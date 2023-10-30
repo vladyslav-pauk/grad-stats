@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Index Page{% endblock %}
+
+{% block content %}
+
+<h1>PhD Stats</h1>
+<form method="post">
+    <label for="url"></label><input id="url" name="url" placeholder="Enter URL" required style="width:300px;"
+                                    type="text">
+
+    <button type="submit">Fetch</button>
+</form>
+<button id="toggleTable">Show/Hide Snapshots</button>
+<div id="snapshotsTable" style="display:none;">
+    {% if snapshot_dates %}
+    <h2>Snapshots</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>URL</th>
+        </tr>
+        {% for snapshot in snapshot_dates %}
+        <tr>
+            <td>{{ snapshot.date }}</td>
+            <td><a href="{{ snapshot.url }}" target="_blank">{{ snapshot.url }}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% if result %}
+<!--<h1></h1>-->
+<div class="profile-container">{{ result|safe }}</div>
+{% endif %}
+{% if error %}
+<p class="error-message">{{ error }}</p>
+{% endif %}
+<script>
+    document.getElementById("toggleTable").addEventListener("click", function () {
+        var x = document.getElementById("snapshotsTable");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    });
+</script>
+<p>&copy; 2023 PhD Stats App</p>
+{% endblock %}

@@ -1,0 +1,163 @@
+/* Your existing root variables */
+:root {
+    --beige: #FAE7CA;
+    --yellow: #E19604;
+    --green: #3D939D;
+    --red: #CC4A40;
+    --blue: #142B44;
+    --darkgray: rgb(51, 51, 51);
+    --beige-opaque: rgba(250, 231, 202, 1);
+    --beige-translucent: rgba(250, 231, 202, 0.5);
+}
+
+/* General Page styling */
+body {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    background-color: var(--darkgray);
+    color: var(--beige);
+    font-size: 16px;
+}
+
+#profile_report {
+    background-color: rgba(0.2, 0.2, 0.2, 1); /* dark gray background */
+}
+
+/* Centered titles */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--red) !important;
+}
+
+/* Header navigation */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 18px;
+    color: var(--blue);
+}
+
+.header a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: var(--green);
+    background-color: var(--beige) !important;
+    padding: 10px;
+    border: 2px solid var(--green);
+    transition: all 0.3s; /* Updated transition */
+    font-size: 18px;
+}
+
+.header a:hover {
+    text-decoration: none;
+    background-color: var(--green) !important; /* New background color on hover */
+    color: var(--beige); /* New text color on hover */
+    border: 2px solid var(--beige);
+}
+
+/* Form styling */
+form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    margin-right: 20px;
+    color: var(--red);
+    background-color: var(--beige);
+    border: 2px solid var(--yellow);
+    padding: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: var(--beige); /* Updated background color */
+    color: var(--red); /* Updated text color */
+    border: 2px solid var(--red);
+    padding: 5px;
+    font-size: 16px;
+    transition: all 0.3s; /* New transition */
+}
+
+button:hover {
+    background-color: var(--red);
+    color: var(--beige) !important;
+    border: 2px solid var(--beige) !important;
+}
+
+/* Table styling */
+
+.table-container {
+    wrap-option: wrap;
+    padding: 0 20px; /* Padding on the sides */
+    margin-bottom: 20px; /* Bottom spacing */
+}
+
+/* Table styling */
+table {
+    width: 50%;
+    max-width: 90%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    white-space: nowrap;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid var(--blue);
+    padding: 5px !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+    text-align: right;
+}
+
+tr:nth-child(even) {
+    background-color: var(--beige-opaque);
+}
+
+tr:nth-child(odd) {
+    background-color: var(--beige-translucent);
+}
+
+th {
+    background-color: var(--green);
+    color: var(--beige);
+}
+
+/* Error message styling */
+p {
+    margin: 10px 0;
+    color: var(--yellow);
+    text-align: center;
+}
+
+/* Show/Hide button */
+#toggleTable {
+    display: block;
+    margin: auto;
+    background-color: var(--beige);
+    color: var(--green);
+    border: 2px solid var(--green);
+    padding: 5px;
+    transition: background-color 0.3s;
+}
+
+#toggleTable:hover {
+    background-color: var(--green);
+    color: var(--beige);
+}
+
+.error-message {
+    margin: 10px 0;
+    color: var(--red);
+}
+
+.profile-container {
+    wrap-option: wrap;
+    padding: 0 20px; /* Padding on the sides */
+    margin-bottom: 20px; /* Bottom spacing */
+    /*background-color: rgba(0.2, 0.2, 0.2, 1); !* Gray background *!*/
+}
