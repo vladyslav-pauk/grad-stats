@@ -24,7 +24,7 @@ def merge_and_save(new_data, latest_version, data_folder='/Users/studio/Work/Pro
         except:
             old_data = pd.DataFrame()
 
-        merged_data = pd.concat([old_data, new_data])
+        merged_data = pd.concat([old_data, new_data], ignore_index=True)
         total_entries = len(merged_data)
         duplicate_entries = merged_data.duplicated(subset=['Email']).sum()
         if len(new_data) == 0:

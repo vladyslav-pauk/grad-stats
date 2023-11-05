@@ -40,6 +40,6 @@ if __name__ == '__main__':
         new_data['End_Date'] = pd.to_datetime(new_data['End_Date'])
         print(new_data)
         profile = ProfileReport(new_data, title="Profiling Report")
-        report_path = "reports/student_report.html"
+        report_path = "dataset/student_report.html"
         profile.to_file(report_path)
         logging.info(f"Profiling report generated at {report_path}")
