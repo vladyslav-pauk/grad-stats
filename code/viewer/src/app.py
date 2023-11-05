@@ -39,7 +39,7 @@ def index():
                 result_html = profile.to_html()
                 result_safe_html = Markup(result_html)
                 snapshot_dates = []
-                snapshots = result['Snapshots'].iloc[0].tolist()
+                snapshots = result['Snapshots'].iloc[0]
                 for snap in snapshots:
                     if '/web/' in snap:
                         date_str = snap.split('/web/')[1].split('/')[0][:-6]  # Remove HMS
