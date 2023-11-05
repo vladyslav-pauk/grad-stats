@@ -39,7 +39,7 @@ def update_placement_from_webpage(database_df, url):
 # Usage example
 # Assuming you have a pandas DataFrame named `db_df` and a URL to match names against
 path_to_dataset = '/Users/studio/Work/Projects/Education/code/'
-latest_data_path = f'{path_to_dataset}dataset/student_data_v1.pkl'
+latest_data_path = f'{path_to_dataset}dataset/student_data_v2.pkl'
 with open(latest_data_path, "rb") as f:
     df = pickle.load(f)
 

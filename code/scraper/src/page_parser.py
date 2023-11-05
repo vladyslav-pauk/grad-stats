@@ -30,6 +30,13 @@ class PageParser:
         self.department_name = path_elements[0].split("/")[-1] if len(path_elements) > 1 else None
         self.url = url
 
+        # fixme: universities, departments - web.engineering.arizona.edu vs eller.arizona.edu
+        # fixme: collect url without webmaster//
+        # fixme: duplicate emails:
+        #  saffo@arizona.edu	  3
+        #  saffo@ema
+        # fixme: pages without emails
+
     def extract_info(self):
         page_data = pd.DataFrame()
 
