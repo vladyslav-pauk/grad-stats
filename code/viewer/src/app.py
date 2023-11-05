@@ -4,13 +4,12 @@ import sys
 from datetime import datetime
 
 from flask import Flask, render_template, request, Markup
-from scraper.src.utils import get_latest_version
 from ydata_profiling import ProfileReport
 
 sys.path.append('/Users/studio/Work/Projects/Education/code/')
+from scraper.src.utils import get_latest_version
 
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
-
 
 def read_latest_data(url, path_to_dataset='/Users/studio/Work/Projects/Education/code/'):
     latest_version = get_latest_version()
