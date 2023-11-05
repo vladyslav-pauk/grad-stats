@@ -3,7 +3,7 @@ import pickle
 import sys
 from datetime import datetime
 
-from flask import Flask, render_template, request, Markup
+from flask import Flask, render_template, request, Markup, jsonify
 from ydata_profiling import ProfileReport
 
 sys.path.append('/Users/studio/Work/Projects/Education/code/')
@@ -54,6 +54,22 @@ def index():
         except Exception as e:
             return render_template("index.html", result=None, error=f"Please enter a valid URL.")
     return render_template("index.html", result=None, snapshot_dates=[], error=None)
+
+
+@app.route("/search-urls")
+def search_urls():
+    query = request.args.get('query', '').lower()
+    latest_version = get_latest_version()
+    latest_data_path = f'/Users/studio/Work/Projects/Education/code/dataset/student_data_v{latest_version}.pkl'
+
+    if os.path.exists(latest_data_path):
+        with open(latest_data_path, "rb") as f:
+            df = pickle.load(f)
+        # Ensure we're searching within a string, and drop duplicates
+        matching_urls = df[df['URL'].str.lower().str.contains(query)]['URL'].drop_duplicates().tolist()
+        return jsonify(matching_urls)
+    else:
+        return jsonify([])  # Return an empty list if no matches
 
 
 @app.route("/about")

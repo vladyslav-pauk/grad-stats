@@ -6,11 +6,33 @@
 
 <h1>PhD Stats</h1>
 <form method="post">
-    <label for="url"></label><input id="url" name="url" placeholder="Enter URL" required style="width:300px;"
-                                    type="text">
-
+    <input id="url" list="urlList" name="url" placeholder="Enter URL" required style="width:300px;" type="text">
+    <datalist id="urlList"></datalist>
     <button type="submit">Fetch</button>
 </form>
+
+
+<ul class="dropdown-menu" id="urlDropdown" style="display: none;"></ul>
+
+<script>
+    document.getElementById('url').addEventListener('input', function () {
+        var inputVal = this.value;
+        if (inputVal.length > 2) { // Only start searching when there are more than 2 characters
+            fetch(`/search-urls?query=${encodeURIComponent(inputVal)}`)
+                .then(response => response.json())
+                .then(data => {
+                    let dataList = document.getElementById('urlList');
+                    dataList.innerHTML = ''; // Clear previous options
+                    new Set(data).forEach(url => { // Use Set to keep only unique values
+                        let option = document.createElement('option');
+                        option.value = url;
+                        dataList.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+</script>
 <button id="toggleTable">Show/Hide Snapshots</button>
 <div id="snapshotsTable" style="display:none;">
     {% if snapshot_dates %}
