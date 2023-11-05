@@ -15,12 +15,31 @@ app = Flask(__name__, template_folder='../templates', static_folder='../static')
 def read_latest_data(url, path_to_dataset='/Users/studio/Work/Projects/Education/code/'):
     latest_version = get_latest_version()
     latest_data_path = f'{path_to_dataset}dataset/student_data_v{latest_version}.pkl'
+
     if os.path.exists(latest_data_path):
         with open(latest_data_path, "rb") as f:
             df = pickle.load(f)
-        filtered_data = df[df['URL'] == url]
-        snapshots = filtered_data['Snapshots'].tolist()
-        return filtered_data, snapshots
+
+        # Collect all unique snapshots for all students with the matching URL
+        all_snapshots = set()
+        for _, student_data in df.iterrows():
+            if student_data['URL'] == url:
+                for snapshot in student_data['Snapshots']:
+                    all_snapshots.add(snapshot)
+
+        unique_snapshots = sorted(all_snapshots, reverse=True)  # Sort if needed
+
+        # Format the snapshots for the template
+        snapshots_formatted = []
+        for snap in unique_snapshots:
+            if '/web/' in snap:
+                date_str = snap.split('/web/')[1].split('/')[0][:-6]  # Remove HMS
+                date_formatted = datetime.strptime(date_str, "%Y%m%d").strftime("%m/%d/%Y")
+            else:
+                date_formatted = datetime.now().strftime("%m/%d/%Y")
+            snapshots_formatted.append({'url': snap, 'date': date_formatted})
+
+        return df[df['URL'] == url], snapshots_formatted
     else:
         return None, None
 
@@ -30,7 +49,7 @@ def index():
     if request.method == "POST":
         url = request.form.get("url")
         try:
-            result, _ = read_latest_data(url)
+            result, snapshots = read_latest_data(url)
             if result is not None:
                 result.drop(['Email', 'URL'], axis=1, inplace=True)
                 # result['Snapshots'] = result['Snapshots'].apply(lambda x: len(x))
@@ -39,15 +58,16 @@ def index():
                 profile = ProfileReport(result, title="Profiling Report")
                 result_html = profile.to_html()
                 result_safe_html = Markup(result_html)
-                snapshot_dates = []
-                snapshots = result['Snapshots'].iloc[0]
-                for snap in snapshots:
-                    if '/web/' in snap:
-                        date_str = snap.split('/web/')[1].split('/')[0][:-6]  # Remove HMS
-                        date_formatted = datetime.strptime(date_str, "%Y%m%d").strftime("%m/%d/%Y")
-                    else:
-                        date_formatted = datetime.now().strftime("%m/%d/%Y")
-                    snapshot_dates.append({'url': snap, 'date': date_formatted})
+                snapshot_dates = snapshots
+
+                # snapshots = result['Snapshots'].iloc[0]
+                # for snap in snapshots:
+                #     if '/web/' in snap:
+                #         date_str = snap.split('/web/')[1].split('/')[0][:-6]  # Remove HMS
+                #         date_formatted = datetime.strptime(date_str, "%Y%m%d").strftime("%m/%d/%Y")
+                #     else:
+                #         date_formatted = datetime.now().strftime("%m/%d/%Y")
+                #     snapshot_dates.append({'url': snap, 'date': date_formatted})
 
                 return render_template("index.html", result=result_safe_html, snapshot_dates=snapshot_dates, error=None)
             else:

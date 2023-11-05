@@ -2,9 +2,9 @@ import logging
 
 import pandas as pd
 
-from .data_processor import DataProcessor
-from .page_parser import PageParser
-from .snapshot_fetcher import SnapshotFetcher
+from data_processor import DataProcessor
+from page_parser import PageParser
+from snapshot_fetcher import SnapshotFetcher
 
 
 def scrape_data(urls):
@@ -20,7 +20,7 @@ def scrape_data(urls):
         try:
             logging.info('Scraping ' + list_url + '...')
             snapshot_fetcher = SnapshotFetcher(list_url)
-            snapshots = snapshot_fetcher.get_snapshots()
+            snapshots = snapshot_fetcher.get_snapshots(log=True)
 
             list_data = pd.DataFrame()
 
@@ -40,4 +40,16 @@ def scrape_data(urls):
 
     return all_data
 
-# todo: add __main__ logic
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+    pd.set_option('display.width', 1000)
+    pd.set_option('display.max_columns', None)
+
+    new_data = scrape_data(['https://philosophy.arizona.edu/phd-students'])
+    logging.info(f"Data has been processed. {len(new_data)} new data samples found.")
+
+    new_data['Start_Date'] = pd.to_datetime(new_data['Start_Date'])
+    new_data['End_Date'] = pd.to_datetime(new_data['End_Date'])
+    print(new_data['Snapshots'].apply(lambda x: len(x)))

@@ -45,5 +45,9 @@ with open(latest_data_path, "rb") as f:
 
 updated_db_df = update_placement_from_webpage(df, 'https://philosophy.arizona.edu/phd-philosophy/placements')
 
+with open(latest_data_path, "wb") as f:
+    updated_df = update_placement_from_webpage(df, 'https://philosophy.arizona.edu/phd-philosophy/placements')
+    pickle.dump(updated_df, f)
+
 with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.width', None):
     print(updated_db_df)
