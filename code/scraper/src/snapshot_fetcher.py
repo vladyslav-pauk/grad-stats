@@ -11,7 +11,7 @@ class SnapshotFetcher:
         timegate_url = 'http://web.archive.org/web/timemap/link/'
         response = requests.get(timegate_url + self.url)
         if response.status_code != 200:
-            print(f"Failed to retrieve snapshots. HTTP Status Code: {response.status_code}")
+            logging.error(f"Failed to retrieve snapshots. HTTP Status Code: {response.status_code}")
             return [self.url]
         link_header = response.text.strip().split('\n')
         snapshots = [link.split(';')[0].strip('<>') for link in link_header if 'rel="memento"' in link]

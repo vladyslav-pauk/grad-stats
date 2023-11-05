@@ -52,4 +52,3 @@ if __name__ == '__main__':
 
     new_data['Start_Date'] = pd.to_datetime(new_data['Start_Date'])
     new_data['End_Date'] = pd.to_datetime(new_data['End_Date'])
-    print(new_data['Snapshots'].apply(lambda x: len(x)))
