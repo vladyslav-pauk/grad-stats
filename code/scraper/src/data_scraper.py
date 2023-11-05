@@ -2,9 +2,9 @@ import logging
 
 import pandas as pd
 
-from data_processor import DataProcessor
-from page_parser import PageParser
-from snapshot_fetcher import SnapshotFetcher
+from .data_processor import DataProcessor
+from .page_parser import PageParser
+from .snapshot_fetcher import SnapshotFetcher
 
 
 def scrape_data(urls):
