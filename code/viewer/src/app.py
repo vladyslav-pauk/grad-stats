@@ -11,6 +11,7 @@ from scraper.src.utils import get_latest_version
 
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
+
 def read_latest_data(url, path_to_dataset='/Users/studio/Work/Projects/Education/code/'):
     latest_version = get_latest_version()
     latest_data_path = f'{path_to_dataset}dataset/student_data_v{latest_version}.pkl'
@@ -51,7 +52,7 @@ def index():
                 return render_template("index.html", result=result_safe_html, snapshot_dates=snapshot_dates, error=None)
             else:
                 return render_template("index.html", result=None, error="No matching data found.")
-        except Exception as e:
+        except Exception:
             return render_template("index.html", result=None, error=f"Please enter a valid URL.")
     return render_template("index.html", result=None, snapshot_dates=[], error=None)
 
