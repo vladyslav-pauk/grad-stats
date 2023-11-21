@@ -1,5 +1,5 @@
 Flask==2.1.0
-Werkzeug==2.0.3  # or the version that is compatible with Flask 2.1.0
-ydata_profiling
-pandas
-beautifulsoup4
+Werkzeug==2.0.3
+ydata_profiling==4.6.1
+pandas==2.1.3
+beautifulsoup4==4.12.2
