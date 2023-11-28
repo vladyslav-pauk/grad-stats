@@ -16,9 +16,21 @@ def extract_info(url):
     date, university, department = extract_url_details(url)
     mailto_elements = [el for el in soup.find_all(href=lambda x: x and 'mailto:' in x) if
                        not filter_email(el.get_text())]
-    page_data = pd.DataFrame([extract_email_name(el, url, date, university, department) for el in mailto_elements if
-                              extract_email_name(el, url, date, university, department)])
-    return page_data
+
+    page_data = []
+    for el in mailto_elements:
+        email, name = extract_email_name(el, soup)
+        page_data.append({
+            'Email': email,
+            'Name': name,
+            'University': university,
+            'Department': department,
+            'URL': url,
+            'Date': date,
+            'Active': False
+        })
+
+    return pd.DataFrame(page_data)
 
 
 def extract_url_details(url):
@@ -40,13 +52,13 @@ def filter_email(email):
     return any(term in email_prefix for term in generic_terms)
 
 
-def extract_email_name(el, soup, url, date, university, department):
+def extract_email_name(el, soup):
     email = el.get_text().strip()
     surrounding_text = el.find_parent().text + soup.get_text()
     potential_names = re.findall(r'([A-Z][a-z]+ [A-Z][a-z]+)', surrounding_text)
     email_prefix = email.split('@')[0]
-    best_match = max(potential_names, key=lambda name: SequenceMatcher(None, email_prefix.lower(),
-                                                                       name.replace(' ', '').lower()).ratio(),
+    best_match = max(potential_names,
+                     key=lambda name: SequenceMatcher(None, email_prefix.lower(),
+                                                      name.replace(' ', '').lower()).ratio(),
                      default=None)
-    name = best_match
-    return {'Email': email, 'Name': name, 'University': university, 'Department': department, 'URL': url, 'Date': date, 'Active': False} if name else None
+    return email, best_match
