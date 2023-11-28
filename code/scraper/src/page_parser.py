@@ -1,8 +1,6 @@
 import datetime
 import re
 from difflib import SequenceMatcher
-from urllib.parse import urlparse
-
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -65,4 +63,9 @@ def extract_email_name(el, soup):
 
 
 def find_names(text):
-    return re.findall(r'([A-Z][a-z]+ [A-Z][a-z]+)', text)
+    pattern = (r'\b([A-Z][a-zA-Z]*\.?\s(?:[A-Z]\.\s)?[A-Z][a-zA-Z]+(?:-[A-Z][a-z]+)?(?:\s[A-Z][a-z]+(?:-[A-Z]['
+               r'a-z]+)?)?)\b')
+
+    potential_names = re.findall(pattern, text)
+
+    return potential_names
