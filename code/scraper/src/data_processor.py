@@ -4,13 +4,12 @@ import pandas as pd
 
 def process_data(data):
     student_info = pd.DataFrame(index=data['Name'].unique(), columns=[
-        'Email', 'University', 'Department', 'URL', 'Start_Date', 'End_Date',
-        'Years', 'Active', 'Snapshots'])
+        'Snapshots',
+        'University', 'Department', 'URL', 'Start_Date', 'End_Date', 'Years', 'Active'])
 
     for name in student_info.index:
         student_data = data[data['Name'] == name]
         student_info.loc[name, ['University', 'Department']] = student_data.iloc[0][['University', 'Department']]
-        student_info.at[name, 'Email'] = student_data['Email'].iloc[0]
         student_info.at[name, 'URL'] = clean_url(student_data['URL'].iloc[0])
         student_info.at[name, 'Start_Date'] = pd.to_datetime(student_data['Date'].min()).date()
         student_info.at[name, 'End_Date'] = pd.to_datetime(student_data['Date'].max()).date()

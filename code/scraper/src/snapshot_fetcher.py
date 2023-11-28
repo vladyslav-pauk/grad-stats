@@ -12,6 +12,7 @@ def get_snapshots(url, log=False):
     link_header = response.text.strip().split('\n')
     snapshots = [link.split(';')[0].strip('<>') for link in link_header if 'rel="memento"' in link]
     snapshots.append(url)
+
     if log:
         logging.info(f"Found {len(snapshots)} snapshots for {url}")
 

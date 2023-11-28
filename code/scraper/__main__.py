@@ -5,7 +5,7 @@ import pandas as pd
 from ydata_profiling import ProfileReport
 
 from .src.data_processor import process_data
-from .src.page_parser import extract_info
+from .src.page_parser import extract_timestamps
 from .src.snapshot_fetcher import get_snapshots
 from .src.utils import get_latest_version, merge_and_save
 
@@ -14,26 +14,18 @@ def scrape_data(urls):
     all_data = pd.DataFrame()
 
     for url in urls:
-        try:
-            logging.info('Scraping ' + url + '...')
-            snapshots = get_snapshots(url, log=True)
 
-            list_data = pd.DataFrame()
+        logging.info('Scraping ' + url + '...')
+        snapshots = get_snapshots(url, log=True)
 
-            for snapshot in snapshots:
-                snapshot_data = extract_info(snapshot)
+        list_data = pd.DataFrame()
 
-                list_data = pd.concat([list_data, snapshot_data], ignore_index=True)
-                # pd.set_option('display.max_colwidth', None)
-                # print(list_data['URL'])
+        for snapshot in snapshots:
+            snapshot_data = extract_timestamps(snapshot)
+            list_data = pd.concat([list_data, snapshot_data], ignore_index=True)
 
-            appearance_data = process_data(list_data)
-
-            all_data = pd.concat([appearance_data, all_data], ignore_index=True)
-            # fixme: remove index from dataframe (or ydata))
-
-        except Exception as e:
-            logging.info(f"Failed to scrape {url}. Error: {e}")
+        appearance_data = process_data(list_data)
+        all_data = pd.concat([appearance_data, all_data], ignore_index=True)
 
     return all_data
 
