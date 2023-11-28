@@ -22,7 +22,10 @@ def scrape_data(urls):
 
             for snapshot in snapshots:
                 snapshot_data = extract_info(snapshot)
+
                 list_data = pd.concat([list_data, snapshot_data], ignore_index=True)
+                # pd.set_option('display.max_colwidth', None)
+                # print(list_data['URL'])
 
             appearance_data = process_data(list_data)
 

@@ -15,7 +15,7 @@ def extract_info(url):
 
     date, university, department = extract_url_details(url)
     mailto_elements = [el for el in soup.find_all(href=lambda x: x and 'mailto:' in x) if
-                       not filter_email(el.get_text())]
+                       not filter_email(el.get_text(), department, university)]
 
     page_data = []
     for el in mailto_elements:
@@ -39,15 +39,15 @@ def extract_url_details(url):
     except IndexError:
         date = pd.to_datetime(datetime.datetime.today())
 
-    path_elements = urlparse(url).path.split('.')
-    university = path_elements[1] if len(path_elements) > 1 else None
-    department = path_elements[0].split("/")[-1] if len(path_elements) > 1 else None
+    path_elements = url.split('.edu')[0].split("/")[-1].split(".")
+    university = path_elements[1]
+    department = path_elements[0]
 
     return date, university, department
 
 
-def filter_email(email):
-    generic_terms = {'contact', 'info', 'support', 'admin', 'webmaster', 'reply'}
+def filter_email(email, department, university):
+    generic_terms = {'contact', 'info', 'support', 'admin', 'webmaster', 'reply', department, university}
     email_prefix = email.split('@')[0].lower()
     return any(term in email_prefix for term in generic_terms)
 
@@ -55,10 +55,14 @@ def filter_email(email):
 def extract_email_name(el, soup):
     email = el.get_text().strip()
     surrounding_text = el.find_parent().text + soup.get_text()
-    potential_names = re.findall(r'([A-Z][a-z]+ [A-Z][a-z]+)', surrounding_text)
+    potential_names = find_names(surrounding_text)
     email_prefix = email.split('@')[0]
     best_match = max(potential_names,
                      key=lambda name: SequenceMatcher(None, email_prefix.lower(),
                                                       name.replace(' ', '').lower()).ratio(),
                      default=None)
     return email, best_match
+
+
+def find_names(text):
+    return re.findall(r'([A-Z][a-z]+ [A-Z][a-z]+)', text)
