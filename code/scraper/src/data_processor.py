@@ -3,21 +3,22 @@ import pandas as pd
 
 
 def process_data(data):
-    student_info = pd.DataFrame(index=data['Email'].unique(), columns=[
-        'Name', 'University', 'Department', 'URL', 'Start_Date', 'End_Date',
+    student_info = pd.DataFrame(index=data['Name'].unique(), columns=[
+        'Email', 'University', 'Department', 'URL', 'Start_Date', 'End_Date',
         'Years', 'Active', 'Snapshots'])
 
-    for email in student_info.index:
-        student_data = data[data['Email'] == email]
-        student_info.loc[email, ['Name', 'University', 'Department']] = student_data.iloc[0][['Name', 'University', 'Department']]
-        student_info.at[email, 'URL'] = clean_url(student_data['URL'].iloc[0])
-        student_info.at[email, 'Start_Date'] = pd.to_datetime(student_data['Date'].min()).date()
-        student_info.at[email, 'End_Date'] = pd.to_datetime(student_data['Date'].max()).date()
-        student_info.at[email, 'Years'] = (student_info.at[email, 'End_Date'] - student_info.at[email, 'Start_Date']).days / 365.25
-        student_info.at[email, 'Active'] = student_data['Active'].sum() > 0
-        student_info.at[email, 'Snapshots'] = student_data['URL'].unique().tolist()
+    for name in student_info.index:
+        student_data = data[data['Name'] == name]
+        student_info.loc[name, ['University', 'Department']] = student_data.iloc[0][['University', 'Department']]
+        student_info.at[name, 'Email'] = student_data['Email'].iloc[0]
+        student_info.at[name, 'URL'] = clean_url(student_data['URL'].iloc[0])
+        student_info.at[name, 'Start_Date'] = pd.to_datetime(student_data['Date'].min()).date()
+        student_info.at[name, 'End_Date'] = pd.to_datetime(student_data['Date'].max()).date()
+        student_info.at[name, 'Years'] = (student_info.at[name, 'End_Date'] - student_info.at[name, 'Start_Date']).days / 365.25
+        student_info.at[name, 'Active'] = student_data['Active'].sum() > 0
+        student_info.at[name, 'Snapshots'] = student_data['URL'].unique().tolist()
 
-    return student_info.reset_index().rename(columns={'index': 'Email'})
+    return student_info.reset_index().rename(columns={'index': 'Name'})
 
 
 def clean_url(url):
@@ -28,7 +29,7 @@ def clean_url(url):
 def calculate_yearly_metrics(data):
     data['Year'] = pd.to_datetime(data['Date']).dt.year
     agg_dict = {
-        'Total_Students': pd.NamedAgg(column='Email', aggfunc='nunique'),
+        'Total_Students': pd.NamedAgg(column='Name', aggfunc='nunique'),
         'Graduated_Students': pd.NamedAgg(
             column='End_Date',
             aggfunc=lambda x: (x < pd.Timestamp(data['Date'].max())).sum()

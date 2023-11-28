@@ -68,6 +68,8 @@ if __name__ == '__main__':
     else:
         new_data['Start_Date'] = pd.to_datetime(new_data['Start_Date'])
         new_data['End_Date'] = pd.to_datetime(new_data['End_Date'])
+        # pd.set_option('display.max_colwidth', None)
+        pd.set_option('display.max_rows', 100)
         print(new_data)
         profile = ProfileReport(new_data, title="Profiling Report")
         report_path = "dataset/student_report.html"
