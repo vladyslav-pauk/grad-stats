@@ -47,7 +47,6 @@ def scrape_data(file):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Web scraper for student data.")
     parser.add_argument("file", nargs='?', default="scraper/urls.csv", type=str, help="The file with URLs.")
-    parser.add_argument("--update", action='store_true', help="Enable update logic.")
 
     args = parser.parse_args()
 
@@ -56,7 +55,4 @@ if __name__ == '__main__':
     else:
         new_data = scrape_data(args.file)
 
-    if args.update:
-        update_dataset(new_data)
-    else:
-        print(new_data)
+    update_dataset(new_data)

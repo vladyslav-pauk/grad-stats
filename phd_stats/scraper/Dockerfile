@@ -3,4 +3,4 @@ WORKDIR /app
 COPY . /app/scraper
 RUN pip install --no-cache-dir -r scraper/requirements.txt
 EXPOSE 5000
-CMD ["python", "-m", "scraper", "--update"]
+CMD ["python", "-m", "scraper"]

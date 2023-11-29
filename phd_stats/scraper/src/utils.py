@@ -3,7 +3,6 @@ import os
 import pickle
 
 import pandas as pd
-# from ydata_profiling import ProfileReport
 
 
 def update_dataset(new_data):
@@ -22,7 +21,12 @@ def update_dataset(new_data):
 
 def get_latest_version(data_folder='dataset'):
     versions = []
-    for filename in os.listdir(os.path.join(os.getcwd(), data_folder)):
+
+    data_folder = os.path.join(os.getcwd(), data_folder)
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder)
+
+    for filename in os.listdir(data_folder):
         if filename.startswith("student_data_v"):
             version_number = int(filename.split('_v')[1].split('.pkl')[0])
             versions.append(version_number)
@@ -41,7 +45,7 @@ def merge_and_save(new_data, latest_version, data_folder='dataset'):
 
         merged_data = pd.concat([old_data, new_data], ignore_index=True)
         total_entries = len(merged_data)
-        duplicate_entries = merged_data.duplicated(subset=['Email']).sum()
+        duplicate_entries = merged_data.duplicated(subset=['Name']).sum()
         if len(new_data) == 0:
             logging.info("No new entries found. Skipping update.")
             return None
@@ -52,7 +56,7 @@ def merge_and_save(new_data, latest_version, data_folder='dataset'):
 
         logging.info(f"Number of new items added: {total_entries - duplicate_entries}")
 
-        merged_data = merged_data.drop_duplicates(subset=['Email'])
+        merged_data = merged_data.drop_duplicates(subset=['Name'])
     else:
         merged_data = new_data
 

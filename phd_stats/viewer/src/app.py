@@ -1,8 +1,7 @@
-import sys
-sys.path.append('/phd-stats/')
-
 from flask import Flask
 from views import index, search_urls, about
+import sys
+sys.path.append('/phd-stats/')
 
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
