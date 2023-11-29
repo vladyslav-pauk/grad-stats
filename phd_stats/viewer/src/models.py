@@ -16,8 +16,9 @@ def get_latest_version(data_folder='dataset'):
 
 
 def get_latest_data_path(base_path):
+    base_path = os.path.join(os.getcwd(), base_path)
     latest_version = get_latest_version()
-    return os.path.join(base_path, 'dataset', f'student_data_v{latest_version}.pkl')
+    return os.path.join(base_path, f'student_data_v{latest_version}.pkl')
 
 
 def load_dataframe(data_path):
