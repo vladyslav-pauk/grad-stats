@@ -1,21 +1,26 @@
 import argparse
 import logging
-
+import csv
 import pandas as pd
-from ydata_profiling import ProfileReport
 
 from .src.data_processor import process_data
 from .src.page_parser import extract_timestamps
 from .src.snapshot_fetcher import get_snapshots
-from .src.utils import get_latest_version, merge_and_save
+from .src.update_placement import update_placement_from_webpage
+from .src.utils import generate_report, update_dataset
 
 
-def scrape_data(urls):
+def scrape_data(file):
+    with open(file, 'r') as file:
+        reader = csv.reader(file)
+        url_pairs = []
+        for row in reader:
+            url_pairs.append((row[0].split(' ')[0], row[0].split(' ')[1]))
+
     all_data = pd.DataFrame()
 
-    for url in urls:
+    for url, placement_url in url_pairs:
 
-        logging.info('Scraping ' + url + '...')
         snapshots = get_snapshots(url, log=True)
 
         list_data = pd.DataFrame()
@@ -25,7 +30,15 @@ def scrape_data(urls):
             list_data = pd.concat([list_data, snapshot_data], ignore_index=True)
 
         appearance_data = process_data(list_data)
-        all_data = pd.concat([appearance_data, all_data], ignore_index=True)
+
+        logging.info(f"Found {len(appearance_data)} new candidates.")
+
+        updated_placement = update_placement_from_webpage(appearance_data, placement_url)
+
+        all_data = pd.concat([updated_placement, all_data], ignore_index=True)
+
+    all_data['Start_Date'] = pd.to_datetime(all_data['Start_Date'])
+    all_data['End_Date'] = pd.to_datetime(all_data['End_Date'])
 
     return all_data
 
@@ -34,36 +47,22 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     parser = argparse.ArgumentParser(description="Web scraper for student data.")
-    parser.add_argument("url", type=str, help="The URL to scrape data from.")
+    parser.add_argument("file", type=str, help="The file with URLs.")
     parser.add_argument("--update", action='store_true', help="Enable update logic.")
 
     args = parser.parse_args()
 
-    pd.set_option('display.width', 1000)
-    pd.set_option('display.max_columns', None)
+    # pd.set_option('display.width', 1000)
+    # pd.set_option('display.max_columns', None)
 
-    new_data = scrape_data([args.url])
-    logging.info(f"Data has been processed. {len(new_data)} new data samples found.")
+    new_data = scrape_data(args.file)
 
     if args.update:
-        latest_version = get_latest_version()
-        if latest_version is None:
-            logging.info("No previous versions found. Creating new data file.")
-            latest_version = 0
-        else:
-            logging.info(f"Current version of data is v{latest_version}")
-
-        new_version = merge_and_save(new_data, latest_version)
-
-        if new_version is not None:
-            logging.info(f"Data updated. New version is v{new_version}.")
+        update_dataset(new_data)
     else:
-        new_data['Start_Date'] = pd.to_datetime(new_data['Start_Date'])
-        new_data['End_Date'] = pd.to_datetime(new_data['End_Date'])
+        # new_data['Start_Date'] = pd.to_datetime(new_data['Start_Date'])
+        # new_data['End_Date'] = pd.to_datetime(new_data['End_Date'])
         # pd.set_option('display.max_colwidth', None)
-        pd.set_option('display.max_rows', 100)
-        print(new_data)
-        profile = ProfileReport(new_data, title="Profiling Report")
-        report_path = "dataset/student_report.html"
-        profile.to_file(report_path)
-        logging.info(f"Profiling report generated at {report_path}")
+        # pd.set_option('display.max_rows', 100)
+        # print(new_data)
+        generate_report(new_data)
