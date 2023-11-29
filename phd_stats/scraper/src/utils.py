@@ -63,14 +63,6 @@ def merge_and_save(new_data, latest_version, data_folder='dataset'):
     return new_version
 
 
-# def generate_report(new_data, version=''):
-#
-#     profile = ProfileReport(new_data, title="Profiling Report", progress_bar=False, minimal=True)
-#     report_path = f"dataset/data_profile_{version}.html"
-#     profile.to_file(report_path)
-#     logging.info(f"Profiling report generated and saved to {report_path}")
-
-
 def view_data(latest_data_path):
     with open(latest_data_path, "rb") as f:
         df = pickle.load(f)

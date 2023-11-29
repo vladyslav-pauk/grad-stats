@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/Users/studio/Work/Projects/Education/code/')
+sys.path.append('/phd-stats/')
 
 from flask import Flask
 from views import index, search_urls, about
@@ -12,4 +12,4 @@ app.add_url_rule('/search-urls', view_func=search_urls, methods=["GET"])
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)

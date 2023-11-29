@@ -3,8 +3,16 @@ import pickle
 import sys
 from datetime import datetime
 
-sys.path.append('/Users/studio/Work/Projects/Education/code/')
-from scraper.src.utils import get_latest_version
+sys.path.append('/phd-stats/')
+
+
+def get_latest_version(data_folder='dataset'):
+    versions = []
+    for filename in os.listdir(os.path.join(os.getcwd(), data_folder)):
+        if filename.startswith("student_data_v"):
+            version_number = int(filename.split('_v')[1].split('.pkl')[0])
+            versions.append(version_number)
+    return max(versions, default=None)
 
 
 def get_latest_data_path(base_path):

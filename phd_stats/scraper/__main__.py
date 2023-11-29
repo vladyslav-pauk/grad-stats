@@ -6,7 +6,7 @@ from .src.data_processor import process_data
 from .src.page_parser import extract_timestamps
 from .src.snapshot_fetcher import get_snapshots
 from .src.update_placement import update_placement_from_webpage
-from .src.utils import update_dataset  # , generate_report
+from .src.utils import update_dataset
 
 import logging
 
@@ -59,5 +59,4 @@ if __name__ == '__main__':
     if args.update:
         update_dataset(new_data)
     else:
-        # generate_report(new_data)
         print(new_data)

@@ -11,10 +11,10 @@ def index():
     if request.method == "POST":
         url = request.form.get("url", "").strip()
         if url:
-            data_path = get_latest_data_path('/Users/studio/Work/Projects/Education/code/')
+            data_path = get_latest_data_path('/phd-stats/')
             df = load_dataframe(data_path)
             if df is not None and url in df['URL'].values:
-                df_filtered = df[df['URL'] == url].drop(['Email', 'URL'], axis=1)
+                df_filtered = df[df['URL'] == url].drop(['URL'], axis=1)
                 df_filtered['Start_Date'] = df_filtered['Start_Date'].astype(str)
                 df_filtered['End_Date'] = df_filtered['End_Date'].astype(str)
                 profile = ProfileReport(df_filtered, title="Profiling Report")
@@ -30,7 +30,7 @@ def index():
 
 def search_urls():
     query = request.args.get('query', '').lower()
-    data_path = get_latest_data_path('/Users/studio/Work/Projects/Education/code/')
+    data_path = get_latest_data_path('/phd-stats/')
     df = load_dataframe(data_path)
     if df is not None:
         matching_urls = df[df['URL'].str.lower().str.contains(query)]['URL'].drop_duplicates().tolist()
