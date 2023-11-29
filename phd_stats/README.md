@@ -72,15 +72,11 @@ You can also run the `scraper` and `viewer` services individually using `docker-
 
 When running the components in a Python environment, you can interact with them directly.
 
-#### Scraper
-
 To run the scraper component:
 
 ```
 python -m scraper
 ```
-
-#### Viewer
 
 To start the viewer web interface:
 
