@@ -1,5 +1,6 @@
 import re
 import pandas as pd
+import logging
 
 
 def process_data(data):
@@ -17,7 +18,11 @@ def process_data(data):
         student_info.at[name, 'Active'] = student_data['Active'].sum() > 0
         student_info.at[name, 'Snapshots'] = student_data['URL'].unique().tolist()
 
-    return student_info.reset_index().rename(columns={'index': 'Name'})
+    appearance_data = student_info.reset_index().rename(columns={'index': 'Name'})
+
+    logging.info(f"Found {len(appearance_data)} new candidates.")
+
+    return appearance_data
 
 
 def clean_url(url):

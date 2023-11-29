@@ -3,7 +3,7 @@ import os
 import pickle
 
 import pandas as pd
-from ydata_profiling import ProfileReport
+# from ydata_profiling import ProfileReport
 
 
 def update_dataset(new_data):
@@ -20,16 +20,16 @@ def update_dataset(new_data):
         logging.info(f"Data updated. New version is v{new_version}.")
 
 
-def get_latest_version(data_folder='/Users/studio/Work/Projects/Education/code/dataset/'):
+def get_latest_version(data_folder='dataset'):
     versions = []
-    for filename in os.listdir(data_folder):
+    for filename in os.listdir(os.path.join(os.getcwd(), data_folder)):
         if filename.startswith("student_data_v"):
             version_number = int(filename.split('_v')[1].split('.pkl')[0])
             versions.append(version_number)
     return max(versions, default=None)
 
 
-def merge_and_save(new_data, latest_version, data_folder='/Users/studio/Work/Projects/Education/code/dataset'):
+def merge_and_save(new_data, latest_version, data_folder='dataset'):
     old_data_path = os.path.join(data_folder, f'student_data_v{latest_version}.pkl')
 
     if os.path.exists(old_data_path):
@@ -63,9 +63,17 @@ def merge_and_save(new_data, latest_version, data_folder='/Users/studio/Work/Pro
     return new_version
 
 
-def generate_report(new_data, version=''):
+# def generate_report(new_data, version=''):
+#
+#     profile = ProfileReport(new_data, title="Profiling Report", progress_bar=False, minimal=True)
+#     report_path = f"dataset/data_profile_{version}.html"
+#     profile.to_file(report_path)
+#     logging.info(f"Profiling report generated and saved to {report_path}")
 
-    profile = ProfileReport(new_data, title="Profiling Report", progress_bar=False, minimal=True)
-    report_path = f"dataset/data_profile_{version}.html"
-    profile.to_file(report_path)
-    logging.info(f"Profiling report generated and saved to {report_path}")
+
+def view_data(latest_data_path):
+    with open(latest_data_path, "rb") as f:
+        df = pickle.load(f)
+
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.width', None):
+        print(df['Snapshots'].apply(lambda x: len(x)))
