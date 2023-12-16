@@ -6,6 +6,15 @@ import pandas as pd
 
 
 def update_dataset(new_data):
+    """
+        Updates the dataset with new data and increments the version.
+
+        Args:
+            new_data (pd.DataFrame): The new data to be merged with the existing dataset.
+
+        Raises:
+            IOError: If an I/O operation fails during data processing.
+        """
     latest_version = get_latest_version()
     if latest_version is None:
         logging.info("No previous versions found. Creating new data file.")
@@ -20,6 +29,18 @@ def update_dataset(new_data):
 
 
 def get_latest_version(data_folder='dataset'):
+    """
+        Retrieves the latest version number of the dataset.
+
+        Args:
+            data_folder (str): The folder where the data files are stored.
+
+        Returns:
+            int: The latest version number or None if no versions are found.
+
+        Raises:
+            OSError: If there is an issue accessing the data folder.
+        """
     versions = []
 
     data_folder = os.path.join(os.getcwd(), data_folder)
@@ -34,6 +55,21 @@ def get_latest_version(data_folder='dataset'):
 
 
 def merge_and_save(new_data, latest_version, data_folder='dataset'):
+    """
+        Merges new data with existing data and saves it.
+
+        Args:
+            new_data (pd.DataFrame): The new data to merge.
+            latest_version (int): The latest version number of the existing data.
+            data_folder (str): The folder where the data files are stored.
+
+        Returns:
+            int: The new version number of the dataset.
+
+        Raises:
+            IOError: If an I/O operation fails during data merging or saving.
+            ValueError: If there is an issue in data processing.
+        """
     old_data_path = os.path.join(data_folder, f'student_data_v{latest_version}.pkl')
 
     if os.path.exists(old_data_path):
@@ -68,6 +104,16 @@ def merge_and_save(new_data, latest_version, data_folder='dataset'):
 
 
 def view_data(latest_data_path):
+    """
+        Prints the data from the latest dataset.
+
+        Args:
+            latest_data_path (str): The path to the latest data file.
+
+        Raises:
+            IOError: If the data file cannot be opened or read.
+            pickle.UnpicklingError: If there is an error unpickling the data.
+        """
     with open(latest_data_path, "rb") as f:
         df = pickle.load(f)
 
