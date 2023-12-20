@@ -127,9 +127,12 @@ th {
     color: var(--beige);
 }
 
-/* Error message styling */
 p {
     margin: 10px 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
     color: var(--yellow);
     text-align: center;
 }
