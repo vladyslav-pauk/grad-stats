@@ -20,7 +20,12 @@ def clean_url(url: str) -> str:
         re.error: If there is an error in regex matching.
     """
     match = URL_PATTERN.search(url)
-    return match.group(1) if match else url
+    url_match = match.group(1) if match else url
+    url_match = url_match.replace(':80', '')
+    url_match = url_match.replace('http://', 'https://')
+    if url_match.endswith('/'):
+        url_match = url_match[:-1]
+    return url_match
 
 
 def process_data(data: pd.DataFrame) -> pd.DataFrame:
@@ -36,26 +41,31 @@ def process_data(data: pd.DataFrame) -> pd.DataFrame:
         ValueError: If there is an issue with data format or content.
         KeyError: If expected columns are not present in the DataFrame.
     """
-    # Convert the 'Date' column from string to datetime for better manipulation
-    data['Date'] = pd.to_datetime(data['Date'])
+    columns = ['Name', 'University', 'Department', 'URL', 'Date', 'Active', 'Placement', 'Years', 'Snapshots']
+    student_info = pd.DataFrame(columns=columns)
+    try:
+        # Convert the 'Date' column from string to datetime for better manipulation
+        data['Date'] = pd.to_datetime(data['Date'])
 
-    # Aggregate student data by name and compute various statistics
-    student_info = data.groupby('Name').agg(
-        University=('University', 'first'),  # First university listed for each student
-        Department=('Department', 'first'),  # First department listed for each student
-        URL=('URL', lambda x: clean_url(x.iloc[0])),  # Cleaned URL of the first entry
-        Start_Date=('Date', 'min'),  # Earliest date found for each student
-        End_Date=('Date', 'max'),  # Latest date found for each student
-        Active=('Active', 'sum')  # Sum of 'Active' entries to check if student was ever active
-    )
+        # Aggregate student data by name and compute various statistics
+        student_info = data.groupby('Name').agg(
+            University=('University', 'first'),  # First university listed for each student
+            Department=('Department', 'first'),  # First department listed for each student
+            URL=('URL', lambda x: clean_url(x.iloc[0])),  # Cleaned URL of the first entry
+            Start_Date=('Date', 'min'),  # Earliest date found for each student
+            End_Date=('Date', 'max'),  # Latest date found for each student
+            Active=('Active', 'sum')  # Sum of 'Active' entries to check if student was ever active
+        )
 
-    # Calculate the duration in years and determine active status
-    student_info['Years'] = (student_info['End_Date'] - student_info['Start_Date']).dt.days / 365.25
-    student_info['Active'] = student_info['Active'] > 0
-    # List of unique URLs (snapshots) associated with each student
-    student_info['Snapshots'] = data.groupby('Name')['URL'].unique()
+        # Calculate the duration in years and determine active status
+        student_info['Years'] = (student_info['End_Date'] - student_info['Start_Date']).dt.days / 365.25
+        student_info['Active'] = student_info['Active'] > 0
+        # List of unique URLs (snapshots) associated with each student
+        student_info['Snapshots'] = data.groupby('Name')['URL'].unique()
 
-    logging.info(f"Found {len(student_info)} new candidates.")
+        logging.info(f"Found {len(student_info)} new candidates")
+    except Exception as e:
+        logging.error(f"Error processing data: {e}")
 
     return student_info.reset_index()
 

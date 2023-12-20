@@ -161,3 +161,9 @@ p {
     margin-bottom: 20px; /* Bottom spacing */
     /*background-color: rgba(0.2, 0.2, 0.2, 1); !* Gray background *!*/
 }
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

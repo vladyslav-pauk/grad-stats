@@ -4,69 +4,55 @@
 
 {% block content %}
 
-<h1>PhD Stats</h1>
-<form method="post">
-    <input id="url" list="urlList" name="url" placeholder="Enter URL" required style="width:300px;" type="text">
-    <datalist id="urlList"></datalist>
-    <button type="submit">Fetch</button>
-</form>
-
-
-<ul class="dropdown-menu" id="urlDropdown" style="display: none;"></ul>
-
-<script>
-    document.getElementById('url').addEventListener('input', function () {
-        var inputVal = this.value;
-        if (inputVal.length > 2) { // Only start searching when there are more than 2 characters
-            fetch(`/search-urls?query=${encodeURIComponent(inputVal)}`)
-                .then(response => response.json())
-                .then(data => {
-                    let dataList = document.getElementById('urlList');
-                    dataList.innerHTML = ''; // Clear previous options
-                    new Set(data).forEach(url => { // Use Set to keep only unique values
-                        let option = document.createElement('option');
-                        option.value = url;
-                        dataList.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    });
-</script>
-<button id="toggleTable">Show/Hide Snapshots</button>
-<div id="snapshotsTable" style="display:none;">
-    {% if snapshot_dates %}
-    <h2>Snapshots</h2>
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>URL</th>
-        </tr>
-        {% for snapshot in snapshot_dates %}
-        <tr>
-            <td>{{ snapshot.date }}</td>
-            <td><a href="{{ snapshot.url }}" target="_blank">{{ snapshot.url }}</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
+<h2>Welcome</h2>
+<p>This app is developed to assist in chronological profiling of PhD programs in philosophy across the United States.</p>
+<h2>Dataset</h2>
+<p>The dataset contains historical data from the graduate students directories and placement pages, scraped using Wayback Machine archive.
+</p>
+<br><br>
+<div class="center-container">
+    <button id="exploreData">Explore Data</button>
 </div>
-{% if result %}
-<!--<h1></h1>-->
-<div class="profile-container">{{ result|safe }}</div>
-{% endif %}
-{% if error %}
-<p class="error-message">{{ error }}</p>
-{% endif %}
+<div id="allData" style="display:none;"></div>
 <script>
-    document.getElementById("toggleTable").addEventListener("click", function () {
-        var x = document.getElementById("snapshotsTable");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
+    document.getElementById('exploreData').addEventListener('click', function () {
+        // Hide the Explore Data button
+        var exploreDataButton = document.getElementById('exploreData');
+        exploreDataButton.style.display = 'none';
+
+        // Create and display the loading message
+        let loadingMessage = document.createElement('div');
+        loadingMessage.id = 'loadingMessage';
+        loadingMessage.textContent = 'Fetching data. Please wait...';
+        exploreDataButton.parentNode.insertBefore(loadingMessage, exploreDataButton.nextSibling);
+
+        fetch('/fetch-all-data')
+            .then(response => response.json())
+            .then(data => {
+                // Hide the loading message
+                document.getElementById('loadingMessage').remove();
+
+                // Show the Explore Data button again
+                exploreDataButton.style.display = 'block';
+
+                if (data.profile) {
+                    let container = document.createElement('div');
+                    container.className = 'profile-container';
+                    container.innerHTML = data.profile;
+                    document.getElementById('allData').style.display = 'block';
+                    document.getElementById('allData').appendChild(container);
+                } else {
+                    // Handle error or no data case
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Hide loading message and show the button again
+                document.getElementById('loadingMessage').remove();
+                exploreDataButton.style.display = 'block';
+            });
     });
 </script>
+<br><br>
 <p>&copy; 2023 PhD Stats App</p>
 {% endblock %}

@@ -41,6 +41,6 @@ def update_placement_from_webpage(database_df: pd.DataFrame, url: str) -> pd.Dat
     webpage_names = set(re.findall(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b', html_content))
     database_df['Placement'] = database_df['Name'].isin(webpage_names)
     matching_placements = database_df['Placement'].sum()
-    logging.info(f"Found {matching_placements} placements in {url}.")
+    logging.info(f"Found {matching_placements} placements in {url}")
 
     return database_df

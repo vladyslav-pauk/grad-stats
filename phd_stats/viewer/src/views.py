@@ -3,7 +3,7 @@ from ydata_profiling import ProfileReport
 from models import get_snapshot_dates, get_latest_data_path, load_dataframe
 
 
-def index():
+def programs():
     """
     Renders the main page of the application. Handles the form submissions for URL input
     and generates profiling reports and snapshot dates for the input URL.
@@ -34,7 +34,7 @@ def index():
         else:
             error = "Please enter a valid URL."
 
-    return render_template("index.html", result=result_safe_html, snapshot_dates=snapshot_dates, error=error)
+    return render_template("programs.html", result=result_safe_html, snapshot_dates=snapshot_dates, error=error)
 
 
 def search_urls():
@@ -54,6 +54,27 @@ def search_urls():
         return jsonify([])
     except Exception as e:
         return jsonify({"error": str(e)})
+
+
+def fetch_all_data():
+    try:
+        data_path = get_latest_data_path('dataset')
+        df = load_dataframe(data_path)
+        df = df.drop(['Snapshots'], axis=1)
+        if df is not None:
+            # Generate a profile for the entire DataFrame
+            profile = ProfileReport(df, title="Comprehensive Profiling Report")
+            profile_html = profile.to_html()
+            return jsonify({"profile": profile_html})
+        else:
+            return jsonify({"error": "No data found."})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+
+
+def index():
+    return render_template('index.html')
 
 
 def about():

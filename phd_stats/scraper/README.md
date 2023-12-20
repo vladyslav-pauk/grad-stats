@@ -4,7 +4,7 @@
 This project consists of a set of Python modules designed for scraping, processing, and updating datasets related to student information from various web sources. It includes functionality for extracting data from webpages, cleaning and summarizing this data, and updating a local dataset with the new information.
 
 ## Modules
-- **data_processor.py**: Cleans URLs, processes student data to create summary data frames, and calculates yearly metrics.
+- **data_aggregator.py**: Cleans URLs, processes student data to create summary data frames, and calculates yearly metrics.
 - **utils.py**: Handles updating and managing dataset versions, including merging new data.
 - **page_parser.py**: Scrapes web pages for student data, extracting metadata and names.
 - **snapshot_fetcher.py**: Fetches snapshots of webpages from the Wayback Machine.
@@ -32,7 +32,7 @@ python __main__.py [path_to_urls_csv]
 The optional `path_to_urls_csv` argument specifies the path to a CSV file containing URLs for scraping.
 
 ### Modules Functionality
-- **data_processor.py**
+- **data_aggregator.py**
   - `clean_url(url: str)`: Cleans the archived URL to its original form.
   - `process_data(data: pd.DataFrame)`: Processes raw student data to create a summarized DataFrame.
   - `calculate_yearly_metrics(data: pd.DataFrame)`: Calculates and returns yearly metrics based on the data.
