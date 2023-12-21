@@ -33,7 +33,16 @@ def programs():
                                             correlations=None,
                                             missing_diagrams=None,
                                             interactions=None,
-                                            samples=None)
+                                            samples=None,
+                                            variables={
+                                                "descriptions": {
+                                                    "Active": "Indicates whether a student is currently enrolled in the program.",
+                                                    "Placement": "Indicates whether a student is in an academic or industry placement.",
+                                                    "Years": "Number of years spent in the program.",
+                                                    "Start_Date": "Year a student entered the program.",
+                                                    "End_Date": "Year a student left the program."
+                                                }
+                                            })
                     result_safe_html = Markup(profile.to_html())
                     snapshot_dates = get_snapshot_dates(df, url)
                 else:
@@ -81,7 +90,16 @@ def fetch_all_data():
                                     correlations=None,
                                     missing_diagrams=None,
                                     interactions=None,
-                                    samples=None)
+                                    samples=None,
+                                    variables={
+                                        "descriptions": {
+                                            "Active": "Indicates whether a student is currently enrolled in the program.",
+                                            "Placement": "Indicates whether a student is in an academic or industry placement.",
+                                            "Years": "Number of years spent in the program.",
+                                            "Start_Date": "Year a student entered the program.",
+                                            "End_Date": "Year a student left the program."
+                                        }
+                                    })
             profile_html = profile.to_html()
             return jsonify({"profile": profile_html})
         else:
