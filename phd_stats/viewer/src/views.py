@@ -23,6 +23,7 @@ def programs():
                 if df is not None and url in df['URL'].values:
                     university = df[df['URL'] == url]['University'].iloc[0]
                     df_filtered = df[df['URL'] == url].drop(['Snapshots', 'URL', 'Department', 'University', 'Name'], axis=1)
+                    df_filtered = df_filtered[['Active', 'Placement', 'Years', 'Start_Date', 'End_Date']]
                     df_filtered['Start_Date'] = df_filtered['Start_Date'].astype(str)
                     df_filtered['End_Date'] = df_filtered['End_Date'].astype(str)
                     profile = ProfileReport(df_filtered,
@@ -68,6 +69,7 @@ def fetch_all_data():
         data_path = get_latest_data_path('dataset')
         df = load_dataframe(data_path)
         df = df.drop(['Snapshots', 'URL', 'Department', 'Name'], axis=1)
+        df = df[['University', 'Active', 'Placement', 'Years', 'Start_Date', 'End_Date']]
         if df is not None:
             profile = ProfileReport(df,
                                     title="Dataset Statistics",
