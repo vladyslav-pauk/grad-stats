@@ -93,10 +93,10 @@ def parse_date(url: str) -> Tuple[datetime.datetime, bool]:
         IndexError: If the URL structure is not as expected and the data cannot be parsed.
     """
     try:
-        date = pd.to_datetime(url.split('/web/')[1].split('/')[0])
+        date = pd.to_datetime(url.split('/web/')[1].split('/')[0]).strftime('%Y-%m-%d')
         status = False
     except IndexError:
-        date = pd.to_datetime(datetime.datetime.today().strftime('%Y-%m-%d'))
+        date = pd.to_datetime(datetime.datetime.today()).strftime('%Y-%m-%d')
         status = True
 
     return date, status

@@ -70,6 +70,8 @@ def fetch_all_data():
         df = load_dataframe(data_path)
         df = df.drop(['Snapshots', 'URL', 'Department', 'Name'], axis=1)
         df = df[['University', 'Active', 'Placement', 'Years', 'Start_Date', 'End_Date']]
+        df['Start_Date'] = df['Start_Date'].astype(str)
+        df['End_Date'] = df['End_Date'].astype(str)
         if df is not None:
             profile = ProfileReport(df,
                                     title="Dataset Statistics",
