@@ -24,8 +24,9 @@ def programs():
                     university = df[df['URL'] == url]['University'].iloc[0]
                     df_filtered = df[df['URL'] == url].drop(['Snapshots', 'URL', 'Department', 'University', 'Name'], axis=1)
                     df_filtered = df_filtered[['Active', 'Placement', 'Years', 'Start_Date', 'End_Date']]
-                    df_filtered['Start_Date'] = df_filtered['Start_Date'].astype(str)
-                    df_filtered['End_Date'] = df_filtered['End_Date'].astype(str)
+                    df_filtered['Start_Date'] = df_filtered['Start_Date'].dt.year.astype(int)
+                    df_filtered['End_Date'] = df_filtered['End_Date'].dt.year.astype(int)
+                    df_filtered['Years'] = df_filtered['Years'].apply(lambda x: round(x * 4) / 4)
                     profile = ProfileReport(df_filtered,
                                             title=f"Report for {university}",
                                             duplicates=None,
@@ -70,8 +71,9 @@ def fetch_all_data():
         df = load_dataframe(data_path)
         df = df.drop(['Snapshots', 'URL', 'Department', 'Name'], axis=1)
         df = df[['University', 'Active', 'Placement', 'Years', 'Start_Date', 'End_Date']]
-        df['Start_Date'] = df['Start_Date'].astype(str)
-        df['End_Date'] = df['End_Date'].astype(str)
+        df['Start_Date'] = df['Start_Date'].dt.year
+        df['End_Date'] = df['End_Date'].dt.year
+        df['Years'] = df['Years'].apply(lambda x: round(x * 4) / 4)
         if df is not None:
             profile = ProfileReport(df,
                                     title="Dataset Statistics",
