@@ -159,11 +159,16 @@ p {
 }
 
 .profile-container {
-    wrap-option: wrap;
-    padding: 0 20px; /* Padding on the sides */
-    margin-bottom: 20px; /* Bottom spacing */
-    /*background-color: rgba(0.2, 0.2, 0.2, 1); !* Gray background *!*/
+    width: 100%; /* Full width */
+    overflow-x: auto; /* Allows horizontal scrolling if content is too wide */
 }
+
+@media (max-width: 600px) {
+    .profile-container {
+        padding: 10px; /* Add padding on smaller screens for better readability */
+    }
+}
+
 
 .center-container {
     display: flex;

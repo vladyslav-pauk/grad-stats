@@ -72,7 +72,6 @@ def fetch_all_data():
         return jsonify({"error": str(e)})
 
 
-
 def index():
     return render_template('index.html')
 
