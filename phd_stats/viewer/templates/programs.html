@@ -20,12 +20,6 @@
         var fetchButton = document.getElementById('fetchButton');
         fetchButton.style.display = 'none';
 
-        // Create and display the loading message
-        let loadingMessage = document.createElement('div');
-        loadingMessage.id = 'loadingMessage';
-        loadingMessage.textContent = 'Fetching data. Please wait...';
-        fetchButton.parentNode.insertBefore(loadingMessage, fetchButton.nextSibling);
-
         // Submit the form programmatically
         this.submit();
     });
@@ -72,7 +66,6 @@
 {% if result %}
 <div class="profile-container">{{ result|safe }}</div>
 
-<!-- Move the script inside this block -->
 <script>
     document.getElementById("toggleTable").style.display = 'block';
     document.getElementById("toggleTable").addEventListener("click", function () {
@@ -87,9 +80,13 @@
 {% endif %}
 
 {% if error %}
+<div class="center-container">
 <p class="error-message">{{ error }}</p>
+</div>
 {% endif %}
 <!--insert empty space-->
 <br><br>
+<div class="center-container">
 <p>&copy; 2023 PhD Stats App</p>
+</div>
 {% endblock %}

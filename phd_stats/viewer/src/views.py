@@ -21,10 +21,17 @@ def programs():
                 data_path = get_latest_data_path('dataset')
                 df = load_dataframe(data_path)
                 if df is not None and url in df['URL'].values:
-                    df_filtered = df[df['URL'] == url].drop(['Snapshots', 'URL'], axis=1)
+                    university = df[df['URL'] == url]['University'].iloc[0]
+                    df_filtered = df[df['URL'] == url].drop(['Snapshots', 'URL', 'Department', 'University', 'Name'], axis=1)
                     df_filtered['Start_Date'] = df_filtered['Start_Date'].astype(str)
                     df_filtered['End_Date'] = df_filtered['End_Date'].astype(str)
-                    profile = ProfileReport(df_filtered, title="Profiling Report")
+                    profile = ProfileReport(df_filtered,
+                                            title=f"Report for {university}",
+                                            duplicates=None,
+                                            correlations=None,
+                                            missing_diagrams=None,
+                                            interactions=None,
+                                            samples=None)
                     result_safe_html = Markup(profile.to_html())
                     snapshot_dates = get_snapshot_dates(df, url)
                 else:
@@ -60,10 +67,15 @@ def fetch_all_data():
     try:
         data_path = get_latest_data_path('dataset')
         df = load_dataframe(data_path)
-        df = df.drop(['Snapshots'], axis=1)
+        df = df.drop(['Snapshots', 'URL', 'Department', 'Name'], axis=1)
         if df is not None:
-            # Generate a profile for the entire DataFrame
-            profile = ProfileReport(df, title="Comprehensive Profiling Report")
+            profile = ProfileReport(df,
+                                    title="Dataset Statistics",
+                                    duplicates=None,
+                                    correlations=None,
+                                    missing_diagrams=None,
+                                    interactions=None,
+                                    samples=None)
             profile_html = profile.to_html()
             return jsonify({"profile": profile_html})
         else:
