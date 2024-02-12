@@ -1,6 +1,6 @@
 from flask import render_template, request, jsonify, Markup
 from ydata_profiling import ProfileReport
-from models import get_snapshot_dates, get_latest_data_path, load_dataframe
+from .models import get_snapshot_dates, get_latest_data_path, load_dataframe
 
 
 def programs():
