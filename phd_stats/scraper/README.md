@@ -4,20 +4,7 @@
 This package is designed for web scraping, data processing, and dataset management.
 It includes modules for fetching web page snapshots, parsing web pages for student data, and aggregating and summarizing the data.
 
-## Modules
-- **data_aggregator.py**: Methods to process URL, aggregate student data, and calculate yearly metrics.
-- **utils.py**: Methods to handle updating and managing dataset versions, including merging new data.
-- **page_parser.py**: Methods to scrape web pages for student data, and extract metadata.
-- **snapshot_fetcher.py**: A method to fetch snapshots of webpages from the Wayback Machine.
-- **update_placement.py**: A method to update placement information from specified webpages.
-- **__main__.py**: The entry point for the scraping and processing script.
-
 ## Installation
-To run this project, ensure you have Python 3.x installed along with the following packages:
-- pandas
-- requests
-- BeautifulSoup4
-- re (regular expressions)
 
 To install the required packages, run:
 
@@ -26,7 +13,7 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-### Running the Main Script
+
 To run the module, execute the following command from the root directory of the project:
 
 ```bash
@@ -35,7 +22,11 @@ python -m scraper [optional: path_to_urls_csv]
 
 The optional `path_to_urls_csv` argument specifies the path to a CSV file containing URLs for scraping.
 
-### Modules Functionality
+Upon execution, the module will fetch snapshots of the URLs, parse the web pages for student data, aggregate the new data into the dataset, and save the updated version of the dataset.
+
+If no dataset is found, a new dataset will be created in the dataset folder located in the root directory of the project. 
+
+## Modules Functionality
 - **data_aggregator.py**
   - `clean_url(url: str)`: Cleans the archived URL to its original form.
   - `process_data(data: pd.DataFrame)`: Processes raw student data to create a summarized DataFrame.
