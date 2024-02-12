@@ -4,12 +4,33 @@
 This web application provides an interface for users to search and view the data collected using `scraper` module.
 The application is built using Flask and provides a user-friendly interface for data exploration and analysis.
 
-## Key Features
-- **URL Search**: Allows users to search for specific URLs related to PhD programs.
-- **Data Profiling**: Generates profiling reports for selected URLs.
-- **Snapshot Viewing**: Displays historical snapshots of data for comparative analysis.
+## Web Interface
+
+The web interface consists of the following pages:
+
+### Home Page
+
+The home page provides an overview of the dataset and allows users to explore the data.
+
+By clicking the `Explore Data` button, users can view the aggregated data and statistical profiling of the dataset.
+
+### Programs Page 
+
+The programs page allows users to filter the dataset by program and access the relevant reports.
+
+A program search form with autocomplete is provided for users to filter samples by program. Upon entering a URL and clicking the `Fetch` button, the website generates and display a report.
+
+A button `Show/Hide Snapshots` allows users to toggle the visibility of 
+  a table displaying URL time snapshots.
+
+### About Page 
+
+The about page provides information about the project and the team.
 
 ## Installation and Setup
+
+Given that compiler and interpreter are installed, the following steps are to be followed to run the application.
+See `README.md` in the root directory for more information on setting up the environment.
 
 To install the required packages, run:
 

@@ -1,8 +1,10 @@
+# README
+
 ## Overview
 
-This repository contains a Python project focused on scraping, processing, and viewing statistics related to PhD programs. The project is structured into two main components: `scraper` and `viewer`.
+This repository contains packages to scrape and view data on graduation and placement records of PhD students across philosophy programs in the USA.
 
-The `scraper` component is responsible for collecting data from various sources, processing it, and storing it in a usable format.
+The `scraper` module builds a dataset from open web sources.
 
 The `viewer` component provides a web interface to visualize and interact with the collected data.
 
@@ -22,7 +24,7 @@ Before you begin, ensure you have the following installed on your system:
 
 ### Setting Up the Environment
 
-To get started with this project, follow the following steps.
+To get started, follow these steps:
 
 1. Clone the repository to your local machine:
    ```
@@ -31,6 +33,8 @@ To get started with this project, follow the following steps.
    ```
 
 2. It is recommended to create a virtual environment to keep dependencies isolated:
+
+   On macOS and Linux, use:
    ```
    python -m venv venv
    source venv/bin/activate 
@@ -66,9 +70,48 @@ Before running these commands, ensure that Docker is installed and the Docker da
    
 You can also run the `scraper` and `viewer` services individually using `docker-compose up scraper` and `docker-compose up viewer`, respectively.
 
-## Running the Code
+## Usage
 
-### Python Environment
+### Scraper
+
+The `scraper` module is designed for scraping web data into a  dataset.
+
+Run the module upon installation using the following command from the root directory of the project:
+
+```bash
+python -m scraper
+```
+
+The module will start fetching time snapshots of the URLs, parse the web pages for student data, and aggregate the new data and save the updated version of the dataset.
+
+See more details in the `scraper` module README.
+
+### Dataset
+
+The dataset contains records of PhD candidates for a university department, 
+detailing their academic and career progress. Key fields include:
+
+- **Snapshots**: URLs to archived Wayback Machine snapshots.
+- **University**: Name of the university (e.g., 'arizona' for the University of Arizona).
+- **Department**: Academic department or program.
+- **Start_Date**: First record date in 'YYYY-MM-DD' format.
+- **End_Date**: Last record date in 'YYYY-MM-DD' format.
+- **Active**: Boolean indicating if the individual is still active in the department.
+- **Years**: Duration of the individual's active period in the department (in years).
+- **Placement**: Boolean indicating if the individual secured a placement or position post-tenure.
+
+### Webpage Interface
+
+The `viewer` provides a web interface for accessing and analysing data with the following key features:
+
+- **Data Profiling**: Generates a detailed statistical profiling using `pandas` library.
+- **Program Filtering**: Facilitates filtering by PhD programs.
+- **Snapshot Viewing**: Displays links to the source snapshots of data on the https://web.archive.org.
+
+See the `viewer` module README for more details.
+
+
+### Running in Python Environment
 
 When running the components in a Python environment, you can interact with them directly.
 
@@ -87,7 +130,7 @@ python viewer/src/app.py
 The web interface will be accessible at `http://localhost:5000` by default.
 
 
-### Using Docker
+### Running Using Docker
 
 Once the Docker containers are up and running, you can interact with the `scraper` and `viewer` services.
 
@@ -151,11 +194,10 @@ To call the main scraper script from your Python script:
 
 ```python
 import scraper
-
 scraper.main()
 ```
 
-### Viewer
+## Viewer
 
 The `viewer` package provides models and views for the web interface:
 
@@ -164,31 +206,6 @@ from viewer.src import models, views, app
 ```
 
 These modules can be used to extend or modify the web application.
-
-## Webpage Interface
-
-The `viewer` provides a web interface with the following features:
-
-- A search form with autocomplete is provided for users to input a URL.
-- Upon entering a URL and clicking the `Fetch` button, the website generates 
-  a report.
-- A button `Show/Hide Snapshots` allows users to toggle the visibility of 
-  a table displaying URL time snapshots.
-
-## Dataset
-
-The dataset contains records of PhD candidates for a university department, 
-detailing their academic and career progress. Key fields include:
-
-- **Name**: Full name of the individual.
-- **Snapshots**: URLs to archived Wayback Machine snapshots.
-- **University**: Name of the university (e.g., 'arizona' for the University of Arizona).
-- **Department**: Academic department or program.
-- **Start_Date**: First record date in 'YYYY-MM-DD' format.
-- **End_Date**: Last record date in 'YYYY-MM-DD' format.
-- **Active**: Boolean indicating if the individual is still active in the department.
-- **Years**: Duration of the individual's active period in the department (in years).
-- **Placement**: Boolean indicating if the individual secured a placement or position post-tenure.
 
 ## Contributing
 
@@ -204,8 +221,15 @@ Contributions to this project are welcome! To contribute:
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
+## Notes
+
+- The package does not handle all edge cases and exceptions; further development might be necessary for robustness.
+- The effectiveness of data extraction depends on the structure of the target web pages.
+- Ensure you have network access for the modules to fetch data from URLs.
+- The viewer is designed to work with the dataset generated by the `scraper` module.
+
 ## Contact
 
-Vladiszlav Pauk - paukvp@gmail.com
+Vladyslav Pauk - paukvp@gmail.com
 
 Project Link: https://github.com/paukvlad/Education
