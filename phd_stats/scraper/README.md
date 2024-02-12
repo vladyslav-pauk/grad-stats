@@ -1,15 +1,16 @@
 # README for scraper.py module
 
 ## Overview
-This project consists of a set of Python modules designed for scraping, processing, and updating datasets related to student information from various web sources. It includes functionality for extracting data from webpages, cleaning and summarizing this data, and updating a local dataset with the new information.
+This package is designed for web scraping, data processing, and dataset management.
+It includes modules for fetching web page snapshots, parsing web pages for student data, and aggregating and summarizing the data.
 
 ## Modules
-- **data_aggregator.py**: Cleans URLs, processes student data to create summary data frames, and calculates yearly metrics.
-- **utils.py**: Handles updating and managing dataset versions, including merging new data.
-- **page_parser.py**: Scrapes web pages for student data, extracting metadata and names.
-- **snapshot_fetcher.py**: Fetches snapshots of webpages from the Wayback Machine.
-- **update_placement.py**: Updates placement information from specified webpages.
-- **__main__.py**: Entry point for the scraping and processing script, handling command-line arguments.
+- **data_aggregator.py**: Methods to process URL, aggregate student data, and calculate yearly metrics.
+- **utils.py**: Methods to handle updating and managing dataset versions, including merging new data.
+- **page_parser.py**: Methods to scrape web pages for student data, and extract metadata.
+- **snapshot_fetcher.py**: A method to fetch snapshots of webpages from the Wayback Machine.
+- **update_placement.py**: A method to update placement information from specified webpages.
+- **__main__.py**: The entry point for the scraping and processing script.
 
 ## Installation
 To run this project, ensure you have Python 3.x installed along with the following packages:
@@ -18,17 +19,20 @@ To run this project, ensure you have Python 3.x installed along with the followi
 - BeautifulSoup4
 - re (regular expressions)
 
-Install these using pip:
+To install the required packages, run:
+
 ```bash
-pip install pandas requests beautifulsoup4
+pip install -r requirements.txt
 ```
 
 ## Usage
 ### Running the Main Script
-To execute the main script, run:
+To run the module, execute the following command from the root directory of the project:
+
 ```bash
-python __main__.py [path_to_urls_csv]
+python -m scraper [optional: path_to_urls_csv]
 ```
+
 The optional `path_to_urls_csv` argument specifies the path to a CSV file containing URLs for scraping.
 
 ### Modules Functionality
@@ -59,6 +63,3 @@ The project utilizes Python's logging module for debugging and tracking. Ensure 
 - Ensure you have network access for the modules to fetch data from URLs.
 - The project does not handle all edge cases and exceptions; further development might be necessary for robustness.
 - The effectiveness of data extraction depends on the structure of the target web pages.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
