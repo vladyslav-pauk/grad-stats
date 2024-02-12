@@ -1,6 +1,5 @@
 from flask import Flask
-from views import index, search_urls, fetch_all_data, programs, about
-import os
+from .views import index, search_urls, fetch_all_data, programs, about
 import logging
 
 
@@ -36,16 +35,3 @@ def create_app(test_config=None):
     app.add_url_rule('/fetch-all-data', view_func=fetch_all_data, methods=["GET"])
 
     return app
-
-
-app = create_app()
-
-if __name__ == "__main__":
-    """
-    The entry point for running the Flask application. It fetches host and port 
-    settings from environment variables, falling back to default values if not found.
-    """
-    # Fetch host and port from environment variables
-    HOST = os.environ.get('FLASK_HOST', '0.0.0.0')
-    PORT = os.environ.get('FLASK_PORT', 5000)
-    app.run(host=HOST, port=PORT)
