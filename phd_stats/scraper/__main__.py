@@ -1,3 +1,7 @@
+# This file is the entry point for the scraper package.
+# The package is used to scrape data on graduation and placement records of PhD students in Philosophy.
+# It reads URLs from a CSV file, consolidates scraped data from each URL, and updates the dataset.
+
 import argparse
 import csv
 import pandas as pd
