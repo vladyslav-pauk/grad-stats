@@ -13,7 +13,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/phd_stats/viewer/templates" />
+        <option value="$MODULE_DIR$/../phd-placement-records/phd_stats/viewer/templates" />
       </list>
     </option>
   </component>
