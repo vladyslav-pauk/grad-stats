@@ -28,8 +28,8 @@ To get started, follow these steps:
 
 1. Clone the repository to your local machine:
    ```
-   git clone https://github.com/paukvlad/Education.git
-   cd Education/phd_stats
+   git clone https://github.com/paukvlad/phd-placement-records.git
+   cd phd-placement-records
    ```
 
 2. It is recommended to create a virtual environment to keep dependencies isolated:

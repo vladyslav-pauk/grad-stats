@@ -1,0 +1,39 @@
+generate_function_prompt: |
+  I need a Python function that extracts all unique PhD student names from an HTML source.
+  Extracted name should contain only letters, spaces, and hyphens.
+  The function signature should be `extract_phd_student_names(source: BeautifulSoup) -> list[str]`.
+  Analyze the following HTML source chunks to understand the structure of the web page.
+  Based on specific structure and patterns, provide the function and necessary import statements.
+
+  {html_chunks}
+
+update_function_prompt: |
+    Update the function based on the patterns in HTML source below.
+    You can't use filtering of an existing list, instead use matching patterns and HTML structures.
+    
+    In your response, provide only the code with the function and necessary import statements are included.
+    The function signature should be `extract_phd_student_names(source: BeautifulSoup) -> list[str]`.
+  
+    Find below results of running a function.
+  
+    Function:
+    ```python
+    {function_code}
+    ```
+    
+    Extracted names:
+    {names}
+  
+    Error message:
+    {error_message}
+    
+    HTML source code:
+    {html_chunks}
+
+  
+validate_names_prompt: |
+  Only if every single item is a valid person name containing only letters, spaces, and hyphens, return only one string “all items are valid names” and nothing else.
+  Only otherwise, provide updated function that extracts only valid names from any html source.
+  Make sure the format of the resulting names is correct, i.e. letters, spaces, and hyphens only, and no newlines or extra spaces, commas and special characters.
+  
+  {names}
