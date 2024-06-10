@@ -1,3 +1,4 @@
 /.env
 /venv
 /dataset-viewer/node_modules
+/.idea
