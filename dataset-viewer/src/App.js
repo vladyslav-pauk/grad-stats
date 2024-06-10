@@ -3,7 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import background from './background-image.jpg';
 import debounce from 'lodash.debounce';
-import logo from './ai-logo.png'; // Make sure to add the logo image to your src directory
+import logo from './ai-logo.svg'; // Make sure to add the logo image to your src directory
 
 function App() {
     const [query, setQuery] = useState('');
@@ -15,7 +15,7 @@ function App() {
     const [tableHoverIndex, setTableHoverIndex] = useState(-1);
     const [isDropdownHovered, setIsDropdownHovered] = useState(false);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-    const dropdownRef = useRef(null); // Add this line
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,7 +34,6 @@ function App() {
         const debouncedFetchData = debounce(fetchData, 300);
         debouncedFetchData();
 
-        // Cleanup function to cancel debounced call if query changes before debounce delay
         return () => {
             debouncedFetchData.cancel();
         };
@@ -78,6 +77,8 @@ function App() {
             setUniversities([]); // Clear the search results
             setQuery(''); // Clear the search query
             setHighlightIndex(-1); // Reset highlight index
+            setTableHoverIndex(-1); // Reset table hover index
+            setHoverIndex(-1); // Reset hover index for dropdown
         } catch (error) {
             console.error("There was an error fetching the data!", error);
         }
@@ -149,39 +150,37 @@ function App() {
         const columns = Object.keys(sortedData[0]);
 
         return (
-            <div
-                className="mt-3"
-            >
+            <div className="mt-3">
                 <h2>{currentProgram}</h2>
                 <table className="table table-striped table">
                     <thead>
-                    <tr>
-                        <th>#</th>
-                        {columns.map((column) => (
-    (currentProgram === 'All Programs' || column !== 'University') && (
-        <th key={column} onClick={() => handleSort(column)} style={{ cursor: 'pointer' }}>
-            {column} {sortConfig.key === column ? (sortConfig.direction === 'ascending' ? '▲' : '▼') : ''}
-        </th>
-    )
-))}
-                    </tr>
+                        <tr>
+                            <th>#</th>
+                            {columns.map((column) => (
+                                (currentProgram === 'All Programs' || column !== 'University') && (
+                                    <th key={column} onClick={() => handleSort(column)} style={{ cursor: 'pointer' }}>
+                                        {column} {sortConfig.key === column ? (sortConfig.direction === 'ascending' ? '▲' : '▼') : ''}
+                                    </th>
+                                )
+                            ))}
+                        </tr>
                     </thead>
                     <tbody>
-                    {sortedData.map((row, rowIndex) => (
-                        <tr
-                            key={rowIndex}
-                            className={rowIndex === highlightIndex || (rowIndex === tableHoverIndex && !isDropdownHovered) ? 'table-active' : ''}
-                            onMouseEnter={() => setTableHoverIndex(rowIndex)}
-                            onMouseLeave={() => setTableHoverIndex(-1)}
-                        >
-                            <td>{rowIndex + 1}</td>
-                            {columns.map((column) => (
-    (currentProgram === 'All Programs' || column !== 'University') && (
-        <td key={column}>{formatValue(row[column])}</td>
-    )
-))}
-                        </tr>
-                    ))}
+                        {sortedData.map((row, rowIndex) => (
+                            <tr
+                                key={rowIndex}
+                                className={rowIndex === tableHoverIndex ? 'table-active' : ''}
+                                onMouseEnter={() => setTableHoverIndex(rowIndex)}
+                                onMouseLeave={() => setTableHoverIndex(-1)}
+                            >
+                                <td>{rowIndex + 1}</td>
+                                {columns.map((column) => (
+                                    (currentProgram === 'All Programs' || column !== 'University') && (
+                                        <td key={column}>{formatValue(row[column])}</td>
+                                    )
+                                ))}
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -197,29 +196,15 @@ function App() {
                 backgroundPosition: 'center',
                 minHeight: '100vh',
                 margin: 0,
-                // add bottom margin to footer
                 padding: 20,
-                // display: 'flex',
-                // flexDirection: 'column',
-                // justifyContent: 'center',
-                // alignItems: 'center',
-                // color: 'black'
             }}
         >
-
-            <div
-                className="container"
-            >
-                <div style={{height: '10px'}}></div>
+            <div className="container">
+                <div style={{ height: '10px' }}></div>
                 <h1 className="text-center">PhD Stats</h1>
-                <div style={{height: '10px'}}></div>
+                <div style={{ height: '10px' }}></div>
                 <div className="form-group">
-                    <label
-                        style={{
-                            display: 'block',
-                            position: 'relative'
-                            }}
-                    >
+                    <label style={{ display: 'block', position: 'relative' }}>
                         <input
                             type="text"
                             name="notASearchField"
@@ -228,26 +213,11 @@ function App() {
                             value={query}
                             onChange={handleSearchChange}
                             onKeyDown={handleKeyDown}
-                            // autoComplete="off" // Changed this line
-                            // autoCorrect="off" // Add this line
-                            // autoCapitalize="off" // Add this line
-                            // spellCheck="false"
                         />
                     </label>
-                        <span className="powered-by-ai"
-                              style={{
-                                  display: 'block',
-                                  textAlign: 'right',
-                                  fontSize: '12px',
-                                  marginTop: '10px'
-                              }}
-                        >
+                    <span className="powered-by-ai" style={{ display: 'block', textAlign: 'right', fontSize: '14px', marginTop: '10px' }}>
                         Powered by GPT &nbsp;
-                            <img
-                                src={logo}
-                                alt="Powered by AI"
-                                style={{height: '15px', verticalAlign: 'top'}}
-                            />
+                        <img src={logo} alt="Powered by AI" style={{ height: '19px', verticalAlign: 'top' }} />
                     </span>
                 </div>
                 {universities.length > 0 && (
@@ -264,7 +234,7 @@ function App() {
                                 onClick={() => handleStatistics(university)}
                                 onMouseEnter={() => setHoverIndex(index)}
                                 onMouseLeave={() => setHoverIndex(-1)}
-                                style={{cursor: 'pointer'}}
+                                style={{ cursor: 'pointer' }}
                             >
                                 {university}
                             </li>
@@ -273,11 +243,12 @@ function App() {
                 )}
                 {renderStatistics(stats)}
                 <footer className="mt-5">
-                    <p className="text-center">&copy; 2024 PhD Stats. All rights reserved.</p>
+                    <p className="text-center">&copy; 2024 PhD Stats. All rights reserved.
+                    </p>
                 </footer>
             </div>
         </div>
-);
+    );
 }
 
 export default App;
