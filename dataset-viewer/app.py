@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Load the dataset
-with open('../dataset/student_data_v1.pkl', 'rb') as file:
+with open('./dataset/student_data_v1.pkl', 'rb') as file:
     data = pickle.load(file)
 
 df = pd.DataFrame(data)

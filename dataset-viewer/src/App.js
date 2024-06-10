@@ -191,6 +191,7 @@ function App() {
     return (
         <div
             style={{
+                fontFamily: "Merriweather, Georgia, serif",
                 backgroundImage: `url(${background})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -213,18 +214,41 @@ function App() {
                 <h1 className="text-center">PhD Stats</h1>
                 <div style={{height: '10px'}}></div>
                 <div className="form-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter program name or press enter for all programs"
-                        value={query}
-                        onChange={handleSearchChange}
-                        onKeyDown={handleKeyDown}
-                    />
-                    <span className="powered-by-ai"
-                          style={{display: 'block', textAlign: 'right', fontSize: '12px', marginTop: '10px'}}>
-    Powered by AI &nbsp; <img src={logo} alt="Powered by AI" style={{height: '15px', verticalAlign: 'top'}}/>
-</span>
+                    <label
+                        style={{
+                            display: 'block',
+                            position: 'relative'
+                            }}
+                    >
+                        <input
+                            type="text"
+                            name="notASearchField"
+                            className="form-control"
+                            placeholder="Enter program name or press enter for all programs"
+                            value={query}
+                            onChange={handleSearchChange}
+                            onKeyDown={handleKeyDown}
+                            // autoComplete="off" // Changed this line
+                            // autoCorrect="off" // Add this line
+                            // autoCapitalize="off" // Add this line
+                            // spellCheck="false"
+                        />
+                    </label>
+                        <span className="powered-by-ai"
+                              style={{
+                                  display: 'block',
+                                  textAlign: 'right',
+                                  fontSize: '12px',
+                                  marginTop: '10px'
+                              }}
+                        >
+                        Powered by GPT &nbsp;
+                            <img
+                                src={logo}
+                                alt="Powered by AI"
+                                style={{height: '15px', verticalAlign: 'top'}}
+                            />
+                    </span>
                 </div>
                 {universities.length > 0 && (
                     <ul
@@ -253,7 +277,7 @@ function App() {
                 </footer>
             </div>
         </div>
-    );
+);
 }
 
 export default App;
