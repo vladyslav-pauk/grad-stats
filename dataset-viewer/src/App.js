@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import background from './background-image.jpg';
 import debounce from 'lodash.debounce';
 import logo from './ai-logo.png'; // Make sure to add the logo image to your src directory
 
@@ -10,7 +11,11 @@ function App() {
     const [stats, setStats] = useState(null);
     const [currentProgram, setCurrentProgram] = useState('');
     const [highlightIndex, setHighlightIndex] = useState(-1);
+    const [hoverIndex, setHoverIndex] = useState(-1);
+    const [tableHoverIndex, setTableHoverIndex] = useState(-1);
+    const [isDropdownHovered, setIsDropdownHovered] = useState(false);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
+    const dropdownRef = useRef(null); // Add this line
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,6 +39,22 @@ function App() {
             debouncedFetchData.cancel();
         };
     }, [query]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setUniversities([]);
+                setHighlightIndex(-1);
+                setHoverIndex(-1);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownRef]);
 
     const fetchAllPrograms = async () => {
         try {
@@ -128,26 +149,37 @@ function App() {
         const columns = Object.keys(sortedData[0]);
 
         return (
-            <div className="mt-3">
+            <div
+                className="mt-3"
+            >
                 <h2>{currentProgram}</h2>
-                <table className="table table-striped">
+                <table className="table table-striped table">
                     <thead>
                     <tr>
                         <th>#</th>
                         {columns.map((column) => (
-                            <th key={column} onClick={() => handleSort(column)} style={{cursor: 'pointer'}}>
-                                {column} {sortConfig.key === column ? (sortConfig.direction === 'ascending' ? '▲' : '▼') : ''}
-                            </th>
-                        ))}
+    (currentProgram === 'All Programs' || column !== 'University') && (
+        <th key={column} onClick={() => handleSort(column)} style={{ cursor: 'pointer' }}>
+            {column} {sortConfig.key === column ? (sortConfig.direction === 'ascending' ? '▲' : '▼') : ''}
+        </th>
+    )
+))}
                     </tr>
                     </thead>
                     <tbody>
                     {sortedData.map((row, rowIndex) => (
-                        <tr key={rowIndex}>
+                        <tr
+                            key={rowIndex}
+                            className={rowIndex === highlightIndex || (rowIndex === tableHoverIndex && !isDropdownHovered) ? 'table-active' : ''}
+                            onMouseEnter={() => setTableHoverIndex(rowIndex)}
+                            onMouseLeave={() => setTableHoverIndex(-1)}
+                        >
                             <td>{rowIndex + 1}</td>
                             {columns.map((column) => (
-                                <td key={column}>{formatValue(row[column])}</td>
-                            ))}
+    (currentProgram === 'All Programs' || column !== 'University') && (
+        <td key={column}>{formatValue(row[column])}</td>
+    )
+))}
                         </tr>
                     ))}
                     </tbody>
@@ -157,39 +189,69 @@ function App() {
     };
 
     return (
-        <div className="container">
-            <p></p>
-            <h1 className="text-center">PhD Stats</h1>
-            <p className="text-center">Powered by AI &nbsp; <img src={logo} alt="Powered by AI"
-                                                                 style={{height: '20px'}}/></p>
-            <div className="form-group">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search for a university"
-                    value={query}
-                    onChange={handleSearchChange}
-                    onKeyDown={handleKeyDown}
-                />
+        <div
+            style={{
+                backgroundImage: `url(${background})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                minHeight: '100vh',
+                margin: 0,
+                // add bottom margin to footer
+                padding: 20,
+                // display: 'flex',
+                // flexDirection: 'column',
+                // justifyContent: 'center',
+                // alignItems: 'center',
+                // color: 'black'
+            }}
+        >
+
+            <div
+                className="container"
+            >
+                <div style={{height: '10px'}}></div>
+                <h1 className="text-center">PhD Stats</h1>
+                <div style={{height: '10px'}}></div>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter program name or press enter for all programs"
+                        value={query}
+                        onChange={handleSearchChange}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <span className="powered-by-ai"
+                          style={{display: 'block', textAlign: 'right', fontSize: '12px', marginTop: '10px'}}>
+    Powered by AI &nbsp; <img src={logo} alt="Powered by AI" style={{height: '15px', verticalAlign: 'top'}}/>
+</span>
+                </div>
+                {universities.length > 0 && (
+                    <ul
+                        className="list-group"
+                        ref={dropdownRef}
+                        onMouseEnter={() => setIsDropdownHovered(true)}
+                        onMouseLeave={() => setIsDropdownHovered(false)}
+                    >
+                        {universities.map((university, index) => (
+                            <li
+                                key={index}
+                                className={`list-group-item ${index === (highlightIndex >= 0 && hoverIndex === -1 ? highlightIndex : hoverIndex) ? 'active' : ''}`}
+                                onClick={() => handleStatistics(university)}
+                                onMouseEnter={() => setHoverIndex(index)}
+                                onMouseLeave={() => setHoverIndex(-1)}
+                                style={{cursor: 'pointer'}}
+                            >
+                                {university}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                {renderStatistics(stats)}
+                <footer className="mt-5">
+                    <p className="text-center">&copy; 2024 PhD Stats. All rights reserved.</p>
+                </footer>
             </div>
-            {universities.length > 0 && (
-                <ul className="list-group">
-                    {universities.map((university, index) => (
-                        <li
-                            key={index}
-                            className={`list-group-item ${index === highlightIndex ? 'active' : ''}`}
-                            onClick={() => handleStatistics(university)}
-                            style={{cursor: 'pointer'}}
-                        >
-                            {university}
-                        </li>
-                    ))}
-                </ul>
-            )}
-            {renderStatistics(stats)}
-            <footer className="mt-5">
-                <p className="text-center">&copy; 2024 PhD Stats. All rights reserved.</p>
-            </footer>
         </div>
     );
 }

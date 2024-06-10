@@ -31,12 +31,13 @@ def statistics():
         matches = df
     # stats = matches.describe().to_dict()
     # return jsonify(stats)
-    matches = matches.drop(columns=['URL', 'Snapshots'])
+    matches = matches.drop(columns=['URL', 'Snapshots', 'Department'])
     for col in matches.columns:
         if 'date' in col.lower() or 'time' in col.lower():
             matches[col] = pd.to_datetime(matches[col], unit='ms').dt.strftime('%m/%d/%Y')
 
     return matches.to_json(orient='records')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
