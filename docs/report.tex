@@ -1,0 +1,59 @@
+%! Author = Vlad Pauk
+%! Date = 6/18/24
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+
+% Document
+\begin{document}
+
+\section{Overview and Motivation}
+
+The purpose of this project is to analyze the enrollment and placement trends in Philosophy graduate programs across the United States and Canada. This analysis is conducted by leveraging web scraping techniques to extract data from university webpages, including information from the Wayback Machine web archive. The aim is to provide a detailed, longitudinal view of student enrollment durations and placement outcomes, facilitating a deeper understanding of program effectiveness and student progress.
+
+\section{Methodology}
+
+To achieve this, a hybrid approach is employed, combining the strengths of Large Language Models (LLMs) and programmatic pattern matching. The core process involves the automatic generation of Python functions using OpenAI's GPT API to extract names of PhD students from web pages. This method ensures adaptability to various non-standardized web structures. The methodology includes:
+
+\begin{itemize}
+\item \textbf{Data Retrieval}: Extracting data from university webpages and Wayback Machine archives.
+\item \textbf{Automatic Code Generation}: Using GPT API to generate functions for extracting names.
+\item \textbf{Validation}: Iteratively validating and refining the generated functions to ensure accuracy.
+\item \textbf{Data Processing}: Structuring the extracted data into a comprehensive dataset.
+\end{itemize}
+
+\section{Technologies}
+
+\subsection{Data Scraping}
+
+    To streamline the process of data retrieval, a custom data scraping tool is developed. This tool integrates with the Wayback Machine to access archived snapshots of web pages, ensuring a historical view of student enrollment.
+
+\subsection{Data Access}
+
+    For accessing and viewing the extracted data, a data viewer application is developed. This application allows users to query and visualize the dataset, providing insights into enrollment durations and placement rates.
+
+\section{Results}
+
+    The analysis focuses on two main features: the placement rate of graduates and the duration of their enrollment in the program.
+
+\subsection{Program Metrics}
+
+    The average duration in the program is computed by tracking the first and last appearance of student names in web page snapshots, thereby estimating start and end dates. This metric excludes currently active students to avoid skewing the results.
+
+\subsection{Dataset Statistics}
+
+    The dataset is structured with fields such as student name, university, URL, start and end dates, active status, duration, snapshots, and placement status.
+    This structure provides a comprehensive view of individual student trajectories within their programs.
+
+\section{Conclusion}
+
+    This project demonstrates the effectiveness of combining LLMs with traditional web scraping techniques to automate and enhance the extraction of valuable academic data.
+    The resulting dataset offers insights into the performance and outcomes of Philosophy graduate programs across North America, supporting academic research, program evaluation, and student recruitment efforts.
+
+\section{Acknowledgements}
+
+
+\end{document}

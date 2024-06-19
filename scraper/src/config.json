@@ -1,0 +1,6 @@
+{
+  "MODEL":  "gpt-3.5-turbo",
+  "NUM_ITERATIONS": 3,
+  "MAX_HISTORY_LEN": 14000,
+  "SOURCE_CHUNK_LEN": 1000
+}

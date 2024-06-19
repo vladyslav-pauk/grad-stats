@@ -1,76 +1,53 @@
-# This file is the entry point for the scraper package.
-# The package is used to scrape data on graduation and placement records of PhD students in Philosophy.
-# It reads URLs from a CSV file, consolidates scraped data from each URL, and updates the dataset.
-
 import argparse
-import csv
+
 import pandas as pd
-import logging
 
-from .src.data_aggregator import process_data
-from .src.page_parser import extract_timestamps, fetch_page, parse_date
-from .src.snapshot_fetcher import get_snapshots
-from .src.placement_updater import update_placement_from_webpage
-from .src.utils import update_dataset
-from .src.code_generator import generate_function, validate_function
-from .src.utils import init_gpt
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-client, _ = init_gpt()
+from .src.module_manager import generate_search_module, validate_search_module
+from .src.program_page import get_page, get_pagination, add_data_from_pages
+from .src.placement_page import update_placement
+from .src.database import update_dataset
+from .src.utils import read_programs, load_logging
+from .src.exceptions import ValidationError, ModuleError
 
 
-def scrape_data(filename: str) -> pd.DataFrame:
+def main(filename: str) -> pd.DataFrame:
     """
-    Reads URLs from a CSV file and consolidates scraped data from each URL.
+    Main function to scrape data for a list of programs.
 
     Args:
-        filename (str): Path to the CSV file containing URLs.
-
+        filename (str): The file with program URLs.
     Returns:
-        pd.DataFrame: Aggregated DataFrame containing data from all URLs.
-
-    Raises:
-        FileNotFoundError: If the CSV file is not found.
-        csv.Error: If there is an error in reading the CSV file.
-        ValueError: If URL processing fails.
+        pd.DataFrame: The object with scraped data.
     """
-    with open(filename, 'r') as file:
-        reader = csv.reader(file)
-        url_pairs = []
-        for row in reader:
-            url_pairs.append((row[0].split(' ')[0], row[0].split(' ')[1]))
+    programs = read_programs(filename)
+    data = pd.DataFrame()
 
-    all_data = pd.DataFrame()
+    for program in programs:
+        load_search_module(validation_url=program[0])
+        pagination = get_pagination(program)
+        data = add_data_from_pages(data, program, page_urls=pagination)
+        data = update_placement(data, placement_page=program[1], log=False)
+        update_dataset(data)
 
-    # url_pairs = [('http://philosophy.princeton.edu:80/people/graduate-students', 'https://philosophy.princeton.edu/graduate/placement-record')]
-
-    for url, placement_url in url_pairs:
-        data_from_url = get_data_from_url(url, placement_url)
-        all_data = pd.concat([data_from_url, all_data], ignore_index=True)
-
-    if not all_data.empty:
-        all_data['Start_Date'] = pd.to_datetime(all_data['Start_Date'])
-        all_data['End_Date'] = pd.to_datetime(all_data['End_Date'])
-
-    return all_data
+    return data
+    # url_pairs = [('http://philosophy.princeton.edu:80/people/graduate-students',
+    # 'https://philosophy.princeton.edu/graduate/placement-record')]
 
 
-def get_data_from_url(url: str, placement_url: str) -> pd.DataFrame:
+def load_search_module(validation_url):
     """
-    Scrapes data from a given URL, processes it, and updates placement information.
+    Validate or generate the search function.
 
     Args:
-        url (str): The URL to scrape data from.
-        placement_url (str): The URL to update placement information.
-
+        validation_url: The URL to validate the function.
     Returns:
-        pd.DataFrame: DataFrame with processed and updated data.
-
-    Raises:
-        requests.exceptions.RequestException: If an error occurs during URL fetching.
-        ValueError, RuntimeError: If data processing or placement updating fails.
+        None
     """
-
+    validation_html = get_page(validation_url)
+    try:
+        validate_search_module(validation_html, validation_url)
+    except (ValidationError, ModuleError):
+        generate_search_module(validation_html, validation_url)
     # save snapshot items to a text file
     # with open('scraper/tests/snapshots.csv', 'w') as file:
     #     for url in snapshot_urls:
@@ -82,37 +59,59 @@ def get_data_from_url(url: str, placement_url: str) -> pd.DataFrame:
     # with open('scraper/tests/snapshots.csv', 'r') as file:
     #     snapshot_urls = file.read().splitlines()
 
-    snapshot_urls = get_snapshots(url, log=True)
-    validation_html = fetch_page(snapshot_urls[0])
-
-    if not validate_function(validation_html, url):
-        generate_function(validation_html, url, client)
-
-    list_data = pd.DataFrame()
-
-    for url in snapshot_urls:
-        page_source = fetch_page(url)
-        # with open(f'scraper/tests/validation_{parse_date(url)[0]}.html', 'r') as file:
-        #     page_source = file.read()
-
-        snapshot_data = extract_timestamps(page_source, url)
-        list_data = pd.concat([list_data, snapshot_data], ignore_index=True)
-
-    appearance_data = process_data(list_data)
-
-    data_with_updated_placement = update_placement_from_webpage(appearance_data, placement_url)
-    return data_with_updated_placement
+    # with open(f'scraper/tests/validation_{parse_date(url)[0]}.html', 'r') as file:
+    #     page_source = file.read()
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Web scraper for student data.")
-    parser.add_argument("file", nargs='?', default="scraper/urls.csv", type=str, help="The file with URLs.")
+    load_logging()
+
+    parser = argparse.ArgumentParser(
+        description="Scrape appearance data and update placement."
+    )
+    parser.add_argument(
+        "file",
+        nargs='?',
+        default="public/urls.csv",
+        type=str,
+        help="The file with URLs."
+    )
 
     args = parser.parse_args()
 
     if args.file is None:
-        new_data = scrape_data('urls.csv')
+        new_data = main('../public/programs.csv')
     else:
-        new_data = scrape_data(args.file)
+        new_data = main(args.file)
 
-    update_dataset(new_data)
+
+# todo: more statistics in program summary, also some metadata
+
+# todo: calculate start date and end date in the middle between two snapshots
+# todo: keep start_date and end_date as it is but use ranges for calculating average
+# todo: end_date should be the last snapshot before disappeared. if it's active no end-date.
+
+# todo: hover over column header to see info
+
+# todo: README
+# todo: report
+
+# fixme: pass error e to chat, but log only error info.
+
+# todo: validation feedback
+
+# fixme: organize colors
+# fixme: fix sorting indicator initialization and memory
+
+# todo: context length error
+# todo: log every page, log at the end of url search
+
+# todo: handle empty name list, possible for pagination
+# todo: update function before first page, don't update further
+
+# todo: fix snapshot link (now last page)
+# todo: update dataset after each program
+
+# todo: fix placement (wrong student, o'hagan)
+# todo: if function confirmed by user create pull request, if not iterate
+# todo: function to delete entries from database

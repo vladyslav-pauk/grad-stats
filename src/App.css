@@ -1,0 +1,198 @@
+:root {
+    --primary-color: rgba(103, 131, 223, 0.9);
+    --primary-hover-color: rgba(0, 0, 255, 0.15);
+    --primary-text-color: rgba(255, 255, 255, 0.9);
+    --secondary-text-color: rgba(0, 0, 0, 1);
+    --background-color: rgba(255, 255, 255, 0.1);
+    --dropdown-bg-color: rgb(240, 240, 240);
+    --highlight-color: rgb(103, 131, 223);
+    --highlight-text-color: rgb(240, 240, 240);
+    --input-bg-color: rgba(240, 240, 240, 0.9);
+    --input-bg-color-focus: rgba(240, 240, 240, 0.9);
+}
+
+/* App.css */
+
+.app-container {
+    font-family: "Merriweather, Georgia, serif", serif;
+    background-image: url('./background-image.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.app-footer {
+    margin-top: 5rem;
+}
+
+.app-footer-text {
+    text-align: center;
+}
+
+/* Tab styling */
+.nav-tabs {
+    border-bottom: 2px solid var(--primary-hover-color);
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: var(--primary-text-color);
+    background-color: var(--primary-color);
+    border-color: transparent;
+}
+
+.nav-tabs .nav-link {
+    color: var(--secondary-text-color);
+    border: 0px solid transparent;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--primary-text-color);
+    background-color: var(--primary-color);
+}
+
+.nav-tabs .nav-link:not(.active):hover {
+    color: var(--secondary-text-color);
+    background-color: var(--primary-hover-color);
+}
+
+/* Statistics.css */
+
+.table th.sortable {
+    cursor: pointer;
+    position: relative; /* Needed to position the sorting indicators */
+    padding-right: 0px; /* Space for sorting indicators */
+}
+
+.table th.sortable::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    font-size: 0.75em; /* Smaller font size for the indicators */
+}
+
+.table th.sortable.ascending::after {
+    content: "▲";
+    color: var(--primary-color);
+}
+
+.table th.sortable.descending::after {
+    content: "▼";
+    color: var(--primary-color);
+}
+
+/* Shared indicator styles */
+.sort-indicator {
+    content: "";
+    position: absolute;
+    left: -10px;
+    font-size: 0.75em; /* Smaller font size for the indicators */
+    color: var(--primary-color); /* Indicator color */
+}
+
+.table-transparent {
+    background-color: var(--background-color); /* White background with 10% transparency */
+}
+
+.table-transparent th,
+.table-transparent td {
+    background-color: transparent; /* Apply the same transparency to table headers and cells */
+    border: none;
+}
+
+.table-transparent tbody tr {
+    background-color: transparent; /* Ensure table rows are fully transparent */
+}
+
+.table-transparent tbody tr:nth-child(even) {
+    background-color: var(--background-color); /* Slightly different transparency for alternating rows */
+}
+
+.table th {
+    background-color: transparent; /* Slightly more opaque for readability */
+    font-weight: bold;
+}
+
+/* SummaryStatistics.css */
+
+.table-striped.table {
+    margin-top: 20px;
+}
+
+.chart-container {
+    margin-top: 40px;
+}
+
+.chart-container h3 {
+    text-align: center;
+}
+
+/* Dropdown styling */
+.dropdown-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 0px solid var(--primary-hover-color);
+    border-radius: 5px;
+    max-height: 200px; /* Adjust as needed */
+    overflow-y: auto; /* Scrollable list */
+    background-color: var(--dropdown-bg-color);
+    position: absolute; /* Position the dropdown absolutely */
+    width: 100%; /* Make it the full width of the parent */
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+.dropdown-list-item {
+    padding: 10px;
+    border-bottom: 0px solid var(--primary-hover-color);
+    cursor: pointer;
+}
+
+.dropdown-list-item:hover,
+.dropdown-list-item.active {
+    background-color: var(--highlight-color); /* Highlight color */
+    color: var(--highlight-text-color); /* Highlight text color */
+}
+
+/* SearchBar.css */
+
+.form-group {
+    position: relative;
+    /*display: flex;*/
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-group label {
+    display: block;
+    position: relative;
+}
+
+.form-control {
+    background-color: var(--input-bg-color); /* Use the new variable for input background color */
+    color: var(--secondary-text-color); /* Ensure the text color contrasts well with the background */
+    border: 1px solid var(--primary-hover-color); /* Use a border color that fits your design */
+    padding: 10px; /* Add some padding for better appearance */
+    border-radius: 5px; /* Rounded corners for a modern look */
+    outline: none; /* Remove default outline */
+}
+
+.form-control:focus {
+    background-color: var(--input-bg-color-focus); /* Change background color on focus if needed */
+    border-color: var(--primary-color); /* Highlight border color on focus */
+}
+
+.powered-by-ai {
+    display: block;
+    text-align: right;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.powered-by-ai img {
+    height: 19px;
+    vertical-align: top;
+}

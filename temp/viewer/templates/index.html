@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Index Page{% endblock %}
+
+{% block content %}
+
+<div id="welcomeSection">
+    <h2>Welcome</h2>
+    <p>This app is developed to assist in chronological profiling of PhD programs in philosophy across the United States.</p>
+    <h2>Dataset</h2>
+    <p>The dataset contains historical data from the graduate students directories and placement pages, scraped from Wayback Machine archive.</p>
+</div>
+<br><br>
+<div class="center-container">
+    <button id="exploreData">Explore DataTable</button>
+</div>
+<div id="allData" style="display:none;"></div>
+<script>
+    document.getElementById('exploreData').addEventListener('click', function () {
+        // Hide the Explore DataTable button
+        var exploreDataButton = document.getElementById('exploreData');
+        exploreDataButton.style.display = 'none';
+
+        // Create and display the loading message
+        let loadingMessage = document.createElement('div');
+        loadingMessage.id = 'loadingMessage';
+        loadingMessage.textContent = 'Fetching data. Please wait...';
+        exploreDataButton.parentNode.insertBefore(loadingMessage, exploreDataButton.nextSibling);
+
+        fetch('/fetch-all-data')
+            .then(response => response.json())
+            .then(data => {
+                // Hide the loading message
+                document.getElementById('loadingMessage').remove();
+
+                if (data.profile) {
+                    // Hide the welcome section and the Explore DataTable button
+                    document.getElementById('welcomeSection').style.display = 'none';
+                    exploreDataButton.style.display = 'none';
+
+                    let container = document.createElement('div');
+                    container.className = 'profile-container';
+                    container.innerHTML = data.profile;
+                    document.getElementById('allData').style.display = 'block';
+                    document.getElementById('allData').appendChild(container);
+                } else {
+                    // Handle error or no data case
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Hide loading message
+                document.getElementById('loadingMessage').remove();
+            });
+    });
+</script>
+<br><br>
+<div class="center-container">
+<p>&copy; 2023 PhylStats </p>
+</div>
+{% endblock %}

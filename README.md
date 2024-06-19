@@ -26,10 +26,12 @@ Before you begin, ensure you have the following installed on your system:
 
 To get started, follow these steps:
 
+#### Install Python Environment
+
 1. Clone the repository to your local machine:
    ```
-   git clone https://github.com/paukvlad/phd-placement-records.git
-   cd phd-placement-records
+   git clone https://github.com/paukvlad/phd-stats.git
+   cd phd-stats
    ```
 
 2. It is recommended to create a virtual environment to keep dependencies isolated:
@@ -49,8 +51,15 @@ To get started, follow these steps:
    
       ```
       pip install -r scraper/requirements.txt
-      pip install -r viewer/requirements.txt
       ```
+
+#### Install JavaScript Environment
+
+1. Navigate to the project root directory and install the required JavaScript packages:
+   ```
+   npm install
+   ```
+
 
 ### Using Docker
 
@@ -100,11 +109,11 @@ detailing their academic and career progress. Key fields include:
 - **Years**: Duration of the individual's active period in the department (in years).
 - **Placement**: Boolean indicating if the individual secured a placement or position post-tenure.
 
-### Webpage Interface
+### Browser App
 
 The `viewer` provides a web interface for accessing and analysing data with the following key features:
 
-- **Data Profiling**: Generates a detailed statistical profiling using `pandas` library.
+- **DataTable Profiling**: Generates a detailed statistical profiling using `pandas` library.
 - **Program Filtering**: Facilitates filtering by PhD programs.
 - **Snapshot Viewing**: Displays links to the source snapshots of data on the https://web.archive.org.
 
@@ -187,7 +196,7 @@ After installation, you can import modules from these packages in your Python sc
 The `scraper` package can be imported into your Python scripts as follows:
 
 ```python
-from scraper.src import data_processor, page_parser, snapshot_fetcher, update_placement, utils
+from scraper.src import data_processor, program_page, snapshot_url, update_placement, utils
 ```
 
 To call the main scraper script from your Python script:
@@ -202,7 +211,8 @@ scraper.main()
 The `viewer` package provides models and views for the web interface:
 
 ```python
-from viewer.src import models, views, app
+from temp.viewer import views
+from temp.viewer.src import app, models
 ```
 
 These modules can be used to extend or modify the web application.

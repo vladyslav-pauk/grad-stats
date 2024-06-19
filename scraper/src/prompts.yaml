@@ -1,39 +1,83 @@
-generate_function_prompt: |
-  I need a Python function that extracts all unique PhD student names from an HTML source.
-  Extracted name should contain only letters, spaces, and hyphens.
-  The function signature should be `extract_phd_student_names(source: BeautifulSoup) -> list[str]`.
-  Analyze the following HTML source chunks to understand the structure of the web page.
-  Based on specific structure and patterns, provide the function and necessary import statements.
+setup_prompt: |
+  
+  You are an expert in Python and web scraping using BeautifulSoup, HTML, regex and other libraries.
+  
+  You have to follow my instructions and respond to my prompts as precisely as possible.
 
+
+generate_function_prompt: |
+
+  Your task is to create a function that extracts a list of current PhD student names from an HTML source. The function should be named `extract_phd_student_names` and should take a BeautifulSoup object as input, returning a list of strings where each string is a current PhD student's name. Make sure it only selects all current students.
+  
+  Analyze the following HTML source chunks to understand the structure of the web page:
+  
   {html_chunks}
 
-update_function_prompt: |
-    Update the function based on the patterns in HTML source below.
-    You can't use filtering of an existing list, instead use matching patterns and HTML structures.
-    
-    In your response, provide only the code with the function and necessary import statements are included.
-    The function signature should be `extract_phd_student_names(source: BeautifulSoup) -> list[str]`.
-  
-    Find below results of running a function.
-  
-    Function:
-    ```python
-    {function_code}
-    ```
-    
-    Extracted names:
-    {names}
-  
-    Error message:
-    {error_message}
-    
-    HTML source code:
-    {html_chunks}
+  Based on the structure and patterns identified in the provided HTML source chunks, write the `extract_phd_student_names` function. Make sure to include the necessary import statements.
 
+  ### Expected Response 
+  ```python
+  def extract_phd_student_names(source: BeautifulSoup) -> list[str]:
+      # Your code here
+  ```
+  
+  This function accurately extracts the names of current PhD students based on the status specified and all information provided in the HTML source.
+
+
+update_function_prompt: |
+
+  Your task is to update the function `extract_phd_student_names` to fix incorrect behavior.
+  You must use matching patterns and HTML structures in the source.
+  
+  The function signature should be `extract_phd_student_names(source: BeautifulSoup) -> list[str]`.
+  In your response, provide only the code with the function and necessary import statements included.
+  
+  Names extracted by the previous implementation:
+  {names}
+  
+  Error message:
+  {error_message}
+  
+  ### Expected Response
+  
+  ```python
+  from bs4 import BeautifulSoup
+  
+  def extract_phd_student_names(source: BeautifulSoup) -> list[str]:
+      <your code here>
+      return students
+  ```
+
+  This update ensures that the function accurately extracts the names of current PhD students.
+
+#  Function:
+#  ```python
+#  {function_code}
+#  ```
+#
+#  Extracted names:
+#  {names}
+#
+#  Error message:
+#  {error_message}
+#
+#  HTML source code:
+#  ```html
+#  {html_chunk}
+#  ```
   
 validate_names_prompt: |
-  Only if every single item is a valid person name containing only letters, spaces, and hyphens, return only one string “all items are valid names” and nothing else.
-  Only otherwise, provide updated function that extracts only valid names from any html source.
-  Make sure the format of the resulting names is correct, i.e. letters, spaces, and hyphens only, and no newlines or extra spaces, commas and special characters.
   
+  You are an expert in natural language processing. Your task is to check if all items in a given list are valid names of students based on specific criteria. A name is valid if:
+  - It contains only letters, spaces, and hyphens.
+  - It has no newlines, extra spaces, commas, or special characters.
+  - It has more than one word, and each word is more than one character long.
+  
+  If every single item is a valid student name, then return only the string "all items are valid names" and nothing else. If there are items that are not valid names of students, return the list of all invalid items with the preamble "Invalid items extracted ". Make sure you don't return valid names.
+  
+  Here is the list of names to check:
+  ```plaintext
   {names}
+  ```
+  
+  Please, provide an answer as described, not code.
