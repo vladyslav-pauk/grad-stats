@@ -31,7 +31,8 @@ function SnapshotLinks({ stats }) {
                 if (!snapshotMap.has(formattedDate)) {
                     snapshotMap.set(formattedDate, { date, formattedDate, url: snapshot, count: 0 });
                 }
-                snapshotMap.get(formattedDate).count += 1;
+                const currentEntry = snapshotMap.get(formattedDate);
+                snapshotMap.set(formattedDate, { date, formattedDate, url: snapshot, count: currentEntry.count + 1 });
             });
         }
     });

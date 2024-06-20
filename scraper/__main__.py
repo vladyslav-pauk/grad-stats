@@ -91,7 +91,6 @@ if __name__ == '__main__':
 # viewer
 # todo: more statistics in program summary, also some metadata
 
-# fixme: fix snapshot link (now last page)
 # fixme: nav tabs, border-bottom
 # fixme: tooltip transparency
 # fixme: align tooltip window to the left
