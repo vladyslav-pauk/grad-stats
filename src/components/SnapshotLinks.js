@@ -56,7 +56,7 @@ function SnapshotLinks({ stats }) {
     const tooltipTexts = {
         date: 'Date when the snapshot was taken',
         count: 'Number of students associated with the snapshot',
-        link: 'Link to the snapshot'
+        link: 'Snapshot URL'
     };
 
     return (
