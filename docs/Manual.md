@@ -175,6 +175,7 @@ dataset (<u>name</u>, university, url, start_date, end_date, active, years, snap
 - <u>`name`</u> (str): Full name, primary key of the dataset
 - `university` (str): Host university
 - `url` (str): Current graduate students page
+- `placement_url` (str): Placements page
 - `start_date` (str): Start date of the program
 - `end_date` (str): End date of the program
 - `active` (bool): Whether the student is currently enrolled
@@ -189,6 +190,7 @@ dataset (<u>name</u>, university, url, start_date, end_date, active, years, snap
   "Name": "Brandon Beaver",
   "University": "Oregano State University",
   "URL": "https://philos.oregano.or/graduate-programs/graduate-students",
+  "PlacementURL": "https://philos.oregano.or/graduate-programs/placements",
   "Start_Date": "2020-01-10 00:00:00",
   "End_Date": "2024-06-17 00:00:00",
   "Active": true,
