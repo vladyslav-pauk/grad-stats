@@ -21,8 +21,8 @@ function SummaryStatistics({ statistics }) {
         })),
         { label: 'Number of Snapshots', value: numberOfSnapshots },
         { label: 'Earliest Record', value: earliestSnapshot },
-        { label: 'Program Link', value: <a href={programLink} target="_blank" rel="noopener noreferrer">{programLink}</a> },
-        { label: 'Placement Link', value: <a href={placementLink} target="_blank" rel="noopener noreferrer">{placementLink}</a> }
+        { label: 'Program Page', value: <a href={programLink} target="_blank" rel="noopener noreferrer">{programLink}</a> },
+        { label: 'Placement Page', value: <a href={placementLink} target="_blank" rel="noopener noreferrer">{placementLink}</a> }
     ];
 
     return (
