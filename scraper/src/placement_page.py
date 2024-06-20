@@ -29,6 +29,9 @@ def update_placement(database_df: pd.DataFrame, placement_page: str, log: bool =
     if 'Placement' not in database_df.columns:
         database_df['Placement'] = False
 
+    # Add the placement_page URL to a new column in the DataFrame
+    database_df['PlacementURL'] = placement_page
+
     try:
         response = requests.get(placement_page)
         response.raise_for_status()
@@ -42,24 +45,19 @@ def update_placement(database_df: pd.DataFrame, placement_page: str, log: bool =
     webpage_names = set(re.findall(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b', html_content))
 
     def preprocess_name(name):
-        # Split the name into parts and sort them alphabetically
         return sorted(name.replace(',', '').split())
 
     def check_two_word_match(name_parts, webpage_name_parts_list):
-        # Check if at least two words match between the name parts and any of the webpage name parts
         for webpage_name_parts in webpage_name_parts_list:
             match_count = sum(part in webpage_name_parts for part in name_parts)
             if match_count >= 2:
                 return True
         return False
 
-    # Preprocess all names in the database
     database_df['ProcessedName'] = database_df['Name'].apply(preprocess_name)
 
-    # Preprocess all names from the webpage
     processed_webpage_names = [preprocess_name(name) for name in webpage_names]
 
-    # Check if at least two words in the processed name from the database match with any of the processed webpage names
     database_df['Placement'] = database_df['ProcessedName'].apply(
         lambda x: check_two_word_match(x, processed_webpage_names))
 

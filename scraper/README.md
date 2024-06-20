@@ -1,6 +1,7 @@
 # Web Scraping Module
 
-This repository contains a robust and scalable web scraping module designed to extract PhD student information from university program pages. Leveraging Python, BeautifulSoup, and GPT-based code generation, this module ensures efficient data extraction, validation, and processing.
+This web scraping module is designed to automatically extract PhD student information from university program pages.
+Leveraging Wayback Machine web archive service and GPT-based code generation, this module offers a robust, scalable and flexible solution for data scraping.
 
 ## Table of Contents
 

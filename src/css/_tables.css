@@ -1,0 +1,88 @@
+/* Statistics.css */
+
+.table th.sortable {
+    cursor: pointer;
+    position: relative;
+    padding-right: 0px;
+}
+
+.table th.sortable::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    font-size: 0.75em;
+}
+
+.table th.sortable.ascending::after {
+    content: "▲";
+    color: var(--primary-color);
+}
+
+.table th.sortable.descending::after {
+    content: "▼";
+    color: var(--primary-color);
+}
+
+/* SummaryStatistics.css */
+
+.table-striped.table {
+    margin-top: 20px;
+}
+
+.chart-container {
+    margin-top: 40px;
+}
+
+.chart-container h3 {
+    text-align: center;
+}
+
+/* Indicator styles */
+.sort-indicator {
+    content: "";
+    position: absolute;
+    left: -10px;
+    font-size: 0.75em;
+    color: var(--primary-color);
+}
+
+.table-transparent {
+    background-color: var(--background-color);
+}
+
+.table-transparent th,
+.table-transparent td {
+    background-color: transparent;
+    border: none;
+}
+
+.table-transparent tbody tr {
+    background-color: transparent;
+}
+
+.table-transparent tbody tr:nth-child(even) {
+    background-color: var(--background-color);
+}
+
+.table th {
+    background-color: transparent;
+    font-weight: bold;
+}
+
+/* Tooltip styling */
+
+.tooltip-inner {
+    background-color: var(--tooltip-color);
+    color: #fff;
+    font-size: 14px;
+    font-family: "Merriweather, Georgia, serif", serif;
+    border-radius: 4px;
+    padding: 5px 10px;
+    text-align: left;
+    /*white-space: nowrap;*/
+    /*max-width: none;*/
+}
+
+.tooltip-arrow {
+    display: none !important;
+}

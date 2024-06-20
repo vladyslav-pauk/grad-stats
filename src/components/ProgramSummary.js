@@ -4,7 +4,7 @@ import '../App.css';
 function SummaryStatistics({ statistics }) {
     if (!statistics) return null;
 
-    const { totalEntries, percentageOfPlacements, currentlyActive, earliestSnapshot, ...otherStats } = statistics;
+    const { totalEntries, percentageOfPlacements, currentlyActive, earliestSnapshot, programLink, placementLink, numberOfSnapshots, ...otherStats } = statistics;
 
     const formatColumnName = (column) => {
         if (column === 'Years') return 'Average Duration';
@@ -19,7 +19,10 @@ function SummaryStatistics({ statistics }) {
             label: formatColumnName(key),
             value: otherStats[key].toFixed ? otherStats[key].toFixed(1) : otherStats[key]
         })),
-        { label: 'Earliest Record', value: earliestSnapshot }
+        { label: 'Number of Snapshots', value: numberOfSnapshots },
+        { label: 'Earliest Record', value: earliestSnapshot },
+        { label: 'Program Link', value: <a href={programLink} target="_blank" rel="noopener noreferrer">{programLink}</a> },
+        { label: 'Placement Link', value: <a href={placementLink} target="_blank" rel="noopener noreferrer">{placementLink}</a> }
     ];
 
     return (

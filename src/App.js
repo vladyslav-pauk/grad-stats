@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tabs, Tab } from 'react-bootstrap';
 import debounce from 'lodash.debounce';
@@ -6,10 +6,10 @@ import logo from './ai-logo.svg';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import UniversityList from './components/UniversityList';
-import DataTable from './components/DataTable'; // Updated to import DataTable
-import SummaryStatistics from './components/SummaryStatistics';
+import DataTable from './components/DataTable';
+import ProgramSummary from './components/ProgramSummary';
 import SnapshotLinks from './components/SnapshotLinks';
-import ProgramStatistics from './components/ProgramStatistics';
+import ProgramIndex from './components/ProgramIndex';
 import { fetchVersions, fetchStudentData } from './utils/dataFetch';
 import { formatValue, computeStatistics, computeStatisticsForPrograms } from './utils/helpers';
 import './App.css';
@@ -32,11 +32,11 @@ function App() {
     useEffect(() => {
         fetchVersions().then(fetchStudentData).then(data => {
             window.studentData = data;
-            setProgramStatistics(computeStatisticsForPrograms(data)); // Set initial program statistics
+            setProgramStatistics(computeStatisticsForPrograms(data));
         }).catch(error => console.error('Error fetching the JSON data:', error));
     }, []);
 
-    const fetchData = (query) => {
+    const fetchData = useCallback((query) => {
         if (query && window.studentData) {
             const matches = window.studentData.filter(item =>
                 item.University.toLowerCase().includes(query.toLowerCase())
@@ -46,14 +46,14 @@ function App() {
         } else {
             setUniversities([]);
         }
-    };
+    }, []);
 
-    const debouncedFetchData = debounce(fetchData, 300);
+    const debouncedFetchData = useCallback(debounce((q) => fetchData(q), 300), [fetchData]);
 
     useEffect(() => {
         debouncedFetchData(query);
         return () => debouncedFetchData.cancel();
-    }, [query]);
+    }, [query, debouncedFetchData]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -88,13 +88,13 @@ function App() {
     const handleStatistics = (university = '') => {
         if (!window.studentData) return;
         const matches = university ? window.studentData.filter(item => item.University.toLowerCase().includes(university.toLowerCase())) : window.studentData;
-        const filteredMatches = matches.map(({ URL, Snapshots, Department, ...rest }) => {
+        const filteredMatches = matches.map(({ Snapshots, ...rest }) => {
             Object.keys(rest).forEach(key => {
                 if (key.toLowerCase().includes('date') || key.toLowerCase().includes('time')) {
                     rest[key] = new Date(rest[key]).toLocaleDateString();
                 }
             });
-            return { ...rest, Snapshots }; // Ensure Snapshots field is retained
+            return { ...rest, Snapshots };
         });
 
         setStats(filteredMatches);
@@ -159,12 +159,12 @@ function App() {
             <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} id="uncontrolled-tab-example" className="mt-3">
                 {currentProgram !== 'All Programs' && (
                     <Tab eventKey="statistics" title="Summary">
-                        <SummaryStatistics statistics={statistics} />
+                        <ProgramSummary statistics={statistics} />
                     </Tab>
                 )}
                 {currentProgram === 'All Programs' && (
                     <Tab eventKey="programStatistics" title="Programs">
-                        <ProgramStatistics programs={programStatistics} onSelectProgram={handleStatistics} />
+                        <ProgramIndex programs={programStatistics} onSelectProgram={handleStatistics} />
                     </Tab>
                 )}
                 <Tab eventKey="data" title="Data">

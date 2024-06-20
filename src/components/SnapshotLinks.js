@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import '../App.css';
 
 function SnapshotLinks({ stats }) {
@@ -52,21 +53,45 @@ function SnapshotLinks({ stats }) {
         setSortConfig({ key, direction });
     };
 
+    const tooltipTexts = {
+        date: 'Date when the snapshot was taken',
+        count: 'Number of students associated with the snapshot',
+        link: 'Link to the snapshot'
+    };
+
     return (
         <div className="mt-3">
             <table className="table table-striped table-transparent">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th onClick={() => requestSort('date')}
-                        className={`sortable ${sortConfig.key === 'date' && sortConfig.direction ? (sortConfig.direction === 'ascending' ? 'ascending' : 'descending') : ''}`}>
-                        Date
-                    </th>
-                    <th onClick={() => requestSort('count')}
-                        className={`sortable ${sortConfig.key === 'count' && sortConfig.direction ? (sortConfig.direction === 'ascending' ? 'ascending' : 'descending') : ''}`}>
-                        Students
-                    </th>
-                    <th>Link</th>
+                    <OverlayTrigger
+                        key="date"
+                        placement="top"
+                        overlay={<Tooltip id="tooltip-date">{tooltipTexts.date}</Tooltip>}
+                    >
+                        <th onClick={() => requestSort('date')}
+                            className={`sortable ${sortConfig.key === 'date' && sortConfig.direction ? (sortConfig.direction === 'ascending' ? 'ascending' : 'descending') : ''}`}>
+                            Date
+                        </th>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        key="count"
+                        placement="top"
+                        overlay={<Tooltip id="tooltip-count">{tooltipTexts.count}</Tooltip>}
+                    >
+                        <th onClick={() => requestSort('count')}
+                            className={`sortable ${sortConfig.key === 'count' && sortConfig.direction ? (sortConfig.direction === 'ascending' ? 'ascending' : 'descending') : ''}`}>
+                            Students
+                        </th>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        key="link"
+                        placement="top"
+                        overlay={<Tooltip id="tooltip-link">{tooltipTexts.link}</Tooltip>}
+                    >
+                        <th>Link</th>
+                    </OverlayTrigger>
                 </tr>
                 </thead>
                 <tbody>

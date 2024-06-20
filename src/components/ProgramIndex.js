@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import '../App.css';
 
-function ProgramStatistics({ programs, onSelectProgram }) {
+function ProgramIndex({ programs, onSelectProgram }) {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [hoverIndex, setHoverIndex] = useState(-1);
 
@@ -34,6 +35,15 @@ function ProgramStatistics({ programs, onSelectProgram }) {
         return 0;
     });
 
+    const tooltipTexts = {
+        Program: 'The institution offering the program',
+        currentlyActive: 'Number of students currently enrolled',
+        totalEntries: 'Cumulative number of enrolled students since the earliest record of the program',
+        percentageOfPlacements: 'Percentage of students placed in jobs',
+        'Average Duration': 'Average duration of enrollment, based on data from former students',
+        earliestSnapshot: 'Earliest record of the program in the web archive'
+    };
+
     return (
         <div className="mt-3">
             <table className="table table-striped table-transparent">
@@ -41,13 +51,22 @@ function ProgramStatistics({ programs, onSelectProgram }) {
                     <tr>
                         <th>#&emsp;</th>
                         {columns.map((column) => (
-                            <th
+                            <OverlayTrigger
                                 key={column}
-                                onClick={() => requestSort(column)}
-                                className={`sortable ${sortConfig.key === column ? (sortConfig.direction === 'ascending' ? 'ascending' : 'descending') : ''}`}
+                                placement="top"
+                                overlay={
+                                    <Tooltip id={`tooltip-${column}`}>
+                                        {tooltipTexts[column]}
+                                    </Tooltip>
+                                }
                             >
-                                {formatColumnName(column)}
-                            </th>
+                                <th
+                                    onClick={() => requestSort(column)}
+                                    className={`sortable ${sortConfig.key === column ? (sortConfig.direction === 'ascending' ? 'ascending' : 'descending') : ''}`}
+                                >
+                                    {formatColumnName(column)}
+                                </th>
+                            </OverlayTrigger>
                         ))}
                     </tr>
                 </thead>
@@ -84,4 +103,4 @@ function ProgramStatistics({ programs, onSelectProgram }) {
     );
 }
 
-export default ProgramStatistics;
+export default ProgramIndex;

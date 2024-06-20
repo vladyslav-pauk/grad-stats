@@ -77,11 +77,11 @@ def process_data(data: pd.DataFrame, log: bool) -> pd.DataFrame:
         data['Date'] = pd.to_datetime(data['Date'])
 
         student_info = data.groupby('Name').agg(
-            University=('University', 'first'),  # First university listed for each student
-            URL=('URL', lambda x: parent_url(x.iloc[0])),  # Cleaned URL of the first entry
-            Start_Date=('Date', 'min'),  # Earliest date found for each student
-            End_Date=('Date', 'max'),  # Latest date found for each student
-            Active=('Active', 'sum')  # Sum of 'Active' entries to check if student was ever active
+            University=('University', 'first'),
+            URL=('URL', lambda x: parent_url(x.iloc[0])),
+            Start_Date=('Date', 'min'),
+            End_Date=('Date', 'max'),
+            Active=('Active', 'sum')
         )
 
         student_info['Years'] = (student_info['End_Date'] - student_info['Start_Date']).dt.days / 365.25
@@ -122,10 +122,8 @@ def calculate_yearly_metrics(data: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: A DataFrame summarizing the total and graduated students per year.
     """
-    # Extract the year from the 'Date' column for each row
     data['Year'] = data['Date'].dt.year
 
-    # Dictionary defining how to aggregate data for each year
     agg_dict: Dict[str, pd.NamedAgg] = {
         'Total_Students': pd.NamedAgg(column='Name', aggfunc='nunique'),  # Count of unique students per year
         'Graduated_Students': pd.NamedAgg(
@@ -197,16 +195,13 @@ def _merge_and_save(new_data: pd.DataFrame, latest_version: int, data_folder: st
     else:
         merged_data = new_data
 
-    # Convert Timestamp objects to strings
     for column in merged_data.select_dtypes(include=['datetime64[ns]', 'datetime64[ns, UTC]']).columns:
         merged_data[column] = merged_data[column].dt.strftime('%Y-%m-%d %H:%M:%S')
 
-    # Convert ndarray objects to lists
     for column in merged_data.columns:
         if merged_data[column].dtype == 'object':
             merged_data[column] = merged_data[column].apply(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
 
-    # Convert Timestamp objects in dict
     def convert_to_serializable(obj):
         if isinstance(obj, pd.Timestamp):
             return obj.strftime('%Y-%m-%d %H:%M:%S')

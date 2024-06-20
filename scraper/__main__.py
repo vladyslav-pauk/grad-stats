@@ -72,7 +72,7 @@ if __name__ == '__main__':
     parser.add_argument(
         "file",
         nargs='?',
-        default="public/urls.csv",
+        default="public/programs.csv",
         type=str,
         help="The file with URLs."
     )
@@ -85,33 +85,29 @@ if __name__ == '__main__':
         new_data = main(args.file)
 
 
-# todo: more statistics in program summary, also some metadata
-
-# todo: calculate start date and end date in the middle between two snapshots
-# todo: keep start_date and end_date as it is but use ranges for calculating average
-# todo: end_date should be the last snapshot before disappeared. if it's active no end-date.
-
-# todo: hover over column header to see info
-
 # todo: README
 # todo: report
 
-# fixme: pass error e to chat, but log only error info.
+# viewer
+# todo: more statistics in program summary, also some metadata
 
-# todo: validation feedback
-
-# fixme: organize colors
+# fixme: fix snapshot link (now last page)
+# fixme: nav tabs, border-bottom
+# fixme: tooltip transparency
+# fixme: align tooltip window to the left
 # fixme: fix sorting indicator initialization and memory
 
-# todo: context length error
-# todo: log every page, log at the end of url search
-
-# todo: handle empty name list, possible for pagination
-# todo: update function before first page, don't update further
-
-# todo: fix snapshot link (now last page)
-# todo: update dataset after each program
-
-# todo: fix placement (wrong student, o'hagan)
+# scraper
+# todo: calculate start date and end date in the middle between two snapshots
+#  keep start_date and end_date as it is but use ranges for calculating average
+#  end_date should be the last snapshot before disappeared. if it's active no end-date.
+# todo: pass error e to chat, but log only error info.
+# todo: validation feedback
 # todo: if function confirmed by user create pull request, if not iterate
 # todo: function to delete entries from database
+
+# fixme: context length error
+# fixme: log every page, log at the end of url search
+# fixme: handle empty name list, possible for pagination
+# fixme: update function before first page, don't update further
+# fixme: fix placement (wrong student, o'hagan)

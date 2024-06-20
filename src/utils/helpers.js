@@ -1,5 +1,3 @@
-// helpers.js
-// helpers.js
 export const formatValue = (value, row, column) => {
     if (typeof value === 'boolean') {
         return value ? 'Yes' : 'No';
@@ -55,7 +53,7 @@ export const computeStatisticsForPrograms = (data) => {
         }
     });
 
-    const programStats = Object.keys(programs).map(program => {
+    return Object.keys(programs).map(program => {
         const stats = programs[program];
         const averageDuration = stats.yearsCount > 0 ? (stats.totalYears / stats.yearsCount).toFixed(2) : 'N/A';
         return {
@@ -64,11 +62,9 @@ export const computeStatisticsForPrograms = (data) => {
             currentlyActive: stats.currentlyActive,
             percentageOfPlacements: stats.totalEntries > 0 ? (stats.placedStudents / stats.totalEntries) * 100 : 0,
             'Average Duration': averageDuration,
-            earliestSnapshot: stats.earliestSnapshot ? stats.earliestSnapshot.toLocaleDateString() : 'N/A'
+            earliestSnapshot: stats.earliestSnapshot ? stats.earliestSnapshot.toLocaleDateString() : 'N/A',
         };
     });
-
-    return programStats;
 };
 
 export const computeStatistics = (data) => {
@@ -78,6 +74,9 @@ export const computeStatistics = (data) => {
     let totalYears = 0;
     let yearsCount = 0;
     let earliestSnapshot = null;
+    let programLink = data[0].URL;
+    let placementLink = data[0].PlacementURL;
+    let numberOfSnapshots = data[0].Snapshots.length;
 
     data.forEach((entry) => {
         if (entry.Placement === true) {
@@ -98,20 +97,22 @@ export const computeStatistics = (data) => {
                 earliestSnapshot = startDate;
             }
         }
+        // programLink = entry.URL;
     });
 
     const percentageOfPlacements = totalEntries > 0 ? (placedStudents / totalEntries) * 100 : 0;
     const averageDuration = yearsCount > 0 ? (totalYears / yearsCount).toFixed(2) : 'N/A';
 
-    const result = {
+    return {
         totalEntries,
         percentageOfPlacements: percentageOfPlacements > 0 ? percentageOfPlacements.toFixed(2) : '0.00',
         currentlyActive,
         earliestSnapshot: earliestSnapshot ? earliestSnapshot.toLocaleDateString() : 'N/A',
         'Average Duration': averageDuration,
+        programLink: programLink,
+        placementLink: placementLink,
+        numberOfSnapshots: numberOfSnapshots,
     };
-
-    return result;
 };
 
 export const formatColumnName = (name) => {

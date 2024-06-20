@@ -1,11 +1,24 @@
 import React from 'react';
 import { formatColumnName, formatValue } from '../utils/helpers';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import '../App.css';
 
 function DataTable({ stats, sortConfig, handleSort, tableHoverIndex, setTableHoverIndex, currentProgram }) {
     if (!stats) return null;
 
-    const columns = Object.keys(stats[0]).filter(column => column !== 'Snapshots');
+    const columns = Object.keys(stats[0]).filter(
+        column => column !== 'Snapshots' && column !== 'URL' && column !== 'PlacementURL'
+    );
+
+    const tooltipTexts = {
+        University: 'The institution offering the program',
+        Name: 'Student name',
+        Active: 'Enrollment status',
+        Placement: 'Job placement status',
+        Years: 'Duration of enrollment in years',
+        Start_Date: 'Date when the program started',
+        End_Date: 'Date when the program ended',
+    };
 
     return (
         <div className="mt-3">
@@ -15,13 +28,22 @@ function DataTable({ stats, sortConfig, handleSort, tableHoverIndex, setTableHov
                         <th>#</th>
                         {columns.map((column) => (
                             (currentProgram === 'All Programs' || column !== 'University') && (
-                                <th
+                                <OverlayTrigger
                                     key={column}
-                                    onClick={() => handleSort(column)}
-                                    className={`sortable ${sortConfig.key === column && sortConfig.direction ? (sortConfig.direction === 'ascending' ? 'ascending' : 'descending') : ''}`}
+                                    placement="top"
+                                    overlay={
+                                        <Tooltip id={`tooltip-${column}`}>
+                                            {tooltipTexts[column] || `Info about ${formatColumnName(column)}`}
+                                        </Tooltip>
+                                    }
                                 >
-                                    {formatColumnName(column)}
-                                </th>
+                                    <th
+                                        onClick={() => handleSort(column)}
+                                        className={`sortable ${sortConfig.key === column && sortConfig.direction ? (sortConfig.direction === 'ascending' ? 'ascending' : 'descending') : ''}`}
+                                    >
+                                        {formatColumnName(column)}
+                                    </th>
+                                </OverlayTrigger>
                             )
                         ))}
                     </tr>

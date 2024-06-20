@@ -104,6 +104,8 @@ def get_pagination(url_tuple: tuple) -> list:
 
     return url_pages
 
+# todo: factor out page identity (or empty) check function
+
 
 def get_page(url: str, max_retries: int = 10, initial_retry_delay: int = 16) -> str:
     """
