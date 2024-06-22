@@ -27,9 +27,9 @@ function ProgramSummary({ statistics }) {
 
     const rows = [
         {label: 'Currently Enrolled', value: currentlyActive},
-        {label: 'Total Students', value: totalEntries},
+        {label: 'Total Students Recorded', value: totalEntries},
         {label: 'Placement Rate', value: placementRate},
-        {label: 'Average Duration', value: averageDuration},
+        {label: 'Average Time-to-Degree', value: averageDuration},
         {label: 'Number of Snapshots', value: numberOfSnapshots},
         {label: 'Earliest Record', value: originalStartDate},
         {label: 'Program Page', value: programPage},

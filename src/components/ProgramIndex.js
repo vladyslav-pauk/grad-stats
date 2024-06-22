@@ -7,16 +7,17 @@ function ProgramIndex({ programs, onSelectProgram }) {
     const [hoverIndex, setHoverIndex] = useState(-1);
 
     const formatColumnName = (column) => {
+        if (column === 'program') return 'Host Institution';
         if (column === 'totalEntries') return 'Total Students';
         if (column === 'currentlyActive') return 'Currently Enrolled';
         if (column === 'percentageOfPlacements') return 'Placement Rate';
-        if (column === 'averageDuration') return 'Average Duration';
+        if (column === 'averageDuration') return 'Time-to-Degree';
         if (column === 'earliestSnapshot') return 'Earliest Record';
-        if (column === 'originalStartDate') return 'Original Start Date';
+        if (column === 'originalStartDate') return 'Earliest Record';
         return column.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     };
 
-    const columns = ['program', 'currentlyActive', 'totalEntries', 'percentageOfPlacements', 'averageDuration', 'originalStartDate'];
+    const columns = ['program', 'currentlyActive', 'totalEntries', 'originalStartDate', 'averageDuration', 'percentageOfPlacements'];
 
     const requestSort = (key) => {
         let direction = 'ascending';

@@ -25,8 +25,8 @@ function DataTable({ stats, sortConfig, handleSort, tableHoverIndex, setTableHov
         Active: 'Current enrollment status',
         Placement: 'Job placement status',
         Years: 'Duration of enrollment in years',
-        Start_Date: 'Date when the program started',
-        End_Date: 'Date when the program ended',
+        Start_Date: 'Date when the student enrolled in the program',
+        End_Date: 'Date when the student completed the program',
     };
 
     return (

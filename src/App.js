@@ -123,7 +123,7 @@ const App = () => {
         setStats(filteredMatches);
         setStatistics(computeProgramSummary(filteredMatches));
         setProgramStatistics(computeProgramIndex(window.studentData));
-        setCurrentProgram(university ? university : 'All Programs');
+        setCurrentProgram(university ? university : 'Program Index');
         setActiveTab(university ? 'statistics' : 'programStatistics');
         setUniversities([]);
         setQuery('');
@@ -179,17 +179,17 @@ const App = () => {
 
     const renderTabs = () => (
         <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} id="uncontrolled-tab-example" className="mt-3">
-            {currentProgram !== 'All Programs' && (
+            {currentProgram !== 'Program Index' && (
                 <Tab eventKey="statistics" title="Summary">
                     <ProgramSummary statistics={statistics} />
                 </Tab>
             )}
-            {currentProgram === 'All Programs' && (
-                <Tab eventKey="programStatistics" title="Programs">
+            {currentProgram === 'Program Index' && (
+                <Tab eventKey="programStatistics" title="Graduate Programs">
                     <ProgramIndex programs={programStatistics} onSelectProgram={handleStatistics} />
                 </Tab>
             )}
-            <Tab eventKey="data" title="Data">
+            <Tab eventKey="data" title="Student Data">
                 <DataTable
                     stats={sortedStats()}
                     sortConfig={sortConfig}
@@ -200,7 +200,7 @@ const App = () => {
                     currentProgram={currentProgram}
                 />
             </Tab>
-            {currentProgram !== 'All Programs' && (
+            {currentProgram !== 'Program Index' && (
                 <Tab eventKey="snapshots" title="Snapshots">
                     <SnapshotLinks stats={stats} />
                 </Tab>

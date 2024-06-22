@@ -132,14 +132,16 @@ def _is_student_name(name: str) -> bool:
 
     # print("Named entities: ", ne_chunk(pos_tags, binary=False))
     if (
-            (pos_tag_counts['JJR'] == 1 and pos_tag_counts['NN'] == 1)
+            (pos_tag_counts['JJR'] >= 1 and pos_tag_counts['NN'] >= 1)
+            or (pos_tag_counts['VBG'] >= 1 and pos_tag_counts['NN'] >= 1)
             or all(tag == 'NNP' for _, tag in pos_tags)
-            or (pos_tag_counts['NNP'] == 1 and (
-            pos_tag_counts['NNS'] == 1
-            or pos_tag_counts['JJ'] == 1
-            or pos_tag_counts['RB'] == 1
-            or pos_tag_counts['JJR'] == 1))
-            or (pos_tag_counts['JJS'] == 1 and pos_tag_counts['VBG'] == 1)
+            or (pos_tag_counts['NNP'] >= 1 and (
+            pos_tag_counts['NNS'] >= 1
+            or pos_tag_counts['NN'] >= 1
+            or pos_tag_counts['JJ'] >= 1
+            or pos_tag_counts['RB'] >= 1
+            or pos_tag_counts['JJR'] >= 1))
+            or (pos_tag_counts['JJS'] >= 1 and pos_tag_counts['VBG'] >= 1)
     ):
         return True
 

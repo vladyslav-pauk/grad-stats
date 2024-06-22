@@ -243,5 +243,11 @@ export const formatColumnName = (name) => {
     if (name === 'totalEntries') {
         return 'Total Entries';
     }
+    if (name === 'Years') {
+        return 'Time-to-Degree';
+    }
+    if (name === 'Active') {
+        return 'Enrolled';
+    }
     return name.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
 };
