@@ -29,10 +29,6 @@ const updateProgramSummary = (programs, entry) => {
         });
         programs[program].snapshots.sort((a, b) => a - b);
     }
-    if (entry.Years && !entry.Active && entry.Start_Date !== 'N/A' && entry.End_Date !== 'N/A') {
-        programs[program].totalYears += entry.Years;
-        programs[program].yearsCount += 1;
-    }
 };
 
 const extractDateFromUrl = (url) => {
@@ -97,6 +93,15 @@ const updateDatesAndCalculateAverage = (data, programs) => {
         if (entry.Active) {
             entry.End_Date = 'N/A';
         }
+
+        // Calculate and update the Years field
+        const startDate = new Date(entry.Start_Date);
+        const endDate = new Date(entry.End_Date);
+        if (entry.Start_Date === 'N/A' || isNaN(startDate) || isNaN(endDate)) {
+            entry.Years = 'N/A';
+        } else {
+            entry.Years = ((endDate - startDate) / (1000 * 60 * 60 * 24 * 365.25)).toFixed(2);
+        }
     });
 
     // Recalculate the total years and years count based on updated dates
@@ -110,7 +115,7 @@ const updateDatesAndCalculateAverage = (data, programs) => {
         const startDate = new Date(entry.Start_Date);
         const endDate = new Date(entry.End_Date);
 
-        if (!isNaN(startDate) && !isNaN(endDate)) {
+        if (!isNaN(startDate) && !isNaN(endDate) && entry.Start_Date !== 'N/A' && entry.End_Date !== 'N/A') {
             const durationInYears = (endDate - startDate) / (1000 * 60 * 60 * 24 * 365.25);
             const program = programs[entry.University];
             if (!entry.Active && entry.Start_Date !== 'N/A' && entry.End_Date !== 'N/A') {
@@ -197,7 +202,7 @@ export const computeProgramSummary = (data) => {
         const startDate = new Date(entry.Start_Date);
         const endDate = new Date(entry.End_Date);
 
-        if (!isNaN(startDate) && !isNaN(endDate)) {
+        if (!isNaN(startDate) && !isNaN(endDate) && entry.Start_Date !== 'N/A' && entry.End_Date !== 'N/A') {
             const durationInYears = (endDate - startDate) / (1000 * 60 * 60 * 24 * 365.25);
             if (!entry.Active && entry.Start_Date !== 'N/A' && entry.End_Date !== 'N/A') {
                 totalYears += durationInYears;
