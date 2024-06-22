@@ -3,17 +3,26 @@ import { formatColumnName, formatValue } from '../utils/helpers';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import '../App.css';
 
+const columnOrder = [
+    'Name',
+    'University',
+    'Start_Date',
+    'End_Date',
+    'Years',
+    'Active',
+    'Placement',
+    // Add other columns as needed
+];
+
 function DataTable({ stats, sortConfig, handleSort, tableHoverIndex, setTableHoverIndex, currentProgram }) {
     if (!stats) return null;
 
-    const columns = Object.keys(stats[0]).filter(
-        column => column !== 'Snapshots' && column !== 'URL' && column !== 'PlacementURL' && column !== 'originalStartDate'
-    );
+    const columns = columnOrder.filter(column => Object.keys(stats[0]).includes(column));
 
     const tooltipTexts = {
         University: 'The institution offering the program',
-        Name: 'Student name',
-        Active: 'Enrollment status',
+        Name: 'First and last name of the student',
+        Active: 'Current enrollment status',
         Placement: 'Job placement status',
         Years: 'Duration of enrollment in years',
         Start_Date: 'Date when the program started',

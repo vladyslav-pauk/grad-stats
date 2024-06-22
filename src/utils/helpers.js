@@ -10,7 +10,6 @@ const updateProgramSummary = (programs, entry) => {
             earliestSnapshot: null
         };
     }
-
     programs[program].totalEntries += 1;
     if (entry.Placement === true) {
         programs[program].placedStudents += 1;
@@ -58,7 +57,7 @@ export const computeProgramIndex = (data) => {
         const stats = programs[program];
         const averageDuration = stats.yearsCount > 0 ? (stats.totalYears / stats.yearsCount).toFixed(2) : 'N/A';
         const placementRate = (stats.placedStudents / stats.totalEntries) * 100;
-        const earliestSnapshot = stats.earliestSnapshot ? stats.earliestSnapshot.toLocaleDateString() : 'N/A';
+        // const earliestSnapshot = stats.earliestSnapshot ? stats.earliestSnapshot.toLocaleDateString() : 'N/A';
         const originalStartDate = data.find(entry => entry.University === program).originalStartDate;
         return {
             program: program,
