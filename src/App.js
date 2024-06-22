@@ -161,21 +161,24 @@ const App = () => {
     };
 
     const sortedStats = () => {
-        if (!stats || !sortConfig.key) {
-            return stats;
+    if (!stats || !sortConfig.key) {
+        return stats;
+    }
+    const sortedData = [...stats];
+    sortedData.sort((a, b) => {
+        const aValue = sortConfig.key === 'percentageOfPlacements' ? parseFloat(a[sortConfig.key]) : a[sortConfig.key];
+        const bValue = sortConfig.key === 'percentageOfPlacements' ? parseFloat(b[sortConfig.key]) : b[sortConfig.key];
+
+        if (aValue < bValue) {
+            return sortConfig.direction === 'ascending' ? -1 : 1;
         }
-        const sortedData = [...stats];
-        sortedData.sort((a, b) => {
-            if (a[sortConfig.key] < b[sortConfig.key]) {
-                return sortConfig.direction === 'ascending' ? -1 : 1;
-            }
-            if (a[sortConfig.key] > b[sortConfig.key]) {
-                return sortConfig.direction === 'ascending' ? 1 : -1;
-            }
-            return 0;
-        });
-        return sortedData;
-    };
+        if (aValue > bValue) {
+            return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+    });
+    return sortedData;
+};
 
     const renderTabs = () => (
         <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} id="uncontrolled-tab-example" className="mt-3">

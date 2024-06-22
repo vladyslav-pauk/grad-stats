@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { formatColumnName } from '../utils/helpers';
 import '../App.css';
 
 function ProgramIndex({ programs, onSelectProgram }) {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [hoverIndex, setHoverIndex] = useState(-1);
+
+    const columns = ['program', 'currentlyActive', 'totalEntries', 'originalStartDate', 'averageDuration', 'percentageOfPlacements'];
 
     const formatColumnName = (column) => {
         if (column === 'program') return 'Host Institution';
@@ -17,8 +20,6 @@ function ProgramIndex({ programs, onSelectProgram }) {
         return column.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     };
 
-    const columns = ['program', 'currentlyActive', 'totalEntries', 'originalStartDate', 'averageDuration', 'percentageOfPlacements'];
-
     const requestSort = (key) => {
         let direction = 'ascending';
         if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -28,10 +29,13 @@ function ProgramIndex({ programs, onSelectProgram }) {
     };
 
     const sortedPrograms = [...programs].sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
+        const aValue = sortConfig.key === 'percentageOfPlacements' ? parseFloat(a[sortConfig.key]) : a[sortConfig.key];
+        const bValue = sortConfig.key === 'percentageOfPlacements' ? parseFloat(b[sortConfig.key]) : b[sortConfig.key];
+
+        if (aValue < bValue) {
             return sortConfig.direction === 'ascending' ? -1 : 1;
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
+        if (aValue > bValue) {
             return sortConfig.direction === 'ascending' ? 1 : -1;
         }
         return 0;
