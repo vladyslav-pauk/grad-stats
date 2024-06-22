@@ -10,12 +10,13 @@ function ProgramIndex({ programs, onSelectProgram }) {
         if (column === 'totalEntries') return 'Total Students';
         if (column === 'currentlyActive') return 'Currently Enrolled';
         if (column === 'percentageOfPlacements') return 'Placement Rate';
-        if (column === 'Average Duration') return 'Average Duration';
+        if (column === 'averageDuration') return 'Average Duration';
         if (column === 'earliestSnapshot') return 'Earliest Record';
+        if (column === 'originalStartDate') return 'Original Start Date';
         return column.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     };
 
-    const columns = ['Program', 'currentlyActive', 'totalEntries', 'percentageOfPlacements', 'Average Duration', 'earliestSnapshot'];
+    const columns = ['program', 'currentlyActive', 'totalEntries', 'percentageOfPlacements', 'averageDuration', 'originalStartDate'];
 
     const requestSort = (key) => {
         let direction = 'ascending';
@@ -36,12 +37,12 @@ function ProgramIndex({ programs, onSelectProgram }) {
     });
 
     const tooltipTexts = {
-        Program: 'The institution offering the program',
+        program: 'The institution offering the program',
         currentlyActive: 'Number of students currently enrolled',
         totalEntries: 'Cumulative number of enrolled students since the earliest record of the program',
         percentageOfPlacements: 'Percentage of students placed in jobs',
-        'Average Duration': 'Average duration of enrollment, based on data from former students',
-        earliestSnapshot: 'Earliest record of the program in the web archive'
+        averageDuration: 'Average duration of enrollment, based on data from former students',
+        originalStartDate: 'Earliest record of the program in the web archive',
     };
 
     return (
@@ -77,7 +78,7 @@ function ProgramIndex({ programs, onSelectProgram }) {
                             className={rowIndex === hoverIndex ? 'table-active' : ''}
                             onMouseEnter={() => setHoverIndex(rowIndex)}
                             onMouseLeave={() => setHoverIndex(-1)}
-                            onClick={() => onSelectProgram(program.Program)}
+                            onClick={() => onSelectProgram(program.program)}
                             style={{ cursor: 'pointer' }}
                         >
                             <td>{rowIndex + 1}</td>
@@ -87,8 +88,8 @@ function ProgramIndex({ programs, onSelectProgram }) {
                                         ? `${parseFloat(program[column]).toFixed(0)}%`
                                         : column === 'totalEntries' || column === 'currentlyActive' || column === 'percentageOfPlacements'
                                         ? program[column]
-                                        : column === 'earliestSnapshot' && program[column] === 'N/A'
-                                        ? 'N/A'
+                                        : column === 'originalStartDate'
+                                        ? new Date(program[column]).toLocaleDateString()
                                         : program[column].toFixed
                                         ? program[column].toFixed(1)
                                         : program[column]

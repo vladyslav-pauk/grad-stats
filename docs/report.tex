@@ -56,4 +56,65 @@ To achieve this, a hybrid approach is employed, combining the strengths of Large
 \section{Acknowledgements}
 
 
+\section{Project Overview}
+
+The Academic Programs Web Scraping Module (SWAP) offers a comprehensive and efficient solution for extracting and performing chronological analysis of PhD student information from graduate program webpages. Utilizing the Wayback Machine web archive data and leveraging OpenAI's GPT API for automatic pattern matching generation, SWAP automates the data collection process. This project aims to address the challenges associated with manually updating and maintaining detailed records of enrollment, graduation, and placement data for PhD programs.
+
+The value of enrollment, graduation, and placement data for PhD programs cannot be overstated. Such data is crucial for academic research, program evaluation, student recruitment, and institutional ranking. However, data reporting across disciplines varies in consistency and accessibility. While centralized databases like the National Science Foundation's Survey of Earned Doctorates provide aggregate statistics, they lack detailed information on individual programs. Initiatives like the Council of Graduate Schools' PhD Completion Project aim to improve data collection and reporting, but challenges such as labor-intensive processes, the need for manual updates, and inconsistent reporting practices persist.
+
+SWAP addresses these challenges by automating the extraction and analysis of PhD student information, thus providing a scalable and adaptable solution that enhances data accuracy and reliability.
+
+\section{Methodology}
+
+The SWAP methodology combines the strengths of Large Language Models (LLMs) with programmatic pattern matching to automate the extraction of information from non-standardized web pages. The core methodology involves the following steps:
+
+\subsection{Enrollment Duration Estimation}
+
+We estimate student enrollment duration based on the student's first and last appearances in the web page source. Since the actual enrollment date is uncorrelated with snapshot frequency, it is assumed to occur between the time of the first appearance and the preceding snapshot. If the first appearance is in the earliest snapshot, the start date is estimated using the snapshot date minus a mean time-to-degree heuristic. The end date is estimated to occur sometime after the last appearance but before the next snapshot. The duration of the program for each student is calculated as the time elapsed between the estimated start and end dates.
+
+\subsection{Accuracy and Reliability}
+
+Several assumptions are made to ensure the accuracy and reliability of the data:
+\begin{itemize}
+    \item The student's name is listed on the program webpage at least once during their enrollment.
+    \item The student's name is listed only while they are enrolled.
+    \item The extracted current students have not graduated yet.
+    \item A student's name is a unique identifier.
+    \item Program and placement pages are up-to-date and accurate.
+\end{itemize}
+
+These assumptions allow for reasonable estimations of cumulative enrollment and program duration, while filtering out non-student entities and ensuring data validity.
+
+\subsection{Automatic Code Generation}
+
+A hybrid approach combining LLMs with programmatic pattern matching is employed to generate Python functions that extract names from web page sources. This methodology leverages OpenAI's GPT API to create adaptable functions capable of adjusting to changes in web page structures. The generated functions are deterministic, ensuring robustness and reproducibility in the extraction process.
+
+\section{Implementation}
+
+The implementation of SWAP revolves around efficient error handling and integration with the Wayback Machine to retrieve archived snapshots of web pages. The architecture consists of three main components: extracting webpage sources, generating Python functions for name extraction, and building a structured database of student information.
+
+\subsection{Wayback Machine Integration}
+
+The integration with the Wayback Machine is managed through the `snapshot_url.py` module, which checks for snapshot availability and fetches all available snapshots for a given URL. The snapshots, stored with time-stamped URLs, allow for tracking changes in student listings over time, providing a basis for longitudinal analysis.
+
+\subsection{Code Generation Pipeline}
+
+The code generation pipeline is designed to handle the non-determinism of GPT-based coding through a feedback loop between validation and generation processes. The steps include:
+\begin{enumerate}
+    \item Validation of existing search modules.
+    \item Generation of new code for extracting names if validation fails.
+    \item Iterative validation and updating of generated code until it meets the required functionality.
+\end{enumerate}
+
+This process ensures that the generated code is both accurate and reliable, facilitating the seamless extraction of PhD student information from web pages.
+
+\subsection{Data Parsing and Storage}
+
+Raw HTML content is parsed using the BeautifulSoup library, and the extracted data is stored in a structured format. The `public/data/student_data_v<version>.json` file follows a schema that includes fields such as the student's name, university, program URL, start and end dates, enrollment status, duration, and placement information. This structured approach allows for easy tracking of changes and updates to the database.
+
+\section{Conclusion}
+
+The SWAP project provides a scalable and efficient solution for extracting and analyzing PhD student information from graduate program webpages. By leveraging the capabilities of LLMs and integrating with the Wayback Machine, SWAP offers a robust methodology for automating data collection and analysis, thereby enhancing the accuracy and reliability of academic program data.
+
+
 \end{document}

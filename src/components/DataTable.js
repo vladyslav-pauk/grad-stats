@@ -7,7 +7,7 @@ function DataTable({ stats, sortConfig, handleSort, tableHoverIndex, setTableHov
     if (!stats) return null;
 
     const columns = Object.keys(stats[0]).filter(
-        column => column !== 'Snapshots' && column !== 'URL' && column !== 'PlacementURL'
+        column => column !== 'Snapshots' && column !== 'URL' && column !== 'PlacementURL' && column !== 'originalStartDate'
     );
 
     const tooltipTexts = {

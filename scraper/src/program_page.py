@@ -23,7 +23,6 @@ Functions:
 """
 
 import logging
-import sys
 from typing import Tuple, List
 
 import requests
@@ -35,10 +34,12 @@ from requests.exceptions import ConnectionError, HTTPError, Timeout
 
 from ..src.search_module import search_names
 from ..src.snapshot_url import get_snapshot_urls
+from ..src.module_manager import generate_search_module, validate_search_module
 from ..src.database import process_data
+from ..src.exceptions import ValidationError, ModuleError
 
 
-def add_data_from_pages(
+def scrape_data_from_pages(
         data: pd.DataFrame,
         program_tuple: Tuple[str, str, str],
         page_urls: List[str]
@@ -68,6 +69,35 @@ def add_data_from_pages(
     return data
 
 
+def load_search_module(validation_url):
+    """
+    Validate or generate the search function.
+
+    Args:
+        validation_url: The URL to validate the function.
+    Returns:
+        None
+    """
+    validation_html = get_page(validation_url)
+    try:
+        validate_search_module(validation_html, validation_url)
+    except (ValidationError, ModuleError):
+        generate_search_module(validation_html, validation_url)
+    # save snapshot items to a text file
+    # with open('scraper/tests/snapshots.csv', 'w') as file:
+    #     for url in snapshot_urls:
+    #         file.write(url + '\n')
+
+    # with open('scraper/tests/validation_2024-06-09.html', 'r') as file:
+    #     validation_html = file.read()
+    #
+    # with open('scraper/tests/snapshots.csv', 'r') as file:
+    #     snapshot_urls = file.read().splitlines()
+
+    # with open(f'scraper/tests/validation_{parse_date(url)[0]}.html', 'r') as file:
+    #     page_source = file.read()
+
+
 def get_pagination(url_tuple: tuple) -> list:
     """
     Generates a list of paginated URLs for the given base URL.
@@ -94,7 +124,7 @@ def get_pagination(url_tuple: tuple) -> list:
         except:
             empty_h1_tags = None
 
-        if empty_h1_tags or len(response) == len(previous_response):
+        if empty_h1_tags or abs(len(response) - len(previous_response)) <= 50:
             logging.info(f"Found {i - 1} page{'s' if len(url_pages) > 1 else ''} for {url_tuple[2]}")
             break
 
@@ -154,10 +184,12 @@ def _track_presence_in_page(page_tuple: Tuple[str, str, str], log_snapshot_searc
         pd.DataFrame: DataFrame with processed and updated data.
     """
     snapshot_urls = get_snapshot_urls(page_tuple, log=log_snapshot_search)
+
     list_data = pd.DataFrame()
 
     for url in snapshot_urls:
         page_source = get_page(url)
+        load_search_module(validation_url=url)
         snapshot_data = _extract_timestamps_from_snapshot(page_source, url, university=page_tuple[2])
         list_data = pd.concat([list_data, snapshot_data], ignore_index=True)
 
@@ -195,14 +227,15 @@ def _extract_timestamps_from_snapshot(page_source: str, url: str, university: st
 
     try:
         names = search_names(page_source, url)
-    except Exception:
-        logging.fatal(
-            "An unexpected error occurred during the name search process. "
-            "Please check the log for more details and try running the program again.",
-            exc_info=True
-        )
-        sys.exit(1)
-
+    except Exception as e:
+        logging.error(e)
+        names = []
+        # logging.fatal(
+        #     "An unexpected error occurred during the name search process. "
+        #     "Please check the log for more details and try running the program again.",
+        #     exc_info=True
+        # )
+    print("Extracted names: ", names)
     date, status = _parse_date(url)
 
     for name in names:

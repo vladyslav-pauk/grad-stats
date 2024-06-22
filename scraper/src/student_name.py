@@ -60,7 +60,7 @@ def validate_names(source: str, name_list: List[str]) -> bool:
     if not name_list:
         raise ValidationError.empty_list()
 
-    print("Validating names:", name_list)
+    # print("Validating names:", name_list)
 
     for name in name_list:
         if not _is_valid_name(name):
@@ -117,30 +117,40 @@ def _is_student_name(name: str) -> bool:
         bool: True if the name is likely a student's name, False otherwise.
     """
     name = name.replace('-', ' ')
-    if name.startswith('Dr.'):
+
+    if name.startswith('Dr.') or name.startswith('Prof.'):
         return False
 
     tokens = word_tokenize(name)
     pos_tags = pos_tag(tokens)
 
-    named_entities = ne_chunk(pos_tags, binary=False)
-    # print(named_entities)
-    for chunk in named_entities:
-        if hasattr(chunk, 'label') and chunk.label() in {'PERSON', 'GPE'}:
-            return True
-
-    pos_tag_counts = {'NNP': 0, 'NNS': 0, 'JJ': 0, 'NN': 0, 'RB': 0, 'VB': 0}
+    pos_tag_counts = {'JJR': 0, 'NNP': 0, 'NNS': 0, 'JJ': 0, 'NN': 0, 'RB': 0, 'VB': 0, 'S': 0, 'JJS': 0, 'VBG': 0}
     for _, tag in pos_tags:
-        if tag in pos_tag_counts:
-            pos_tag_counts[tag] += 1
+        if tag not in pos_tag_counts:
+            pos_tag_counts[tag] = 0
+        pos_tag_counts[tag] += 1
 
-    if (pos_tag_counts['NNP'] >= 1 or pos_tag_counts['NNS']) and (pos_tag_counts['JJ'] >= 1 or pos_tag_counts['NN'] >= 1 or pos_tag_counts['RB'] or pos_tag_counts['VB'] >= 1):
-        return True
-
-    if all(tag == 'NNP' for _, tag in pos_tags):
+    # print("Named entities: ", ne_chunk(pos_tags, binary=False))
+    if (
+            (pos_tag_counts['JJR'] == 1 and pos_tag_counts['NN'] == 1)
+            or all(tag == 'NNP' for _, tag in pos_tags)
+            or (pos_tag_counts['NNP'] == 1 and (
+            pos_tag_counts['NNS'] == 1
+            or pos_tag_counts['JJ'] == 1
+            or pos_tag_counts['RB'] == 1
+            or pos_tag_counts['JJR'] == 1))
+            or (pos_tag_counts['JJS'] == 1 and pos_tag_counts['VBG'] == 1)
+    ):
         return True
 
     return False
+    # if all(tag == 'NNP' for _, tag in pos_tags):
+    #     return True
+    # for chunk in named_entities:
+    #     if hasattr(chunk, 'label') and chunk.label() in {'PERSON', 'GPE'}:
+    #         return True
+    # if (pos_tag_counts['JJR'] >= 1 or pos_tag_counts['NNP'] >= 1 or pos_tag_counts['NNS']) and (pos_tag_counts['JJ'] >= 1 or pos_tag_counts['NN'] >= 1 or pos_tag_counts['RB'] or pos_tag_counts['VB'] >= 1 or pos_tag_counts['S'] >= 1):
+    #     return True
 
 
 def _normalize_source(text: str) -> str:
@@ -156,7 +166,6 @@ def _normalize_source(text: str) -> str:
     text = html.unescape(text)
     text = re.sub(r'\s+', ' ', text).strip().lower()
     return text
-
 
 # def validate_names_with_gpt(names: list) -> bool:
 #     from .utils import init_gpt_chat

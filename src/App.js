@@ -11,10 +11,10 @@ import ProgramSummary from './components/ProgramSummary';
 import SnapshotLinks from './components/SnapshotLinks';
 import ProgramIndex from './components/ProgramIndex';
 import { fetchVersions, fetchStudentData } from './utils/dataFetch';
-import { formatValue, computeStatistics, computeStatisticsForPrograms } from './utils/helpers';
+import { formatValue, computeProgramSummary, computeProgramIndex } from './utils/helpers';
 import './App.css';
 
-function App() {
+const App = () => {
     const [query, setQuery] = useState('');
     const [universities, setUniversities] = useState([]);
     const [stats, setStats] = useState([]);
@@ -28,12 +28,16 @@ function App() {
     const [isDropdownHovered, setIsDropdownHovered] = useState(false);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const dropdownRef = useRef(null);
+    const searchInputRef = useRef(null);
 
     useEffect(() => {
-        fetchVersions().then(fetchStudentData).then(data => {
-            window.studentData = data;
-            setProgramStatistics(computeStatisticsForPrograms(data));
-        }).catch(error => console.error('Error fetching the JSON data:', error));
+        fetchVersions()
+            .then(fetchStudentData)
+            .then(data => {
+                window.studentData = data;
+                setProgramStatistics(computeProgramIndex(data));
+            })
+            .catch(error => console.error('Error fetching the JSON data:', error));
     }, []);
 
     const fetchData = useCallback((query) => {
@@ -67,6 +71,25 @@ function App() {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [dropdownRef]);
 
+    const handleEscapeKey = useCallback((event) => {
+        if (event.key === 'Escape') {
+            setUniversities([]);
+            setHighlightIndex(-1);
+            setHoverIndex(-1);
+        }
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleEscapeKey);
+        return () => document.removeEventListener('keydown', handleEscapeKey);
+    }, [handleEscapeKey]);
+
+    useEffect(() => {
+        if (searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    }, []);
+
     const fetchAllPrograms = () => {
         if (window.studentData) {
             const uniqueUniversities = Array.from(new Set(window.studentData.map(item => item.University)));
@@ -98,8 +121,8 @@ function App() {
         });
 
         setStats(filteredMatches);
-        setStatistics(computeStatistics(filteredMatches));
-        setProgramStatistics(computeStatisticsForPrograms(window.studentData));
+        setStatistics(computeProgramSummary(filteredMatches));
+        setProgramStatistics(computeProgramIndex(window.studentData));
         setCurrentProgram(university ? university : 'All Programs');
         setActiveTab(university ? 'statistics' : 'programStatistics');
         setUniversities([]);
@@ -154,37 +177,61 @@ function App() {
         return sortedData;
     };
 
-    const renderTabs = () => {
-        return (
-            <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} id="uncontrolled-tab-example" className="mt-3">
-                {currentProgram !== 'All Programs' && (
-                    <Tab eventKey="statistics" title="Summary">
-                        <ProgramSummary statistics={statistics} />
-                    </Tab>
-                )}
-                {currentProgram === 'All Programs' && (
-                    <Tab eventKey="programStatistics" title="Programs">
-                        <ProgramIndex programs={programStatistics} onSelectProgram={handleStatistics} />
-                    </Tab>
-                )}
-                <Tab eventKey="data" title="Data">
-                    <DataTable stats={sortedStats()} sortConfig={sortConfig} handleSort={handleSort} formatValue={formatValue} tableHoverIndex={tableHoverIndex} setTableHoverIndex={setTableHoverIndex} currentProgram={currentProgram} />
+    const renderTabs = () => (
+        <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} id="uncontrolled-tab-example" className="mt-3">
+            {currentProgram !== 'All Programs' && (
+                <Tab eventKey="statistics" title="Summary">
+                    <ProgramSummary statistics={statistics} />
                 </Tab>
-                {currentProgram !== 'All Programs' && (
-                    <Tab eventKey="snapshots" title="Snapshots">
-                        <SnapshotLinks stats={stats} />
-                    </Tab>
-                )}
-            </Tabs>
-        );
-    };
+            )}
+            {currentProgram === 'All Programs' && (
+                <Tab eventKey="programStatistics" title="Programs">
+                    <ProgramIndex programs={programStatistics} onSelectProgram={handleStatistics} />
+                </Tab>
+            )}
+            <Tab eventKey="data" title="Data">
+                <DataTable
+                    stats={sortedStats()}
+                    sortConfig={sortConfig}
+                    handleSort={handleSort}
+                    formatValue={formatValue}
+                    tableHoverIndex={tableHoverIndex}
+                    setTableHoverIndex={setTableHoverIndex}
+                    currentProgram={currentProgram}
+                />
+            </Tab>
+            {currentProgram !== 'All Programs' && (
+                <Tab eventKey="snapshots" title="Snapshots">
+                    <SnapshotLinks stats={stats} />
+                </Tab>
+            )}
+        </Tabs>
+    );
 
     return (
         <div className="app-container">
             <div className="container">
                 <Header />
-                <SearchBar query={query} handleSearchChange={handleSearchChange} handleSearchFocus={handleSearchFocus} handleKeyDown={handleKeyDown} logo={logo} />
-                {universities.length > 0 && <UniversityList universities={universities} dropdownRef={dropdownRef} highlightIndex={highlightIndex} hoverIndex={hoverIndex} setHoverIndex={setHoverIndex} handleStatistics={handleStatistics} isDropdownHovered={isDropdownHovered} setIsDropdownHovered={setIsDropdownHovered} />}
+                <SearchBar
+                    query={query}
+                    handleSearchChange={handleSearchChange}
+                    handleSearchFocus={handleSearchFocus}
+                    handleKeyDown={handleKeyDown}
+                    logo={logo}
+                    searchInputRef={searchInputRef}
+                />
+                {universities.length > 0 && (
+                    <UniversityList
+                        universities={universities}
+                        dropdownRef={dropdownRef}
+                        highlightIndex={highlightIndex}
+                        hoverIndex={hoverIndex}
+                        setHoverIndex={setHoverIndex}
+                        handleStatistics={handleStatistics}
+                        isDropdownHovered={isDropdownHovered}
+                        setIsDropdownHovered={setIsDropdownHovered}
+                    />
+                )}
                 {currentProgram && (
                     <div>
                         <h2>{currentProgram}</h2>
@@ -197,6 +244,6 @@ function App() {
             </div>
         </div>
     );
-}
+};
 
 export default App;

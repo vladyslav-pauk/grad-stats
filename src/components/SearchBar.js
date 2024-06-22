@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 
-function SearchBar({ query, handleSearchChange, handleKeyDown, logo }) {
+function SearchBar({ query, handleSearchChange, handleKeyDown, logo, searchInputRef }) {
     return (
         <div className="form-group">
             <label>
@@ -13,6 +13,7 @@ function SearchBar({ query, handleSearchChange, handleKeyDown, logo }) {
                     value={query}
                     onChange={handleSearchChange}
                     onKeyDown={handleKeyDown}
+                    ref={searchInputRef}
                 />
             </label>
             <span className="powered-by-ai">
