@@ -27,6 +27,7 @@ Functions:
 """
 
 import os
+import sys
 import logging
 import random
 
@@ -131,6 +132,9 @@ def _generate_code(source_chunks: list, gpt_chat: tuple) -> str:
     try:
         response_content = get_gpt_response(gpt_chat, prompt)
         return _crop_code(response_content)
+    except (OpenAIError.insufficient_balance()) as e:
+        logging.error(e)
+        sys.exit(1)
     except (ValidationError, ModuleError, OpenAIError) as e:
         logging.error(e)
         return ""

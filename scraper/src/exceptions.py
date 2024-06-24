@@ -70,7 +70,7 @@ class ValidationError(Exception):
         Returns:
             ValidationError: An instance of ValidationError.
         """
-        return cls(f"{name} must be two words or longer")
+        return cls(f"'{name}' must be two words or longer")
 
     @classmethod
     def name_not_in_source(cls, name):
@@ -166,6 +166,16 @@ class OpenAIError(Exception):
     def __init__(self, message="Error"):
         self.message = f"OpenAI API: {message}"
         super().__init__(self.message)
+
+    @classmethod
+    def insufficient_balance(cls):
+        """
+        Creates an OpenAIError for insufficient balance.
+
+        Returns:
+            OpenAIError: An instance of OpenAIError.
+        """
+        return cls("Insufficient balance")
 
     @classmethod
     def client_required(cls):
