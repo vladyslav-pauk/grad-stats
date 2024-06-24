@@ -2,12 +2,10 @@ import argparse
 
 import pandas as pd
 
-from .src.module_manager import generate_search_module, validate_search_module
 from .src.program_page import get_page, get_pagination, scrape_data_from_pages
 from .src.placement_page import update_placement
 from .src.database import update_dataset
 from .src.utils import read_programs, load_logging
-from .src.exceptions import ValidationError, ModuleError
 
 
 def main(filename: str) -> pd.DataFrame:
@@ -54,6 +52,9 @@ if __name__ == '__main__':
     else:
         new_data = main(args.file)
 
+
+# todo: fix sorting
+# todo: invalid dates
 
 # todo: README
 # todo: report

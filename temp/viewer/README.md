@@ -12,7 +12,7 @@ The web interface consists of the following pages:
 
 The home page provides an overview of the dataset and allows users to explore the data.
 
-By clicking the `Explore DataTable` button, users can view the aggregated data and statistical profiling of the dataset.
+By clicking the `Explore StudentData` button, users can view the aggregated data and statistical profiling of the dataset.
 
 ### Programs Page 
 
@@ -55,7 +55,7 @@ Access the application through a web browser at `http://<HOST>:<PORT>`, where `<
 
 ### Using the Application
 
-Explore the entire dataset using "Explore DataTable" button on the home page.
+Explore the entire dataset using "Explore StudentData" button on the home page.
 
 Use "Programs" page to filter individual programs.
 
@@ -63,5 +63,5 @@ Use "Programs" page to filter individual programs.
 - `app.py`: Main Flask application setup and routes.
 - `templates/`: HTML templates for the web application.
 - `static/`: Static files (e.g., CSS, JavaScript) for the web application.
-- `src/models.py`: DataTable models for the application.
+- `src/models.py`: StudentData models for the application.
 - `src/views.py`: View functions for the application.

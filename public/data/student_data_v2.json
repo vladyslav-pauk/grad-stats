@@ -18,6 +18,27 @@
         "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
     },
     {
+        "Name": "Alexandra (Sasha) Alekseyeva",
+        "University": "Vanderbilt University",
+        "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
+        "Start_Date": "2015-12-07 00:00:00",
+        "End_Date": "2017-02-21 00:00:00",
+        "Active": false,
+        "Years": 1.2101300479123889,
+        "Snapshots": [
+            "http://web.archive.org/web/20151207093530/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20160206181108/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20160407161722/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20160607131256/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20160813035915/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20161012211649/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20161224085327/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20170221080311/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
+    },
+    {
         "Name": "Alyssa Lowery",
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -46,9 +67,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2023-03-25 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 1.2457221081451062,
+        "Years": 1.2484599589322383,
         "Snapshots": [
             "http://web.archive.org/web/20230325204236/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20230530020523/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -108,9 +129,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2020-10-24 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 3.6605065023956196,
+        "Years": 3.6632443531827517,
         "Snapshots": [
             "http://web.archive.org/web/20201024095239/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20210116094444/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -133,9 +154,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2023-09-30 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 0.7282683093771389,
+        "Years": 0.731006160164271,
         "Snapshots": [
             "http://web.archive.org/web/20230930034540/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20240227023706/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -172,9 +193,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2023-09-30 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 0.7282683093771389,
+        "Years": 0.731006160164271,
         "Snapshots": [
             "http://web.archive.org/web/20230930034540/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20240227023706/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -299,13 +320,27 @@
         "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
     },
     {
+        "Name": "Dylan Shaul",
+        "University": "Vanderbilt University",
+        "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
+        "Start_Date": "2018-10-22 00:00:00",
+        "End_Date": "2018-10-22 00:00:00",
+        "Active": false,
+        "Years": 0.0,
+        "Snapshots": [
+            "http://web.archive.org/web/20181022043255/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
+    },
+    {
         "Name": "Eli Aleinikoff",
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2023-03-25 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 1.2457221081451062,
+        "Years": 1.2484599589322383,
         "Snapshots": [
             "http://web.archive.org/web/20230325204236/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20230530020523/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -322,9 +357,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2022-02-11 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 2.3600273785078714,
+        "Years": 2.3627652292950034,
         "Snapshots": [
             "http://web.archive.org/web/20220211140404/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20230325204236/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -363,6 +398,27 @@
         "Years": 0.0,
         "Snapshots": [
             "http://web.archive.org/web/20181022043255/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students"
+        ],
+        "Placement": true,
+        "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
+    },
+    {
+        "Name": "Elizabeth Lanphier (nee Barone)",
+        "University": "Vanderbilt University",
+        "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
+        "Start_Date": "2015-12-07 00:00:00",
+        "End_Date": "2017-02-21 00:00:00",
+        "Active": false,
+        "Years": 1.2101300479123889,
+        "Snapshots": [
+            "http://web.archive.org/web/20151207093530/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20160206181108/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20160407161722/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20160607131256/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20160813035915/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20161012211649/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20161224085327/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20170221080311/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students"
         ],
         "Placement": true,
         "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
@@ -414,9 +470,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2016-10-12 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 7.693360711841205,
+        "Years": 7.696098562628337,
         "Snapshots": [
             "http://web.archive.org/web/20161012211649/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20161224085327/http://as.vanderbilt.edu:80/philosophy/people/index-faculty.php?group=graduate-students",
@@ -558,9 +614,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2022-02-11 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 2.3600273785078714,
+        "Years": 2.3627652292950034,
         "Snapshots": [
             "http://web.archive.org/web/20220211140404/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20230325204236/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -599,9 +655,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2023-09-30 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 0.7282683093771389,
+        "Years": 0.731006160164271,
         "Snapshots": [
             "http://web.archive.org/web/20230930034540/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20240227023706/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -616,9 +672,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2023-09-30 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 0.7282683093771389,
+        "Years": 0.731006160164271,
         "Snapshots": [
             "http://web.archive.org/web/20230930034540/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20240227023706/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -649,9 +705,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2020-10-24 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 3.6605065023956196,
+        "Years": 3.6632443531827517,
         "Snapshots": [
             "http://web.archive.org/web/20201024095239/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20210116094444/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -825,9 +881,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2023-09-30 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 0.7282683093771389,
+        "Years": 0.731006160164271,
         "Snapshots": [
             "http://web.archive.org/web/20230930034540/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20240227023706/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -874,6 +930,23 @@
         "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
     },
     {
+        "Name": "Peiying Yang",
+        "University": "Vanderbilt University",
+        "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
+        "Start_Date": "2023-09-30 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.731006160164271,
+        "Snapshots": [
+            "http://web.archive.org/web/20230930034540/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20240227023706/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
+            "http://web.archive.org/web/20240425095557/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
+            "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
+    },
+    {
         "Name": "Rachael Yonek",
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -899,9 +972,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2018-10-22 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 5.66735112936345,
+        "Years": 5.670088980150582,
         "Snapshots": [
             "http://web.archive.org/web/20181022043255/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20201024095239/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -1058,9 +1131,9 @@
         "University": "Vanderbilt University",
         "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
         "Start_Date": "2020-10-24 00:00:00",
-        "End_Date": "2024-06-22 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
         "Active": true,
-        "Years": 3.6605065023956196,
+        "Years": 3.6632443531827517,
         "Snapshots": [
             "http://web.archive.org/web/20201024095239/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
             "http://web.archive.org/web/20210116094444/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
@@ -1188,17 +1261,731 @@
         "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
     },
     {
-        "Name": "Peiying Yang",
-        "University": "Vanderbilt University",
-        "URL": "https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students",
-        "Start_Date": "2023-09-30 00:00:00",
-        "End_Date": "2023-09-30 00:00:00",
-        "Active": false,
+        "Name": "Tavish Farrell",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=10",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
         "Years": 0.0,
         "Snapshots": [
-            "http://web.archive.org/web/20230930034540/https://as.vanderbilt.edu/philosophy/people/index-faculty.php?group=graduate-students"
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=10"
         ],
         "Placement": false,
-        "PlacementURL": "https://as.vanderbilt.edu/philosophy/graduateprogram/placement.php"
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Taylor Aitken",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=10",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=10"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Thomas (Dan) Morison",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=10",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=10"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Tyra Lennie",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=10",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=10"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Sajan Karn",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Scott Metzger",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Sezen Bektas",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Siddharth Raman",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Stephen Ross",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=9"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Nigel Freno",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Paolo Leone Camporese",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Paul O'Hagan",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Rich Neels",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8"
+        ],
+        "Placement": true,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Robert Holley",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=8"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Matthew Gardhouse",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Maxim Leonov",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7"
+        ],
+        "Placement": true,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Miriam Bronski",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Muhammad Omar Khan",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Nicole Lokstadt",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=7"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Kathrin Gardhouse",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=6",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=6"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Katie Bourdeau",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=6",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=6"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Kirk Lougheed",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=6",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=6"
+        ],
+        "Placement": true,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Lucy Langston",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=6",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=6"
+        ],
+        "Placement": true,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Jeffrey Arcand",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=5",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=5"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Jeffrey Elewani",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=5",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=5"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Jo Cenaiko",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=5",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=5"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Fernando Lennertz",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Francesco Stellin Sturino",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Hannah LaGrand",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Harrison Racioppo",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Hedieh Eghtesadi",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Isaac Jiang",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Isaias Ruiz",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=4"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Bryston Langlois",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Corey McKibbin",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Craig Foye",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Daniel Marijanovic",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Eamon Brennan",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Ethan Tion",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=3"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Austin Blackwell",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Austin Noonan",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Ayomide Ajimoko",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Belinda Alievska",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Benjamin Marshall",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Bennet G. Soenen",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Brent Odland",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/?pg=2"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Aaron Jeffrey Coletti",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Aaron Roberts",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/"
+        ],
+        "Placement": true,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Alana Jolly",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Alexia Cipriani",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Amir Ganjavie",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
+    },
+    {
+        "Name": "Ashlynn Whalley",
+        "University": "McMaster University",
+        "URL": "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students",
+        "Start_Date": "2024-06-23 00:00:00",
+        "End_Date": "2024-06-23 00:00:00",
+        "Active": true,
+        "Years": 0.0,
+        "Snapshots": [
+            "https://philos.humanities.mcmaster.ca/graduate-programs/graduate-students/"
+        ],
+        "Placement": false,
+        "PlacementURL": "https://philos.humanities.mcmaster.ca/graduate-programs/phd-philosophy/phd-placements/"
     }
 ]

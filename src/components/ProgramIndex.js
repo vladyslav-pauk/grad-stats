@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { formatColumnName } from '../utils/helpers';
+import { formatColumnName, formatValue } from '../utils/helpers';
 import '../App.css';
 
 function ProgramIndex({ programs, onSelectProgram }) {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [hoverIndex, setHoverIndex] = useState(-1);
 
-    const columns = ['program', 'currentlyActive', 'totalEntries', 'originalStartDate', 'averageDuration', 'percentageOfPlacements'];
-
-    const formatColumnName = (column) => {
-        if (column === 'program') return 'Host Institution';
-        if (column === 'totalEntries') return 'Total Students';
-        if (column === 'currentlyActive') return 'Currently Enrolled';
-        if (column === 'percentageOfPlacements') return 'Placement Rate';
-        if (column === 'averageDuration') return 'Time-to-Degree';
-        if (column === 'earliestSnapshot') return 'Earliest Record';
-        if (column === 'originalStartDate') return 'Earliest Record';
-        return column.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    };
+    const columns = ['program', 'currentlyActive', 'totalEntries', 'earliestSnapshot', 'averageDuration', 'percentageOfPlacements'];
 
     const requestSort = (key) => {
         let direction = 'ascending';
@@ -29,8 +18,16 @@ function ProgramIndex({ programs, onSelectProgram }) {
     };
 
     const sortedPrograms = [...programs].sort((a, b) => {
-        const aValue = sortConfig.key === 'percentageOfPlacements' ? parseFloat(a[sortConfig.key]) : a[sortConfig.key];
-        const bValue = sortConfig.key === 'percentageOfPlacements' ? parseFloat(b[sortConfig.key]) : b[sortConfig.key];
+        let aValue = a[sortConfig.key];
+        let bValue = b[sortConfig.key];
+
+        if (sortConfig.key === 'percentageOfPlacements') {
+            aValue = parseFloat(aValue);
+            bValue = parseFloat(bValue);
+        } else if (sortConfig.key === 'earliestSnapshot') {
+            aValue = new Date(aValue);
+            bValue = new Date(bValue);
+        }
 
         if (aValue < bValue) {
             return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -44,10 +41,10 @@ function ProgramIndex({ programs, onSelectProgram }) {
     const tooltipTexts = {
         program: 'The institution offering the program',
         currentlyActive: 'Number of students currently enrolled',
-        totalEntries: 'Cumulative number of enrolled students since the earliest record of the program',
-        percentageOfPlacements: 'Percentage of students placed in jobs',
+        totalEntries: 'Total number of enrolled students since the earliest record of the program',
+        percentageOfPlacements: 'Percentage of students placed in jobs according to the placement page',
         averageDuration: 'Average duration of enrollment, based on data from former students',
-        originalStartDate: 'Earliest record of the program in the web archive',
+        earliestSnapshot: 'Earliest record of the program in the web archive',
     };
 
     return (
@@ -89,16 +86,7 @@ function ProgramIndex({ programs, onSelectProgram }) {
                             <td>{rowIndex + 1}</td>
                             {columns.map((column) => (
                                 <td key={column}>
-                                    {column === 'percentageOfPlacements'
-                                        ? `${parseFloat(program[column]).toFixed(0)}%`
-                                        : column === 'totalEntries' || column === 'currentlyActive' || column === 'percentageOfPlacements'
-                                        ? program[column]
-                                        : column === 'originalStartDate'
-                                        ? new Date(program[column]).toLocaleDateString()
-                                        : program[column].toFixed
-                                        ? program[column].toFixed(1)
-                                        : program[column]
-                                    }
+                                    {formatValue(program[column], program, column)}
                                 </td>
                             ))}
                         </tr>

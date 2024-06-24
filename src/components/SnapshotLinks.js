@@ -1,26 +1,12 @@
 import React, { useState } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { extractDateFromUrl } from "../utils/helpers";
 import '../App.css';
 
 function SnapshotLinks({ stats }) {
     const [sortConfig, setSortConfig] = useState({ key: 'date', direction: '' });
 
     if (!stats) return null;
-
-    const extractDateFromUrl = (url) => {
-        const match = url.match(/web\/(\d{14})/);
-        if (match) {
-            const dateStr = match[1];
-            const year = dateStr.slice(0, 4);
-            const month = dateStr.slice(4, 6);
-            const day = dateStr.slice(6, 8);
-            return { date: new Date(year, month - 1, day), formattedDate: `${month}/${day}/${year}` };
-        }
-        // For non-archived URLs, use the current date
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleDateString();
-        return { date: currentDate, formattedDate };
-    };
 
     const snapshotMap = new Map();
 

@@ -22,7 +22,7 @@ def get_latest_version(data_folder='dataset') -> int:
     versions = []
     full_path = os.path.join(os.getcwd(), data_folder)
     if not os.path.exists(full_path):
-        raise OSError(f"DataTable folder {data_folder} not found.")
+        raise OSError(f"StudentData folder {data_folder} not found.")
 
     for filename in os.listdir(full_path):
         if filename.startswith("student_data_v"):
@@ -68,7 +68,7 @@ def load_dataframe(data_path: str):
         pickle.UnpicklingError, EOFError: If an error occurs during the unpickling process.
     """
     if not os.path.exists(data_path):
-        raise FileNotFoundError(f"DataTable file {data_path} not found.")
+        raise FileNotFoundError(f"StudentData file {data_path} not found.")
 
     try:
         with open(data_path, "rb") as file:

@@ -6,12 +6,14 @@ import logo from './ai-logo.svg';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import UniversityList from './components/UniversityList';
-import DataTable from './components/DataTable';
+import StudentData from './components/StudentData';
 import ProgramSummary from './components/ProgramSummary';
 import SnapshotLinks from './components/SnapshotLinks';
 import ProgramIndex from './components/ProgramIndex';
 import { fetchVersions, fetchStudentData } from './utils/dataFetch';
-import { formatValue, computeProgramSummary, computeProgramIndex } from './utils/helpers';
+import { computeProgramSummary, computeProgramIndex } from './utils/dataProcess';
+import { formatValue } from './utils/helpers';
+// import { updateDatesAndCalculateAverage } from './utils/dataProcess';
 import './App.css';
 
 const App = () => {
@@ -30,12 +32,23 @@ const App = () => {
     const dropdownRef = useRef(null);
     const searchInputRef = useRef(null);
 
+    const formatDatesInData = (data) => {
+        return data.map(item => {
+            const formattedItem = { ...item };
+            Object.keys(formattedItem).forEach(key => {
+                if (key.toLowerCase().includes('date') || key.toLowerCase().includes('time')) {
+                    formattedItem[key] = new Date(formattedItem[key]).toLocaleDateString();
+                }
+            });
+            return formattedItem;
+        });
+    };
+
     useEffect(() => {
         fetchVersions()
             .then(fetchStudentData)
             .then(data => {
                 window.studentData = data;
-                setProgramStatistics(computeProgramIndex(data));
             })
             .catch(error => console.error('Error fetching the JSON data:', error));
     }, []);
@@ -110,19 +123,11 @@ const App = () => {
 
     const handleStatistics = (university = '') => {
         if (!window.studentData) return;
-        const matches = university ? window.studentData.filter(item => item.University.toLowerCase().includes(university.toLowerCase())) : window.studentData;
-        const filteredMatches = matches.map(({ Snapshots, ...rest }) => {
-            Object.keys(rest).forEach(key => {
-                if (key.toLowerCase().includes('date') || key.toLowerCase().includes('time')) {
-                    rest[key] = new Date(rest[key]).toLocaleDateString();
-                }
-            });
-            return { ...rest, Snapshots };
-        });
+        const filteredMatches = university ? window.studentData.filter(item => item.University.toLowerCase().includes(university.toLowerCase())) : window.studentData;
 
         setStats(filteredMatches);
-        setStatistics(computeProgramSummary(filteredMatches));
         setProgramStatistics(computeProgramIndex(window.studentData));
+        setStatistics(computeProgramSummary(filteredMatches));
         setCurrentProgram(university ? university : 'Program Index');
         setActiveTab(university ? 'statistics' : 'programStatistics');
         setUniversities([]);
@@ -161,24 +166,38 @@ const App = () => {
     };
 
     const sortedStats = () => {
-    if (!stats || !sortConfig.key) {
-        return stats;
-    }
-    const sortedData = [...stats];
-    sortedData.sort((a, b) => {
-        const aValue = sortConfig.key === 'percentageOfPlacements' ? parseFloat(a[sortConfig.key]) : a[sortConfig.key];
-        const bValue = sortConfig.key === 'percentageOfPlacements' ? parseFloat(b[sortConfig.key]) : b[sortConfig.key];
+        if (!stats || !sortConfig.key) {
+            return stats;
+        }
+        const sortedData = [...stats];
+        sortedData.sort((a, b) => {
 
-        if (aValue < bValue) {
-            return sortConfig.direction === 'ascending' ? -1 : 1;
-        }
-        if (aValue > bValue) {
-            return sortConfig.direction === 'ascending' ? 1 : -1;
-        }
-        return 0;
-    });
-    return sortedData;
-};
+            let aValue;
+            let bValue;
+
+            aValue = a[sortConfig.key];
+            bValue = b[sortConfig.key];
+
+            if ((sortConfig.key === 'enrollmentDate')) {
+                aValue = new Date(aValue.replace('< ', '').replace('> ', '')).getTime();
+                bValue = new Date(bValue.replace('< ', '').replace('> ', '')).getTime();
+            }
+
+            if ((sortConfig.key === 'timeToDegree')) {
+                aValue = parseFloat(aValue.replace('> ', ''));
+                bValue = parseFloat(bValue.replace('> ', ''));
+            }
+
+            if (aValue < bValue) {
+                return sortConfig.direction === 'ascending' ? -1 : 1;
+            }
+            if (aValue > bValue) {
+                return sortConfig.direction === 'ascending' ? 1 : -1;
+            }
+            return 0;
+        });
+        return sortedData;
+    };
 
     const renderTabs = () => (
         <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} id="uncontrolled-tab-example" className="mt-3">
@@ -193,7 +212,7 @@ const App = () => {
                 </Tab>
             )}
             <Tab eventKey="data" title="Student Data">
-                <DataTable
+                <StudentData
                     stats={sortedStats()}
                     sortConfig={sortConfig}
                     handleSort={handleSort}

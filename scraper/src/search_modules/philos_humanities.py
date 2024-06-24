@@ -1,15 +1,15 @@
 from bs4 import BeautifulSoup
 
 def extract_phd_student_names(source: BeautifulSoup) -> list[str]:
-    student_names = []
-    profile_items = source.find_all('div', class_='profile-item-info')
+    phd_student_names = []
     
-    for item in profile_items:
-        program = item.find('div', class_='profile-item--program').text
-        position = item.find('div', class_='profile-item--position').text
-        
-        if 'PhD' in program and 'Current Students' in position:
-            name = item.find('div', class_='profile-item--name').text.strip()
-            student_names.append(name)
+    profiles = source.find_all("div", class_="profile-item")
     
-    return student_names
+    for profile in profiles:
+        program = profile.find("div", class_="profile-item--program")
+        if program and "PhD" in program.text:
+            name = profile.find("div", class_="profile-item--name")
+            if name:
+                phd_student_names.append(name.text.strip())
+    
+    return phd_student_names

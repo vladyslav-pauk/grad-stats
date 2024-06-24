@@ -1,15 +1,18 @@
 from bs4 import BeautifulSoup
+import re
 
-def extract_phd_student_names(soup: BeautifulSoup) -> list[str]:
-    phd_students = []
-
-    # Find the section where the student details are located
-    students_section = soup.find('div', {'class': 'secmain'})
+def extract_phd_student_names(source: BeautifulSoup) -> list[str]:
+    # List to hold the names of PhD students
+    phd_student_names = []
     
-    if students_section:
-        # Extract names and add them to the list
-        for student_info in students_section.find_all('strong'):
-            student_name = student_info.get_text()
-            phd_students.append(student_name)
+    # We assume that each PhD student's name is wrapped in a <strong> tag within a <td> with class "biolink"
+    # Retrieving all such <td> elements
+    student_entries = source.find_all("td", class_="biolink")
     
-    return phd_students
+    # Iterate through each entry found
+    for entry in student_entries:
+        name_tag = entry.find("strong")
+        if name_tag:
+            phd_student_names.append(name_tag.get_text(strip=True))
+    
+    return phd_student_names

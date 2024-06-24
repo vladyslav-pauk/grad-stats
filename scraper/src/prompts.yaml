@@ -15,7 +15,7 @@ generate_function_prompt: |
 
   Based on the structure and patterns identified in the provided HTML source chunks, write the `extract_phd_student_names` function. Make sure to include the necessary import statements.
 
-  ### Expected Response 
+  ### Expected Response
   ```python
   def extract_phd_student_names(source: BeautifulSoup) -> list[str]:
       # Your code here

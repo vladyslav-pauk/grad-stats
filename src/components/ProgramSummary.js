@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import { formatValue } from '../utils/helpers';
 
 function ProgramSummary({ statistics }) {
     if (!statistics) return null;
@@ -8,18 +9,12 @@ function ProgramSummary({ statistics }) {
         totalEntries,
         percentageOfPlacements,
         currentlyActive,
-        originalStartDate,
+        earliestSnapshot,
         programLink,
         placementLink,
         numberOfSnapshots,
         averageDuration
     } = statistics;
-
-    // const formatColumnName = (column) => {
-    //     if (column === 'Years') return 'Average Duration';
-    //     // return column.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    //     return column
-    // };
 
     const placementRate = `${parseFloat(percentageOfPlacements).toFixed(0)}%`
     const programPage = <a href={programLink} target="_blank" rel="noopener noreferrer">{programLink}</a>
@@ -31,7 +26,7 @@ function ProgramSummary({ statistics }) {
         {label: 'Placement Rate', value: placementRate},
         {label: 'Average Time-to-Degree', value: averageDuration},
         {label: 'Number of Snapshots', value: numberOfSnapshots},
-        {label: 'Earliest Record', value: originalStartDate},
+        {label: 'Earliest Record', value: earliestSnapshot},
         {label: 'Program Page', value: programPage},
         {label: 'Placement Page', value: placementPage}
         // ...Object.keys(otherStats).map(key => ({
@@ -47,7 +42,7 @@ function ProgramSummary({ statistics }) {
                 {rows.map((row, index) => (
                     <tr key={index}>
                         <th>{row.label}</th>
-                        <td>{row.value}</td>
+                        <td>{formatValue(row.value, row, 'value')}</td>
                     </tr>
                 ))}
                 </tbody>

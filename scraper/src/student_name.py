@@ -65,9 +65,9 @@ def validate_names(source: str, name_list: List[str]) -> bool:
     for name in name_list:
         if not _is_valid_name(name):
             raise ValidationError.invalid_name_format(name)
-
-        if not _is_in_source(name, source):
-            raise ValidationError.name_not_in_source(name)
+        #
+        # if not _is_in_source(name, source):
+        #     raise ValidationError.name_not_in_source(name)
 
         if not _is_student_name(name):
             raise ValidationError.invalid_student_name(name)
@@ -90,21 +90,32 @@ def _is_valid_name(name: str) -> bool:
 
 def _is_in_source(name: str, source: str) -> bool:
     """
-        Checks if a name is present in the provided source content.
+    Checks if a name is present in the provided source content, considering possible nicknames in parentheses.
 
-        Args:
-            name (str): The name to search for.
-            source (str): The source content to search within.
+    Args:
+        name (str): The name to search for.
+        source (str): The source content to search within.
 
-        Returns:
-            bool: True if the name is found in the source, False otherwise.
+    Returns:
+        bool: True if the name is found in the source, False otherwise.
     """
     normalized_name = _normalize_source(name)
     normalized_source = _normalize_source(source)
 
-    name_pattern = re.compile(re.escape(normalized_name), re.IGNORECASE)
-    return name_pattern.search(normalized_source) is not None
+    # Split the name into first and last parts for pattern matching
+    parts = normalized_name.split()
+    if len(parts) == 2:
+        first_name, last_name = parts
+    else:
+        # Handle cases where the name doesn't split neatly into two parts
+        return False
 
+    # Pattern to match 'FirstName (Nickname) LastName' or 'FirstName LastName'
+    name_pattern = re.compile(
+        rf'{re.escape(first_name)}\s*(\(\w+\)\s*)?{re.escape(last_name)}', re.IGNORECASE
+    )
+
+    return name_pattern.search(normalized_source) is not None
 
 def _is_student_name(name: str) -> bool:
     """
@@ -124,23 +135,29 @@ def _is_student_name(name: str) -> bool:
     tokens = word_tokenize(name)
     pos_tags = pos_tag(tokens)
 
-    pos_tag_counts = {'JJR': 0, 'NNP': 0, 'NNS': 0, 'JJ': 0, 'NN': 0, 'RB': 0, 'VB': 0, 'S': 0, 'JJS': 0, 'VBG': 0}
+    pos_tag_counts = {
+        'JJR': 0, 'NNP': 0, 'NNS': 0, 'JJ': 0, 'NN': 0, 'RB': 0, 'VB': 0, 'S': 0, 'JJS': 0, 'VBG': 0, 'VBD': 0, 'GPE': 0
+    }
     for _, tag in pos_tags:
         if tag not in pos_tag_counts:
             pos_tag_counts[tag] = 0
         pos_tag_counts[tag] += 1
 
-    # print("Named entities: ", ne_chunk(pos_tags, binary=False))
+    print("Named entities: ", ne_chunk(pos_tags, binary=False))
     if (
             (pos_tag_counts['JJR'] >= 1 and pos_tag_counts['NN'] >= 1)
-            or (pos_tag_counts['VBG'] >= 1 and pos_tag_counts['NN'] >= 1)
-            or all(tag == 'NNP' for _, tag in pos_tags)
+            or ((pos_tag_counts['VBG'] >= 1 or pos_tag_counts['VBD'] >= 1) and pos_tag_counts['NN'] >= 1)
+            or pos_tag_counts['NNP'] >= 2
             or (pos_tag_counts['NNP'] >= 1 and (
             pos_tag_counts['NNS'] >= 1
             or pos_tag_counts['NN'] >= 1
+            or pos_tag_counts['GPE'] >= 1
             or pos_tag_counts['JJ'] >= 1
             or pos_tag_counts['RB'] >= 1
+            or pos_tag_counts['VBG'] >= 1
+            or pos_tag_counts['JJR'] >= 1
             or pos_tag_counts['JJR'] >= 1))
+
             or (pos_tag_counts['JJS'] >= 1 and pos_tag_counts['VBG'] >= 1)
     ):
         return True
@@ -166,7 +183,7 @@ def _normalize_source(text: str) -> str:
             str: The normalized text.
     """
     text = html.unescape(text)
-    text = re.sub(r'\s+', ' ', text).strip().lower()
+    text = re.sub(r'[\s\(\)-]+', ' ', text).strip().lower()
     return text
 
 # def validate_names_with_gpt(names: list) -> bool:

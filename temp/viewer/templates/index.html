@@ -12,12 +12,12 @@
 </div>
 <br><br>
 <div class="center-container">
-    <button id="exploreData">Explore DataTable</button>
+    <button id="exploreData">Explore StudentData</button>
 </div>
 <div id="allData" style="display:none;"></div>
 <script>
     document.getElementById('exploreData').addEventListener('click', function () {
-        // Hide the Explore DataTable button
+        // Hide the Explore StudentData button
         var exploreDataButton = document.getElementById('exploreData');
         exploreDataButton.style.display = 'none';
 
@@ -34,7 +34,7 @@
                 document.getElementById('loadingMessage').remove();
 
                 if (data.profile) {
-                    // Hide the welcome section and the Explore DataTable button
+                    // Hide the welcome section and the Explore StudentData button
                     document.getElementById('welcomeSection').style.display = 'none';
                     exploreDataButton.style.display = 'none';
 
