@@ -25,8 +25,8 @@ export const formatValue = (value, row, column) => {
     if (typeof value === 'number') {
         return value.toFixed(0);
     }
-    if (typeof value === 'string') {
-        return value;
+    if (value === '> 0.00') {
+        return 'N/A';
     }
     return value;
 };
