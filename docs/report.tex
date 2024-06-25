@@ -6,39 +6,327 @@
 
 % Packages
 \usepackage{amsmath}
+\usepackage[margin=0.7in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
+\title{
+    {\small School of Electrical Engineering and Computer Science}
+    \vspace{0.5cm}
+
+    {\small
+
+    Project Report
+
+    \vspace{1cm}
+
+    Advisor: Dr. William Braynen
+
+    Assistannt: Dr. Vladiszlav Pauk}
+    \vspace{1cm}
+
+    Graduation and Placement Trends in Philosophy Graduate Programs Using Automatic Web Scraping
+    \date{}
+}
 
 % Document
 \begin{document}
 
+\maketitle
+\abstract{This project investigates the enrollment and placement trends in Philosophy graduate programs throughout the United States and Canada.
+By leveraging web archive service, we construct detailed enrollment timelines for numerous graduate programs. The data collection process is facilitated through an advanced web scraping pipeline, which utilizes generative AI scripting to streamline and scale the extraction process.
+%This approach not only enhances the efficiency and accuracy of data retrieval but also ensures the scalability necessary for handling large datasets.
+To provide an interactive interface for exploring and analyzing the collected data, we develop a simple web-application, Grad Stats. The application allows users to search for universities, view detailed statistics on student data, and gain insights into various graduate programs.
+}
+
 \section{Overview and Motivation}
 
-The purpose of this project is to analyze the enrollment and placement trends in Philosophy graduate programs across the United States and Canada.
-This analysis is conducted by leveraging web scraping techniques to extract data from university webpages, including information from the Wayback Machine web archive.
-The aim is to provide a detailed, longitudinal view of student enrollment durations and placement outcomes, facilitating a deeper understanding of program effectiveness and student progress.
+
+Enrollment, graduation and placement data is a valuable resource for academic research, program evaluation, student recruitment, and ranking.
+Across various disciplines, data reporting varies in terms of consistency and accessibility.
+Centralized databases akin to the National Science Foundation's Survey of Earned Doctorates\footnote{\url{https://ncses.nsf.gov/surveys/earned-doctorates}} and grant-funded initiatives like the Council of Graduate Schools' PhD Completion Project\footnote{\url{https://cgsnet.org/data-insights/diversity-equity-inclusiveness/degree-completion/ph-d-completion-project}} provide aggregate statistics, but lack information on individual programs.
+Accessing such data is labor-intensive and can be challenging due to legacy systems, privacy concerns, and inconsistent reporting practices.
+
+University academic departments often publish lists of current graduate students on their websites, providing insights into the student body of individual programs.
+Philosophy programs, for example, often provide detailed information on current graduate students, including their names, graduation status, and placement outcomes.
+By collecting and analyzing this data over time, we can gain a comprehensive understanding of enrollment trends and assess the outcomes of individual programs.
+%
+The Wayback Machine web archive service captures snapshots of web pages over time, which enables tracking changes in student listings, and enables longitudinal analysis of enrollment.
+By monitoring student names in the webpage over time, we can estimate start and end dates of each student's enrollment, providing access to time-to-degree metrics.
+To assess the outcomes for each student, the placement and graduation information can be retrieved by matching student database against program placement, alumni and other open sources.
+
+Collecting web archive data on graduate students is a challenging task due to the variability in webpage structures, the dynamic nature of web content, and internationalization of names.
+Furthermore, webpages often list supervisors, alumni, and other non-student names, further complicating the extraction process.
+Using standard web scraping techniques and libraries yields limited results, while manual programming of pattern matching is time-consuming, not scalable, and requires manual maintenance and updates.
+
+Recent advancements in Large Language Models (LLMs) have opened new avenues for automating and streamlining code scripting.
+Models like OpenAI's GPT exhibit exceptional capabilities in information retrieval and generation tasks, and became a widespread tool in natural language processing.
+However, the non-deterministic nature of LLMs presents challenges in producing consistently reliable results for direct information retrieval.
+Moreover, performing inference with LLMs on large collections of web pages is computationally intensive, often resulting in significant overhead.
+With targeted prompting, it is possible to generate high-quality code snippets that can be validated and integrated into manually coded pipelines.
+In this way, the strengths of LLMs can be harnessed to automate the generation of web scraping scripts, while maintaining the robustness and reliability of programmatic extraction.
 
 \section{Methodology}
 
-To achieve this, a hybrid approach is employed, combining the strengths of Large Language Models (LLMs) and programmatic pattern matching.
-The core process involves the automatic generation of Python functions using OpenAI's GPT API to extract names of graduate students from web pages.
-This method ensures adaptability to various non-standardized web structures.
-The methodology includes:
+We estimate student enrollment in a program over time based on the student’s first and last appearances in the web page source.
+The actual enrollment date is not available and is uncorrelated with the snapshot frequency.
+It is assumed to occur between the time of the first appearance and the preceding snapshot.
+In case the first appearance is the first snapshot, the start date is not available.
+The end date is estimated to be sometime after the last appearance but before the next snapshot.
+The duration of the program for each student is calculated as the time elapsed between the estimated start and end dates, given both are available.
+If a student is currently listed on the program webpage it is assumed to be active and the end date is not available.
+We don't consider graduation rate in this module, however our approach can be extended to include this metric.
 
+We estimate the average time-to-degree for the program by calculating the mean duration of all past students.
+Note, that this definition assumes that all students graduated, which may not be the case.
+By extending our model with the graduation information, this can be straightforwardly addressed.
+We don't include the current students in calculating the average time-to-degree, as recent students may introduce bias towards shorter durations.
+
+We make several assumptions to estimate the enrollment duration and program completion:
 \begin{itemize}
-\item \textbf{Data Retrieval}: Extracting data from university webpages and Wayback Machine archives.
-\item \textbf{Automatic Code Generation}: Using GPT API to generate functions for extracting names.
-\item \textbf{Validation}: Iteratively validating and refining the generated functions to ensure accuracy.
-\item \textbf{Data Processing}: Structuring the extracted data into a comprehensive dataset.
+\item The student's name is listed on the program webpage at least once during their enrollment.
+\item The student's name is listed on the program webpage only while they are enrolled.
+\item The extracted current students did not graduate yet.
+\item A student's name is a unique identifier.
+\item Program and placement pages are up-to-date and accurate.
+\item The start (end) date are estimated as the date of the first (last) snapshot where the student is listed.
 \end{itemize}
 
-\section{Technologies}
+Since our aim is estimating cumulative enrollment and duration of the program, rather than individual student data, the assumptions are reasonable and do not significantly affect the overall accuracy of the analysis.
+Philosophy programs are typically accurate in listing current students and placement records, and the data is often updated regularly.
+Name collisions are rare.
 
-\subsection{Data Scraping}
+Besides currently enrolled students, the web page may list faculty, alumni, or students who have already graduated.
+To address this, we design the search functions so that they target the currently active students specifically, filtering out other entities.
+With a minimal intervention, we can increase accuracy of the name search by manually validating the extracted names as a part of the generation pipeline.
+%
+The frequency of snapshot captures varies per website.
+Websites in the "Worldwide Web Crawls" are included in a "crawl list", with the site archived once per crawl. A crawl can take months or even years to complete, depending on size.
+See Wikipedia\footnote{\url{https://en.wikipedia.org/wiki/Wayback\_Machine}} and Wayback Machine Help\footnote{\url{https://help.archive.org}} for more information.
 
-    To streamline the process of data retrieval, a custom data scraping tool is developed. This tool integrates with the Wayback Machine to access archived snapshots of web pages, ensuring a historical view of student enrollment.
+We propose a hybrid approach that combines the strengths of LLMs with programmatic pattern matching, and facilitates automating the process of extracting information from non-standardized web pages.
+By leveraging OpenAI's GPT API, we streamline generation of Python functions that extract names from web page sources, providing a scalable and adaptable solution for data collection, while maintaining robustness and reliability of programmatic extraction.
+%
+The core of the module's methodology is the use of OpenAI's GPT API to generate Python functions for name extraction.
+Using GPT-generated functions offers a non-deterministic solution providing means for automatic adaption to changes in the web page structure.
+This approach is agnostic to the specific structure of web pages, making it adaptable to various non-standardized sources.
+The generated functions are deterministic, providing robustness and reproducibility in the extraction process.
 
-\subsection{Data Access}
+Using GPT for code generation, rather than relying on direct inference, mitigates the overheads associated with traditional NLP model approaches, which require iterative execution of resource-intensive models on extensive datasets. Additionally, pattern matching is computationally efficient.
+%
+Generated code undergoes programmatic validation to ensure it meets the required functionality and correctness. To enhance robustness and reliability, users are prompted to verify the correctness of the generated code. If the generated function returns incorrect results, users can provide feedback to the model, facilitating continuous improvement.
+For each generated function, the user only needs to inspect the extracted names once to verify the correctness of the code.
+%
+The pipeline can automatically adjust to changes in web page structures by re-running the generation process, eliminating the need for manual updates and reducing maintenance demands.
+By modifying the prompt, this approach can be easily adapted to a specific task.
+We can target specifically graduate students, or generally, students with specific traits.
+This is difficult to achieve using NLP models or generic pattern matching without hand-crafted rules.
+
+\subsection{Architecture}
+
+The module architecture is based on three main components: extracting webpage source of snapshots from the web archive, generating Python functions to extract names from the source, and building a database of student information based on extracted data.
+%
+The list of Wayback Machine snapshot URLs is obtained with \texttt{snapshot\_url.py} module.
+The \texttt{program\_page.py} module handles fetching and processing data from snapshots of web pages. These two modules interact with the Wayback Machine API to retrieve the archived web pages.
+
+The student information is retrieved using \texttt{searn\_names.py} module which calls generated search modules to extract names from the source. The placement information is retrieved using the \texttt{placement\_page.py} module which fetches and processes data from the placement pages. The extracted data is processed and stored in a structured format in the database by \texttt{database.py} module.
+%
+The search modules are generated with \texttt{module\_manager.py}. The module interacts with the OpenAI API to generate Python functions via \texttt{gpt\_api.py} module. The validation of the generated functions is performed by verifying extracted names. This is implemented in \texttt{student\_mame.py} module, which handles both programmatic validation and interaction with the user via command line interface.
+
+%\subsection*{Code Generation Pipeline}
+
+The challenges arising related to non-determinism of GPT-based coding are handled via a feedback loop between validation and generation processes.
+%
+The pipeline for code generation involves the following steps:
+
+\begin{enumerate}
+    \item \textbf{Validation}: The \texttt{search\_module} is validated using the \texttt{validate\_function}.
+    \begin{itemize}
+        \item If validation passes, data scraping from archive snapshots proceeds.
+        \item If validation fails, the code is generated using \texttt{generate\_code}.
+    \end{itemize}
+    \item \textbf{Code Generation}: A function is generated to extract names from the web page source using \texttt{generate\_code}.
+    \begin{itemize}
+        \item The generated code is validated with \texttt{validate\_function}.
+        \item If validation passes, the code is saved as a Python file.
+        \item If validation fails, the code is updated using \texttt{update\_code} and revalidated.
+    \end{itemize}
+    \item \textbf{Update Code}: The code is updated based on the chat response and saved to a Python file.
+    \begin{itemize}
+        \item The updated function is validated and saved to a Python file.
+        \item The process is repeated until the function is validated.
+    \end{itemize}
+\end{enumerate}
+
+%\subsection*{Dataset Structure}
+
+The extracted data is stored in a structured format in \texttt{public/data/student\_data\_v<version>.json} with the following schema:
+
+\begin{verbatim}
+dataset (name, university, url, start_date, end_date, active, years, snapshots, placement)
+\end{verbatim}
+
+\noindent where:
+\begin{itemize}
+    \item \underline{\texttt{name}} (str): Full name, primary key of the dataset
+    \item \texttt{university} (str): Host university
+    \item \texttt{url} (str): Current graduate students page
+    \item \texttt{placement\_url} (str): Placements page
+    \item \texttt{start\_date} (str): Start date of the program
+    \item \texttt{end\_date} (str): End date of the program
+    \item \texttt{active} (bool): Whether the student is currently enrolled
+    \item \texttt{years} (int): Duration of the program in years
+    \item \texttt{snapshots} (list): URLs of snapshots
+    \item \texttt{placement} (bool): Whether the student has a placement
+\end{itemize}
+%
+The primary program identifier is the domain name of the university.
+
+%\subsection*{Example JSON Entry}
+%
+%\begin{verbatim}
+%{
+%  "Name": "Brandon Beaver",
+%  "University": "Oregano State University",
+%  "URL": "https://philos.oregano.or/graduate-programs/graduate-students",
+%  "PlacementURL": "https://philos.oregano.or/graduate-programs/placements",
+%  "Start_Date": "2020-01-10 00:00:00",
+%  "End_Date": "2024-06-17 00:00:00",
+%  "Active": true,
+%  "Years": 0.0,
+%  "Snapshots": [
+%    "https://philos.oregano.or/graduate-programs/graduate-students/",
+%    "https://web.archive.org/web/20200110000000/https://philos.oregano.or/graduate-programs/graduate-students/"
+%  ],
+%  "Placement": false
+%}
+%\end{verbatim}
+
+After extracting the data, it is matched against the most recent database version to identify new entries. The new entries are then added to the database, and the database version is updated.
+
+\subsection{Implementation}
+
+%\subsection*{Error-Driven Design}
+
+The implementation of the module is built around efficient error handling, which plays a crucial role in the code generation and validation process. The program involves invoking machine-generated code, which may not always be correct or exhibit the desired behavior or structure. By utilizing exceptions, the architecture efficiently handles the non-deterministic nature of the system and facilitates seamless interaction between the program and the chat API.
+%
+If a function fails validation, it is treated as an exception, and the error is propagated to the GPT API for context-aware function generation. This approach allows for unified handling of validation, module, and server errors within a single feedback interface.
+%
+In the \texttt{exceptions.py} module, we define custom error classes: \texttt{ModuleError}, \texttt{ValidationError}, \texttt{OpenAIError}, and \texttt{WaybackMachineError} to categorize errors from different modules. \texttt{ModuleError} and \texttt{ValidationError} are redirected to the chat API to update the context for function generation. \texttt{OpenAIError} and \texttt{WaybackMachineError} are logged and displayed to the user.
+
+%\subsection*{Wayback Machine Integration}
+
+The module integrates with the Wayback Machine to retrieve archived snapshots of web pages. The \texttt{snapshot\_url.py} module first checks for the availability of snapshots for the given URL and then fetches and parses all available snapshots. A retry mechanism is implemented to handle temporary connection and server errors.
+%
+In Wayback Machine web archive, snapshots of documents and resources are stored with time stamp URLs such as \texttt{20240615142741}. The date of the snapshot is encoded in the URL, allowing for easy retrieval of the snapshot date.
+
+%\subsection*{Code Generation}
+
+The interaction with the OpenAI API is managed by the \texttt{gpt\_api.py} module via predefined prompts. The prompts for the GPT model in \texttt{prompts.yaml} are designed to generate a function that extracts all unique graduate student names from a web page source. It includes the function signature and a high-level description of the required functionality.
+%
+\begin{verbatim}
+setup_prompt: |
+
+  You are an expert in Python and web scraping using
+    BeautifulSoup, HTML, regex and other libraries.
+
+  You have to follow instructions and respond to prompts as precisely as possible.
+
+generate_function_prompt: |
+
+  Your task is to create a function that extracts
+    a list of current graduate student names
+    from an HTML source.
+   The function should be named `extract_phd_student_names` and should take
+    a BeautifulSoup object as input, returning a list of strings where each string
+    is a current PhD student's name.
+   Make sure it only selects all current students.
+
+  Analyze the following HTML source chunks to understand the structure of the web page:
+
+  {html_chunks}
+
+  Based on the structure and patterns identified in the provided HTML source chunks,
+    write the `extract_phd_student_names` function.
+    Make sure to include the necessary import statements.
+
+  ### Expected Response
+
+  def extract_phd_student_names(source: BeautifulSoup) -> list[str]:
+      # Your code here
+
+  This function accurately extracts the names of current PhD students
+    based on the status specified and all information provided in the HTML source.
+
+update_function_prompt: |
+
+  Your task is to update the function `extract_phd_student_names`
+    to fix incorrect behavior.
+  You must use matching patterns and HTML structures in the source.
+
+  The function signature should be
+    `extract_phd_student_names(source: BeautifulSoup) -> list[str]`.
+  In your response, provide only the code with the function
+    and necessary import statements included.
+
+  Names extracted by the previous implementation:
+  {names}
+
+  Error message:
+  {error_message}
+
+  I expect your response to include the following structure:
+
+  from bs4 import BeautifulSoup
+
+  def extract_phd_student_names(source: BeautifulSoup) -> list[str]:
+      <your code here>
+      return students
+
+  This update ensures that the function accurately extracts
+    the names of current PhD students.
+\end{verbatim}
+%
+The response from the GPT model is processed to extract the relevant code within code block markers. The code is then trimmed after the return statement to ensure functionality.
+
+%\subsection*{Parsing Web Page Source}
+
+Some pages include pagination. The \texttt{program\_page.py} module manages it by sequentially extracting names from all pages, using incremental page numbers in the pagination URL query strings (e.g., \texttt{?pg=1}). This process continues until no new pages are detected or the page content is empty.
+%
+The raw HTML content is parsed using the BeautifulSoup library and then broken down into chunks. We randomly sample and present a subset of these chunks to the GPT model for analysis and pattern generation. Sampling has two benefits: it provides a representative view of the page structure and reduces the computational load on the model. In fact, the entire page source won't fit into the GPT model's token limit, so sampling is necessary.
+
+%\subsection*{Scraping Schedule}
+
+The module processes the programs from \texttt{public/programs.csv} file and updates the database after each program scan with new records. In this way, the new data is saved incrementally, allowing for easy tracking of changes and updates. In case of errors, the module logs the error and continues with the next program, ensuring the scraping process is robust and fault-tolerant. Users can monitor the progress and status of the scraping process through the logs, validation output, and the database viewer. When needed, the module can be run for a specific program or a set of programs, allowing for targeted data collection and correction.
+
+%\subsection{Data Scraping}
+
+\section{Data Viewer Application}
 
     For accessing and viewing the extracted data, a data viewer application is developed. This application allows users to query and visualize the dataset, providing insights into enrollment durations and placement rates.
+Grad Stats is a web application designed to provide an interactive interface for exploring and analyzing graduate program data. Users can search for universities, view detailed statistics on student data, and gain insights into various programs.
+
+\subsection{Features}
+
+The application includes a robust search functionality, allowing users to type the name of a university or program in the search bar. As users type, a dropdown list of matching universities appears, and they can use the arrow keys to navigate through this list, pressing enter to select a university. Clicking on a university name in the dropdown displays the relevant statistics. Additionally, if the search query is empty and the search bar is focused, a list of all available programs is displayed, offering automatic suggestions.
+
+Grad Stats provides various data views through multiple tabs. The Overview tab offers a summary of graduate programs, including total entries, currently active students, and placement rates. Clicking on a program name in this tab reveals detailed statistics for that program. The Statistics tab displays placement rates and time-to-degree data through histograms, while the Program Summary tab gives a comprehensive overview of the selected program, detailing the number of currently enrolled students, total students recorded, placement rate, average time-to-degree, and more. The Students tab presents detailed student data, including names, enrollment dates, completion dates, time to degree, and placement status. Finally, the Snapshots tab provides links to snapshots of program data, showing the date of the snapshot and the number of students listed.
+
+The data tables in Grad Stats support sorting functionality, enabling users to sort the data by clicking on column headers. This sorting can be done in ascending or descending order, with the current sort direction indicated by an arrow next to the column header. To help users understand the data better, informative tooltips appear when hovering over column headers, offering additional context about the data represented in each column.
+
+Cross-view navigation is seamlessly integrated into the application. Clicking on a program name in the Programs tab or a university name in the search dropdown displays detailed statistics for that program or university, ensuring users can easily move between different views of the data.
+
+\subsection{Installation and Usage}
+
+To install Grad Stats, clone the repository and navigate to the project directory. Install the dependencies using \texttt{npm install} and start the development server with \texttt{npm start}. The application will be accessible at \url{http://localhost:3000}.
+
+Using Grad Stats is straightforward. Start by typing the name of a university or program in the search bar or press enter to open the overview page. Navigate the dropdown list of universities using the arrow keys, selecting a university to view its detailed statistics. The application’s tabs offer different views: the Graduate Programs tab displays a summary of various programs, the Summary tab provides detailed program statistics, the Student Data tab shows comprehensive student data, and the Snapshots tab links to program data snapshots.
+
+Sorting the data is simple: click on the column headers in any table to sort by that column. Click once to sort in ascending order, and click again to sort in descending order, with an arrow indicating the sort direction. Tooltips on column headers provide additional information to help understand the data.
+
+\subsection{Data Flow}
+
+Grad Stats fetches data from external sources using the \texttt{fetchVersions} and \texttt{fetchStudentData} functions.
+The data is processed to compute program summaries and indexes with functions \texttt{computeProgramSummary} and \texttt{computeProgramIndex}. State management is handled using React hooks, including \texttt{useState}, \texttt{useEffect}, \texttt{useRef}, and \texttt{useCallback}. Based on the state, various components are rendered to display the data to the user, ensuring a smooth and interactive experience.
 
 \section{Results}
 
@@ -57,78 +345,5 @@ The methodology includes:
 
     This project demonstrates the effectiveness of combining LLMs with traditional web scraping techniques to automate and enhance the extraction of valuable academic data.
     The resulting dataset offers insights into the performance and outcomes of Philosophy graduate programs across North America, supporting academic research, program evaluation, and student recruitment efforts.
-
-\section{Acknowledgements}
-
-
-\section{Project Overview}
-
-The Academic Programs Web Scraping Module (SWAP) offers a comprehensive and efficient solution for extracting and performing chronological analysis of graduate student information from graduate program webpages.
-Utilizing the Wayback Machine web archive data and leveraging OpenAI's GPT API for automatic pattern matching generation, SWAP automates the data collection process.
-This project aims to address the challenges associated with manually updating and maintaining detailed records of enrollment, graduation, and placement data for graduate programs.
-
-The value of enrollment, graduation, and placement data for graduate programs cannot be overstated.
-Such data is crucial for academic research, program evaluation, student recruitment, and institutional ranking.
-However, data reporting across disciplines varies in consistency and accessibility.
-While centralized databases like the National Science Foundation's Survey of Earned Doctorates provide aggregate statistics, they lack detailed information on individual programs.
-Initiatives like the Council of Graduate Schools' graduate Completion Project aim to improve data collection and reporting, but challenges such as labor-intensive processes, the need for manual updates, and inconsistent reporting practices persist.
-
-SWAP addresses these challenges by automating the extraction and analysis of graduate student information, thus providing a scalable and adaptable solution that enhances data accuracy and reliability.
-
-\section{Methodology}
-
-The SWAP methodology combines the strengths of Large Language Models (LLMs) with programmatic pattern matching to automate the extraction of information from non-standardized web pages. The core methodology involves the following steps:
-
-\subsection{Enrollment Duration Estimation}
-
-We estimate student enrollment duration based on the student's first and last appearances in the web page source.
-Since the actual enrollment date is uncorrelated with snapshot frequency, it is assumed to occur between the time of the first appearance and the preceding snapshot. If the first appearance is in the earliest snapshot, the start date is estimated using the snapshot date minus a mean time-to-degree heuristic. The end date is estimated to occur sometime after the last appearance but before the next snapshot. The duration of the program for each student is calculated as the time elapsed between the estimated start and end dates.
-
-\subsection{Accuracy and Reliability}
-
-Several assumptions are made to ensure the accuracy and reliability of the data:
-\begin{itemize}
-    \item The student's name is listed on the program webpage at least once during their enrollment.
-    \item The student's name is listed only while they are enrolled.
-    \item The extracted current students have not graduated yet.
-    \item A student's name is a unique identifier.
-    \item Program and placement pages are up-to-date and accurate.
-\end{itemize}
-
-These assumptions allow for reasonable estimations of cumulative enrollment and program duration, while filtering out non-student entities and ensuring data validity.
-
-\subsection{Automatic Code Generation}
-
-A hybrid approach combining LLMs with programmatic pattern matching is employed to generate Python functions that extract names from web page sources. This methodology leverages OpenAI's GPT API to create adaptable functions capable of adjusting to changes in web page structures. The generated functions are deterministic, ensuring robustness and reproducibility in the extraction process.
-
-\section{Implementation}
-
-The implementation of SWAP revolves around efficient error handling and integration with the Wayback Machine to retrieve archived snapshots of web pages. The architecture consists of three main components: extracting webpage sources, generating Python functions for name extraction, and building a structured database of student information.
-
-\subsection{Wayback Machine Integration}
-
-The integration with the Wayback Machine is managed through the `snapshot_url.py` module, which checks for snapshot availability and fetches all available snapshots for a given URL. The snapshots, stored with time-stamped URLs, allow for tracking changes in student listings over time, providing a basis for longitudinal analysis.
-
-\subsection{Code Generation Pipeline}
-
-The code generation pipeline is designed to handle the non-determinism of GPT-based coding through a feedback loop between validation and generation processes. The steps include:
-\begin{enumerate}
-    \item Validation of existing search modules.
-    \item Generation of new code for extracting names if validation fails.
-    \item Iterative validation and updating of generated code until it meets the required functionality.
-\end{enumerate}
-
-This process ensures that the generated code is both accurate and reliable, facilitating the seamless extraction of graduate student information from web pages.
-
-\subsection{Data Parsing and Storage}
-
-Raw HTML content is parsed using the BeautifulSoup library, and the extracted data is stored in a structured format.
-The `public/data/student_data_v<version>.json` file follows a schema that includes fields such as the student's name, university, program URL, start and end dates, enrollment status, duration, and placement information. This structured approach allows for easy tracking of changes and updates to the database.
-
-\section{Conclusion}
-
-The SWAP project provides a scalable and efficient solution for extracting and analyzing graduate student information from graduate program webpages.
-By leveraging the capabilities of LLMs and integrating with the Wayback Machine, SWAP offers a robust methodology for automating data collection and analysis, thereby enhancing the accuracy and reliability of academic program data.
-
 
 \end{document}

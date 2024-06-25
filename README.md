@@ -2,8 +2,7 @@
 
 ## Overview
 
-The Grad Stats is a web application designed to provide an interactive interface for exploring and analyzing graduate program data.
-It allows users to search for universities, view detailed statistics on student data, and gain insights into various programs.
+The Grad Stats application provides an interactive interface for exploring and analyzing the collected data. The application allows users to search for universities, view detailed statistics on student data, and gain insights into various graduate programs. The application features a robust search functionality, multiple data views, sortable tables, and informative tooltips. Users can navigate seamlessly between different views to access comprehensive information about programs and students.
 
 ## Features
 
