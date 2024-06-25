@@ -33,9 +33,11 @@
 
 \maketitle
 \abstract{This project investigates the enrollment and placement trends in Philosophy graduate programs throughout the United States and Canada.
-By leveraging web archive service, we construct detailed enrollment timelines for numerous graduate programs. The data collection process is facilitated through an advanced web scraping pipeline, which utilizes generative AI scripting to streamline and scale the extraction process.
+By leveraging web archive service, we construct detailed enrollment timelines for numerous graduate programs.
+The data collection process is facilitated through an advanced web scraping pipeline, which utilizes generative AI scripting to streamline and scale the extraction process.
 %This approach not only enhances the efficiency and accuracy of data retrieval but also ensures the scalability necessary for handling large datasets.
-To provide an interactive interface for exploring and analyzing the collected data, we develop a simple web-application, Grad Stats. The application allows users to search for universities, view detailed statistics on student data, and gain insights into various graduate programs.
+We provide an interactive interface for exploring and analyzing the collected data via web-application Grad Stats.
+The application allows users to search for universities, view detailed statistics on student data, and gain insights into various graduate programs.
 }
 
 \section{Overview and Motivation}
@@ -62,13 +64,13 @@ Recent advancements in Large Language Models (LLMs) have opened new avenues for 
 Models like OpenAI's GPT exhibit exceptional capabilities in information retrieval and generation tasks, and became a widespread tool in natural language processing.
 However, the non-deterministic nature of LLMs presents challenges in producing consistently reliable results for direct information retrieval.
 Moreover, performing inference with LLMs on large collections of web pages is computationally intensive, often resulting in significant overhead.
-With targeted prompting, it is possible to generate high-quality code snippets that can be validated and integrated into manually coded pipelines.
+On the contrary, with targeted prompting, it is possible to generate high-quality code snippets that can be validated and integrated into manually coded pipelines.
 In this way, the strengths of LLMs can be harnessed to automate the generation of web scraping scripts, while maintaining the robustness and reliability of programmatic extraction.
 
 \section{Methodology}
 
-We estimate student enrollment in a program over time based on the student’s first and last appearances in the web page source.
-The actual enrollment date is not available and is uncorrelated with the snapshot frequency.
+We determine student enrollment in a program over time based on the student’s first and last appearances in the web page source.
+The actual enrollment date is not available and is uncorrelated with the webpage backup frequency.
 It is assumed to occur between the time of the first appearance and the preceding snapshot.
 In case the first appearance is the first snapshot, the start date is not available.
 The end date is estimated to be sometime after the last appearance but before the next snapshot.
@@ -307,7 +309,7 @@ Grad Stats is a web application designed to provide an interactive interface for
 
 \subsection{Features}
 
-The application includes a robust search functionality, allowing users to type the name of a university or program in the search bar. As users type, a dropdown list of matching universities appears, and they can use the arrow keys to navigate through this list, pressing enter to select a university. Clicking on a university name in the dropdown displays the relevant statistics. Additionally, if the search query is empty and the search bar is focused, a list of all available programs is displayed, offering automatic suggestions.
+The application includes a search functionality, allowing users to type the name of a university or program in the search bar. As users type, a dropdown list of matching universities appears, and they can use the arrow keys to navigate through this list, pressing enter to select a university. Clicking on a university name in the dropdown displays the relevant statistics. Additionally, if the search query is empty and the search bar is focused, a list of all available programs is displayed, offering automatic suggestions.
 
 Grad Stats provides various data views through multiple tabs. The Overview tab offers a summary of graduate programs, including total entries, currently active students, and placement rates. Clicking on a program name in this tab reveals detailed statistics for that program. The Statistics tab displays placement rates and time-to-degree data through histograms, while the Program Summary tab gives a comprehensive overview of the selected program, detailing the number of currently enrolled students, total students recorded, placement rate, average time-to-degree, and more. The Students tab presents detailed student data, including names, enrollment dates, completion dates, time to degree, and placement status. Finally, the Snapshots tab provides links to snapshots of program data, showing the date of the snapshot and the number of students listed.
 
@@ -332,18 +334,29 @@ The data is processed to compute program summaries and indexes with functions \t
 
     The analysis focuses on two main features: the placement rate of graduates and the duration of their enrollment in the program.
 
-\subsection{Program Metrics}
-
     The average duration in the program is computed by tracking the first and last appearance of student names in web page snapshots, thereby estimating start and end dates. This metric excludes currently active students to avoid skewing the results.
 
-\subsection{Dataset Statistics}
+    A quarter of the analysed programs have only one snapshot and therefore lack sufficient data to calculate the average duration.
+    We exclude these programs from the cumulative statistics.
+    The remaining programs have an average duration of 2 years and 2 months, with a standard deviation of approximately 10 months.
+    This is less than the typical duration of a Philosophy graduate program, and can be attributed to students that have not completed the program.
+    Indeed, examination of the individual student data reveals that many students were enrolled for short durations of less than a year, suggesting that they may have dropped out or transferred to other programs.
+    To address this issue, we can extend the analysis to include graduation information, which would provide a more accurate estimate of the average time-to-degree, as well as the graduation and attrition rates.
+    Furthermore, the average duration is underestimated due to the lock of data on past graduates who graduated before the first snapshot.
+    Given that the archive history is limited to the last 5-10 years, and the typical duration of a Philosophy graduate program is 5-7 years, this is a source of significant bias.
 
-    The dataset is structured with fields such as student name, university, URL, start and end dates, active status, duration, snapshots, and placement status.
-    This structure provides a comprehensive view of individual student trajectories within their programs.
+    The placement rate is calculated by matching student names against placement records.
+    The average placement rate across all programs is 22\%, with a standard deviation of 10\%.
+    Low placement rates are explained by inconsistent reporting practices in reporting non-academic placements, as well as the fact that we consider the cohort of all graduate students rather than targeting PhD students specifically.
+    This can be straightforwardly addressed by selecting only PhD programs and tuning the search prompts.
+    Furthermore, the placement rate is likely underestimated due to the lack of data on recent graduates, who may not have had time to secure placements.
+    Given that the typically the archive history is limited to the last 5 years, many recent graduates are not included in the placement webpages, and at the same time many placed graduates are not accessible due to the lack of snapshots.
 
 \section{Conclusion}
 
-    This project demonstrates the effectiveness of combining LLMs with traditional web scraping techniques to automate and enhance the extraction of valuable academic data.
-    The resulting dataset offers insights into the performance and outcomes of Philosophy graduate programs across North America, supporting academic research, program evaluation, and student recruitment efforts.
+    This project demonstrates the potential of combining LLMs with traditional web scraping techniques to automate and enhance the extraction of chronological data from web sources.
+    Our approach provides an alternative way access the time-to-degree metric using information from the institutions hosting the academic programs without requesting this information directly.
+    Furthermore, it provides an insight into the enrollment history for each program, the information that is often only available to the university administrations and partner organizations, based on only public sources.
+    The main limitations of the method are due to a limited observation time and the lack of the completion information.
 
 \end{document}
