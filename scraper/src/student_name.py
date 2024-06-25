@@ -27,12 +27,9 @@ import re
 import html
 from typing import List
 
-from nltk import word_tokenize, pos_tag, ne_chunk
-
-from .utils import load_nltk, load_sys_path
+from .utils import load_sys_path
 from .exceptions import ValidationError
 
-load_nltk()
 load_sys_path()
 
 
@@ -64,12 +61,12 @@ def validate_names(source: str, name_list: List[str]) -> bool:
     for name in name_list:
         if not _is_valid_name(name):
             raise ValidationError.invalid_name_format(name)
-        #
+
         # if not _is_in_source(name, source):
         #     raise ValidationError.name_not_in_source(name)
 
-        # if not _is_student_name(name):
-        #     raise ValidationError.invalid_student_name(name)
+        if not _is_student_name(name):
+            raise ValidationError.invalid_student_name(name)
 
     return True
 
@@ -101,15 +98,12 @@ def _is_in_source(name: str, source: str) -> bool:
     normalized_name = _normalize_source(name)
     normalized_source = _normalize_source(source)
 
-    # Split the name into first and last parts for pattern matching
     parts = normalized_name.split()
     if len(parts) == 2:
         first_name, last_name = parts
     else:
-        # Handle cases where the name doesn't split neatly into two parts
         return False
 
-    # Pattern to match 'FirstName (Nickname) LastName' or 'FirstName LastName'
     name_pattern = re.compile(
         rf'{re.escape(first_name)}\s*(\(\w+\)\s*)?{re.escape(last_name)}', re.IGNORECASE
     )
@@ -131,45 +125,7 @@ def _is_student_name(name: str) -> bool:
     if name.startswith('Dr.') or name.startswith('Prof.'):
         return False
 
-    tokens = word_tokenize(name)
-    pos_tags = pos_tag(tokens)
-
-    pos_tag_counts = {
-        'JJR': 0, 'NNP': 0, 'NNS': 0, 'JJ': 0, 'NN': 0, 'RB': 0, 'VB': 0, 'S': 0, 'JJS': 0, 'VBG': 0, 'VBD': 0, 'MD': 0, 'GPE': 0
-    }
-    for _, tag in pos_tags:
-        if tag not in pos_tag_counts:
-            pos_tag_counts[tag] = 0
-        pos_tag_counts[tag] += 1
-
-    # print("Named entities: ", ne_chunk(pos_tags, binary=False))
-    if (
-            (pos_tag_counts['JJR'] >= 1 and pos_tag_counts['NN'] >= 1)
-            or (pos_tag_counts['MD'] >= 1 and pos_tag_counts['VB'] >= 1)
-            or ((pos_tag_counts['VBG'] >= 1 or pos_tag_counts['VBD'] >= 1) and pos_tag_counts['NN'] >= 1)
-            or pos_tag_counts['NNP'] >= 2
-            or (pos_tag_counts['NNP'] >= 1 and (
-            pos_tag_counts['NNS'] >= 1
-            or pos_tag_counts['NN'] >= 1
-            or pos_tag_counts['GPE'] >= 1
-            or pos_tag_counts['JJ'] >= 1
-            or pos_tag_counts['RB'] >= 1
-            or pos_tag_counts['VBG'] >= 1
-            or pos_tag_counts['JJR'] >= 1
-            or pos_tag_counts['JJR'] >= 1))
-
-            or (pos_tag_counts['JJS'] >= 1 and pos_tag_counts['VBG'] >= 1)
-    ):
-        return True
-
-    return False
-    # if all(tag == 'NNP' for _, tag in pos_tags):
-    #     return True
-    # for chunk in named_entities:
-    #     if hasattr(chunk, 'label') and chunk.label() in {'PERSON', 'GPE'}:
-    #         return True
-    # if (pos_tag_counts['JJR'] >= 1 or pos_tag_counts['NNP'] >= 1 or pos_tag_counts['NNS']) and (pos_tag_counts['JJ'] >= 1 or pos_tag_counts['NN'] >= 1 or pos_tag_counts['RB'] or pos_tag_counts['VB'] >= 1 or pos_tag_counts['S'] >= 1):
-    #     return True
+    return True
 
 
 def _normalize_source(text: str) -> str:
@@ -185,69 +141,3 @@ def _normalize_source(text: str) -> str:
     text = html.unescape(text)
     text = re.sub(r'[\s\(\)-]+', ' ', text).strip().lower()
     return text
-
-# def validate_names_with_gpt(names: list) -> bool:
-#     from .utils import init_gpt_chat
-#     from .exceptions import OpenAIError
-#
-#     MODEL_V = "gpt-4-turbo"
-#     client_v, prompts, _ = init_gpt_chat()
-#     try:
-#         if client_v is None:
-#             raise OpenAIError.client_required()
-#
-#         # httpx_logger = logging.getLogger("httpx")
-#         # httpx_logger.setLevel(logging.WARNING)
-#         if len(names) == 0:
-#             return False
-#
-#         prompt = prompts['validate_names_prompt'].format(names=str(names))
-#         # print("Validation prompt:", prompt)
-#         response = client_v.chat.completions.create(
-#             messages=[{"role": "user", "content": prompt}],
-#             model=MODEL_V,
-#         )
-#         validation_result = response.choices[0].message.content.strip().lower()
-#         # print("Validation result:", validation_result)
-#         if not "all items are valid names" in validation_result:
-#             raise ValidationError(validation_result)
-#     except Exception as e:
-#         raise e
-
-# def is_student_name(name: str) -> bool:
-#     ner_tagger = load_stanford_ner()
-#     if name.startswith('Dr.'):
-#         return False
-#
-#     tokens = word_tokenize(name)
-#     ner_tags = ner_tagger.tag(tokens)
-#
-#     print(ner_tags)  # Debugging line to see the NER tags
-#
-#     for tag in ner_tags:
-#         if tag[1] == 'PERSON':
-#             return True
-#
-#     # Additional heuristic: Check if all tokens are proper nouns (NNP)
-#     pos_tags = pos_tag(tokens)
-#     if all(tag == 'NNP' for word, tag in pos_tags):
-#         return True
-#
-#     return False
-
-# if __name__ == "__main__":
-#     with open('../../public/urls.csv', 'r') as file:
-#         urls = [url.split(' ')[0] for url in file.readlines()]
-#
-#     for url in urls:
-#         print("Processing URL:", url)
-#         html_source = requests.get(url).text
-#         filepath = extract_filepath(url)
-#         department, university = dep_uni_name(filepath)
-#
-#         names = search_names(html_source, filepath)
-#         print("Extracted Names:", names)
-#         print("University:", university)
-#         print("Department:", department)
-#         is_valid = validate_names(html_source, names)
-#         print("Validation Result:", is_valid)

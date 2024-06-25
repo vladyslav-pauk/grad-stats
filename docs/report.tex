@@ -12,11 +12,16 @@
 
 \section{Overview and Motivation}
 
-The purpose of this project is to analyze the enrollment and placement trends in Philosophy graduate programs across the United States and Canada. This analysis is conducted by leveraging web scraping techniques to extract data from university webpages, including information from the Wayback Machine web archive. The aim is to provide a detailed, longitudinal view of student enrollment durations and placement outcomes, facilitating a deeper understanding of program effectiveness and student progress.
+The purpose of this project is to analyze the enrollment and placement trends in Philosophy graduate programs across the United States and Canada.
+This analysis is conducted by leveraging web scraping techniques to extract data from university webpages, including information from the Wayback Machine web archive.
+The aim is to provide a detailed, longitudinal view of student enrollment durations and placement outcomes, facilitating a deeper understanding of program effectiveness and student progress.
 
 \section{Methodology}
 
-To achieve this, a hybrid approach is employed, combining the strengths of Large Language Models (LLMs) and programmatic pattern matching. The core process involves the automatic generation of Python functions using OpenAI's GPT API to extract names of PhD students from web pages. This method ensures adaptability to various non-standardized web structures. The methodology includes:
+To achieve this, a hybrid approach is employed, combining the strengths of Large Language Models (LLMs) and programmatic pattern matching.
+The core process involves the automatic generation of Python functions using OpenAI's GPT API to extract names of graduate students from web pages.
+This method ensures adaptability to various non-standardized web structures.
+The methodology includes:
 
 \begin{itemize}
 \item \textbf{Data Retrieval}: Extracting data from university webpages and Wayback Machine archives.
@@ -58,11 +63,17 @@ To achieve this, a hybrid approach is employed, combining the strengths of Large
 
 \section{Project Overview}
 
-The Academic Programs Web Scraping Module (SWAP) offers a comprehensive and efficient solution for extracting and performing chronological analysis of PhD student information from graduate program webpages. Utilizing the Wayback Machine web archive data and leveraging OpenAI's GPT API for automatic pattern matching generation, SWAP automates the data collection process. This project aims to address the challenges associated with manually updating and maintaining detailed records of enrollment, graduation, and placement data for PhD programs.
+The Academic Programs Web Scraping Module (SWAP) offers a comprehensive and efficient solution for extracting and performing chronological analysis of graduate student information from graduate program webpages.
+Utilizing the Wayback Machine web archive data and leveraging OpenAI's GPT API for automatic pattern matching generation, SWAP automates the data collection process.
+This project aims to address the challenges associated with manually updating and maintaining detailed records of enrollment, graduation, and placement data for graduate programs.
 
-The value of enrollment, graduation, and placement data for PhD programs cannot be overstated. Such data is crucial for academic research, program evaluation, student recruitment, and institutional ranking. However, data reporting across disciplines varies in consistency and accessibility. While centralized databases like the National Science Foundation's Survey of Earned Doctorates provide aggregate statistics, they lack detailed information on individual programs. Initiatives like the Council of Graduate Schools' PhD Completion Project aim to improve data collection and reporting, but challenges such as labor-intensive processes, the need for manual updates, and inconsistent reporting practices persist.
+The value of enrollment, graduation, and placement data for graduate programs cannot be overstated.
+Such data is crucial for academic research, program evaluation, student recruitment, and institutional ranking.
+However, data reporting across disciplines varies in consistency and accessibility.
+While centralized databases like the National Science Foundation's Survey of Earned Doctorates provide aggregate statistics, they lack detailed information on individual programs.
+Initiatives like the Council of Graduate Schools' graduate Completion Project aim to improve data collection and reporting, but challenges such as labor-intensive processes, the need for manual updates, and inconsistent reporting practices persist.
 
-SWAP addresses these challenges by automating the extraction and analysis of PhD student information, thus providing a scalable and adaptable solution that enhances data accuracy and reliability.
+SWAP addresses these challenges by automating the extraction and analysis of graduate student information, thus providing a scalable and adaptable solution that enhances data accuracy and reliability.
 
 \section{Methodology}
 
@@ -70,7 +81,8 @@ The SWAP methodology combines the strengths of Large Language Models (LLMs) with
 
 \subsection{Enrollment Duration Estimation}
 
-We estimate student enrollment duration based on the student's first and last appearances in the web page source. Since the actual enrollment date is uncorrelated with snapshot frequency, it is assumed to occur between the time of the first appearance and the preceding snapshot. If the first appearance is in the earliest snapshot, the start date is estimated using the snapshot date minus a mean time-to-degree heuristic. The end date is estimated to occur sometime after the last appearance but before the next snapshot. The duration of the program for each student is calculated as the time elapsed between the estimated start and end dates.
+We estimate student enrollment duration based on the student's first and last appearances in the web page source.
+Since the actual enrollment date is uncorrelated with snapshot frequency, it is assumed to occur between the time of the first appearance and the preceding snapshot. If the first appearance is in the earliest snapshot, the start date is estimated using the snapshot date minus a mean time-to-degree heuristic. The end date is estimated to occur sometime after the last appearance but before the next snapshot. The duration of the program for each student is calculated as the time elapsed between the estimated start and end dates.
 
 \subsection{Accuracy and Reliability}
 
@@ -106,15 +118,17 @@ The code generation pipeline is designed to handle the non-determinism of GPT-ba
     \item Iterative validation and updating of generated code until it meets the required functionality.
 \end{enumerate}
 
-This process ensures that the generated code is both accurate and reliable, facilitating the seamless extraction of PhD student information from web pages.
+This process ensures that the generated code is both accurate and reliable, facilitating the seamless extraction of graduate student information from web pages.
 
 \subsection{Data Parsing and Storage}
 
-Raw HTML content is parsed using the BeautifulSoup library, and the extracted data is stored in a structured format. The `public/data/student_data_v<version>.json` file follows a schema that includes fields such as the student's name, university, program URL, start and end dates, enrollment status, duration, and placement information. This structured approach allows for easy tracking of changes and updates to the database.
+Raw HTML content is parsed using the BeautifulSoup library, and the extracted data is stored in a structured format.
+The `public/data/student_data_v<version>.json` file follows a schema that includes fields such as the student's name, university, program URL, start and end dates, enrollment status, duration, and placement information. This structured approach allows for easy tracking of changes and updates to the database.
 
 \section{Conclusion}
 
-The SWAP project provides a scalable and efficient solution for extracting and analyzing PhD student information from graduate program webpages. By leveraging the capabilities of LLMs and integrating with the Wayback Machine, SWAP offers a robust methodology for automating data collection and analysis, thereby enhancing the accuracy and reliability of academic program data.
+The SWAP project provides a scalable and efficient solution for extracting and analyzing graduate student information from graduate program webpages.
+By leveraging the capabilities of LLMs and integrating with the Wayback Machine, SWAP offers a robust methodology for automating data collection and analysis, thereby enhancing the accuracy and reliability of academic program data.
 
 
 \end{document}

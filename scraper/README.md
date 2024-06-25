@@ -1,6 +1,6 @@
 # Web Scraping Module
 
-This web scraping module is designed to automatically extract PhD student information from university program pages.
+This web scraping module is designed to automatically extract graduate student information from university program pages.
 Leveraging Wayback Machine web archive service and GPT-based code generation, this module offers a robust, scalable and flexible solution for data scraping.
 
 ## Table of Contents
@@ -27,11 +27,11 @@ Leveraging Wayback Machine web archive service and GPT-based code generation, th
 
 ## Overview
 
-This module automates the extraction and processing of PhD student information from university websites. It utilizes a combination of web scraping techniques and GPT-generated code to ensure accuracy and efficiency.
+This module automates the extraction and processing of graduate student information from university websites. It utilizes a combination of web scraping techniques and GPT-generated code to ensure accuracy and efficiency.
 
 ## Features
 
-- **Automated Data Extraction:** Extracts PhD student names and related data from program pages.
+- **Automated Data Extraction:** Extracts graduate student names and related data from program pages.
 - **Data Validation:** Ensures the extracted data is accurate and complete.
 - **GPT Integration:** Generates and updates scraping functions using GPT.
 - **Comprehensive Logging:** Logs all operations and errors for easy debugging and auditing.

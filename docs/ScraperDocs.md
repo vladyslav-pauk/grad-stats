@@ -1,6 +1,6 @@
 # Scraping Web for Academic Progress
 
-The graduate programs web scraping package provides a comprehensive and efficient solution for extracting and performing chronological analysis of PhD student information from graduate program webpages.
+The graduate programs web scraping package provides a comprehensive and efficient solution for extracting and performing chronological analysis of graduate student information from graduate program webpages.
 It leverages Wayback Machine web archive data and automatic pattern matching generation using OpenAI's GPT API to automate the data collection process.
 
 [//]: # (The PhD program scraping module addresses this challenge by automating the extraction of PhD student names from university web pages.)
@@ -43,7 +43,7 @@ It leverages Wayback Machine web archive data and automatic pattern matching gen
 
 ## Overview
 
-Enrollment, graduation and placement data for PhD programs is a valuable resource for academic research, program evaluation, student recruitment, and ranking.
+Enrollment, graduation and placement data for graduate programs is a valuable resource for academic research, program evaluation, student recruitment, and ranking.
 Across various disciplines, data reporting varies in terms of consistency and accessibility.
 Centralized databases like the [National Science Foundation's Survey of Earned Doctorates](https://ncses.nsf.gov/surveys/earned-doctorates) provide aggregate statistics, but lack detailed information on individual programs.
 Some initiatives like the [Council of Graduate Schools' PhD Completion Project](https://cgsnet.org/data-insights/diversity-equity-inclusiveness/degree-completion/ph-d-completion-project) aim to improve data collection and reporting, but challenges remain.
@@ -53,8 +53,8 @@ Furthermore, accessing this data can be challenging due to legacy systems, priva
 
 ### Archive of Enrollment Data
 
-University academic departments often publish lists of current PhD students on their websites, providing insights into the student body of individual programs.
-Philosophy programs, for example, often provide detailed information on current PhD students, including their names, graduation status, and placement outcomes.
+University academic departments often publish lists of current graduate students on their websites, providing insights into the student body of individual programs.
+Philosophy programs, for example, often provide detailed information on current graduate students, including their names, graduation status, and placement outcomes.
 
 The Wayback Machine web archive service captures snapshots of web pages over time, which enables tracking changes in student listings, and enables longitudinal analysis of enrollment.
 By monitoring student names in the webpage over time, one can estimate start and end dates of each student's enrollment, providing access to time-to-degree metrics.
@@ -62,7 +62,7 @@ Finally, to assess the outcomes for each student, the placement and graduation i
 
 ### Challenges in Data Collection
 
-Collecting web archive data on PhD students is a challenging task due to the lack of standardized formats and the dynamic nature of web content.
+Collecting web archive data on graduate students is a challenging task due to the lack of standardized formats and the dynamic nature of web content.
 Using standard web scraping techniques and libraries yields limited results due to the variability in webpage structures and internationalization of names.
 Furthermore, webpages often list supervisors, alumni, and other non-student names, further complicating the extraction process.
 Manual programming of pattern matching is time-consuming, requires handling of edge cases, is not scalable to a large number of academic programs, and requires manual maintenance and updates.
@@ -140,7 +140,7 @@ For each generated function, the user only needs to inspect the extracted names 
 
 The pipeline can automatically adjust to changes in web page structures by re-running the generation process, eliminating the need for manual updates and reducing maintenance demands.
 By modifying the prompt, this approach can be easily adapted to a specific task.
-We can target specifically PhD students, or generally, students with specific traits.
+We can target specifically graduate students, or generally, students with specific traits.
 This is difficult to achieve using NLP models or generic pattern matching without hand-crafted rules.
 
 ## Architecture
@@ -277,7 +277,7 @@ The date of the snapshot is encoded in the URL, allowing for easy retrieval of t
 ### Code Generation
 
 The interaction with the OpenAI API is managed by the `gpt_api.py` module via predefined prompts.
-The prompts for the GPT model in `prompts.yaml` are designed to generate a function that extracts all unique PhD student names from a web page source. It includes the function signature and a high-level description of the required functionality.
+The prompts for the GPT model in `prompts.yaml` are designed to generate a function that extracts all unique graduate student names from a web page source. It includes the function signature and a high-level description of the required functionality.
 
 ```yaml
 setup_prompt: |
@@ -334,7 +334,7 @@ update_function_prompt: |
 
 ```
 
-These prompt is tailored to generate patterns specifically targeting current PhD student names, avoiding names of faculty or alumni.
+These prompt is tailored to generate patterns specifically targeting current graduate student names, avoiding names of faculty or alumni.
 
 The response from the GPT model is processed to extract the relevant code within code block markers. The code is then trimmed after the return statement to ensure functionality.
 

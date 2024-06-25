@@ -83,20 +83,6 @@ def load_logging(level='INFO') -> None:
     httpx_logger.setLevel(logging.WARNING)
 
 
-def load_nltk() -> None:
-    """
-    Downloads necessary NLTK data files.
-
-    This function downloads the required NLTK data files to a specified directory.
-    """
-    import nltk
-    nltk_dir = "/Users/home/Work/Projects/phd-stats/venv/nltk_data"
-    nltk.download('punkt', download_dir=nltk_dir, quiet=True)
-    nltk.download('averaged_perceptron_tagger', download_dir=nltk_dir, quiet=True)
-    nltk.download('maxent_ne_chunker', download_dir=nltk_dir, quiet=True)
-    nltk.download('words', download_dir=nltk_dir, quiet=True)
-
-
 def read_programs(filename: str) -> list:
     """
     Reads program URLs from a CSV file and returns them as a list of tuples.

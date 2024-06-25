@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Grad Stats is a React application designed to provide an interactive interface for exploring and analyzing data related to PhD programs. It allows users to search for universities, view detailed statistics on student data, and gain insights into various programs.
+The Grad Stats is a React application designed to provide an interactive interface for exploring and analyzing data related to graduate programs. It allows users to search for universities, view detailed statistics on student data, and gain insights into various programs.
 
 ## Features
 
@@ -16,7 +16,7 @@ The Grad Stats is a React application designed to provide an interactive interfa
 
 The application features multiple tabs to display different types of data:
 
-- **Graduate Programs**: Shows a summary of various PhD programs, including total entries, currently active students, placement rates, etc. Clicking on a program name will display detailed statistics for that program.
+- **Graduate Programs**: Shows a summary of various graduate programs, including total entries, currently active students, placement rates, etc. Clicking on a program name will display detailed statistics for that program.
 - **Summary**: Provides a detailed summary of the selected program, including the number of currently enrolled students, total students recorded, placement rate, average time-to-degree, and more.
 - **Student Data**: Displays detailed student data for the selected program, including student names, enrollment dates, completion dates, time to degree, and placement status.
 - **Snapshots**: Shows links to snapshots of the program data, including the date of the snapshot and the number of students listed in the snapshot.
@@ -38,13 +38,13 @@ The application features multiple tabs to display different types of data:
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/paukvlad/phd-stats.git
+git clone https://github.com/paukvlad/grad-stats.git
 ```
 
 2. Navigate to the project directory:
 
 ```sh
-cd phd-stats
+cd grad-stats
 ```
 
 3. Install the dependencies:
@@ -71,7 +71,7 @@ The application will be available at `http://localhost:3000`.
 
 ### Tabs
 
-1. **Graduate Programs Tab**: Displays a summary of various PhD programs. Click on a program name to view detailed statistics for that program.
+1. **Graduate Programs Tab**: Displays a summary of various graduate programs. Click on a program name to view detailed statistics for that program.
 2. **Summary Tab**: Provides a detailed summary of the selected program, including statistics like currently enrolled students, placement rates, and average time-to-degree.
 3. **Student Data Tab**: Displays detailed student data for the selected program. You can sort the data by clicking on the column headers.
 4. **Snapshots Tab**: Shows links to snapshots of the program data. The snapshots include the date and number of students listed.

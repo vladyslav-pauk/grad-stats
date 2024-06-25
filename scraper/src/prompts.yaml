@@ -7,7 +7,7 @@ setup_prompt: |
 
 generate_function_prompt: |
 
-  Your task is to create a function that extracts a list of current PhD student names from an HTML source. The function should be named `extract_phd_student_names` and should take a BeautifulSoup object as input, returning a list of strings where each string is a current PhD student's name. Make sure it only selects all current students.
+  Your task is to create a function that extracts a list of current graduate student names from an HTML source. The function should be named `extract_phd_student_names` and should take a BeautifulSoup object as input, returning a list of strings where each string is a current graduate student's name. Make sure it only selects all current students.
   
   Analyze the following HTML source chunks to understand the structure of the web page:
   
@@ -21,7 +21,7 @@ generate_function_prompt: |
       # Your code here
   ```
   
-  This function accurately extracts the names of current PhD students based on the status specified and all information provided in the HTML source.
+  This function accurately extracts the names of current graduate students based on the status specified and all information provided in the HTML source.
 
 
 update_function_prompt: |
@@ -48,7 +48,7 @@ update_function_prompt: |
       return students
   ```
 
-  This update ensures that the function accurately extracts the names of current PhD students.
+  This update ensures that the function accurately extracts the names of current graduate students.
 
 #  Function:
 #  ```python
