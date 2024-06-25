@@ -2,7 +2,8 @@
 
 ## Overview
 
-The Grad Stats is a React application designed to provide an interactive interface for exploring and analyzing data related to graduate programs. It allows users to search for universities, view detailed statistics on student data, and gain insights into various programs.
+The Grad Stats is a web application designed to provide an interactive interface for exploring and analyzing graduate program data.
+It allows users to search for universities, view detailed statistics on student data, and gain insights into various programs.
 
 ## Features
 
@@ -12,13 +13,14 @@ The Grad Stats is a React application designed to provide an interactive interfa
 - **Dropdown Navigation**: Use the arrow keys to navigate through the dropdown list and press enter to select a university. Clicking on a university name in the dropdown will display the statistics for that university.
 - **Automatic Suggestions**: If the search query is empty and the search bar is focused, a list of all available programs will be displayed.
 
-### Tabs
+### Data Views
 
-The application features multiple tabs to display different types of data:
+The application features multiple tabs to display different views of data:
 
-- **Graduate Programs**: Shows a summary of various graduate programs, including total entries, currently active students, placement rates, etc. Clicking on a program name will display detailed statistics for that program.
-- **Summary**: Provides a detailed summary of the selected program, including the number of currently enrolled students, total students recorded, placement rate, average time-to-degree, and more.
-- **Student Data**: Displays detailed student data for the selected program, including student names, enrollment dates, completion dates, time to degree, and placement status.
+- **Overview**: Shows a summary of various graduate programs, including total entries, currently active students, placement rates, etc. Clicking on a program name will display detailed statistics for that program.
+- **Statistics**: Displays statistics and histograms of the placement rates and time-to-degree over the body of programs.
+- **Program Summary**: Provides a detailed summary of the selected program, including the number of currently enrolled students, total students recorded, placement rate, average time-to-degree, and more.
+- **Students**: Displays detailed student data, including student names, enrollment dates, completion dates, time to degree, and placement status.
 - **Snapshots**: Shows links to snapshots of the program data, including the date of the snapshot and the number of students listed in the snapshot.
 
 ### Sorting
@@ -29,9 +31,9 @@ The application features multiple tabs to display different types of data:
 
 - **Informative Tooltips**: Hovering over the column headers in the tables will display tooltips with additional information about the column. This helps users understand the meaning of each column and the data it represents.
 
-### Click to Proceed
+### Cross-View Navigation
 
-- **Program Selection**: Clicking on a program name in the Graduate Programs tab or a university name in the search dropdown will display detailed statistics for that program or university.
+- **Program Selection**: Clicking on a program name in the Programs tab or a university name in the search dropdown will display detailed statistics for that program or university.
 
 ## Installation
 
@@ -65,7 +67,7 @@ The application will be available at `http://localhost:3000`.
 
 ### Search
 
-1. **Type in the Search Bar**: Start typing the name of a university or program in the search bar.
+1. **Type in the Search Bar**: Start typing the name of a university or program in the search bar or press enter to open the overview page.
 2. **Navigate the Dropdown**: Use the arrow keys to navigate the dropdown list of universities. Press enter to select a university or click on the university name.
 3. **View Program Statistics**: Once a university is selected, the detailed statistics for that program will be displayed.
 

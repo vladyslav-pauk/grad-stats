@@ -1,7 +1,7 @@
 # Scraping Web for Academic Progress
 
-The graduate programs web scraping package provides a comprehensive and efficient solution for extracting and performing chronological analysis of graduate student information from graduate program webpages.
-It leverages Wayback Machine web archive data and automatic pattern matching generation using OpenAI's GPT API to automate the data collection process.
+The data scraping module is an efficient tool for gathering information about changes in graduate student enrollment over time from university websites.
+It aims at streamlining the data collection process by leveraging Wayback Machine web archive service and automatic pattern matching generation using OpenAI's GPT API.
 
 [//]: # (The PhD program scraping module addresses this challenge by automating the extraction of PhD student names from university web pages.)
 
@@ -45,11 +45,11 @@ It leverages Wayback Machine web archive data and automatic pattern matching gen
 
 Enrollment, graduation and placement data for graduate programs is a valuable resource for academic research, program evaluation, student recruitment, and ranking.
 Across various disciplines, data reporting varies in terms of consistency and accessibility.
-Centralized databases like the [National Science Foundation's Survey of Earned Doctorates](https://ncses.nsf.gov/surveys/earned-doctorates) provide aggregate statistics, but lack detailed information on individual programs.
-Some initiatives like the [Council of Graduate Schools' PhD Completion Project](https://cgsnet.org/data-insights/diversity-equity-inclusiveness/degree-completion/ph-d-completion-project) aim to improve data collection and reporting, but challenges remain.
+Centralized databases like the [National Science Foundation's Survey of Earned Doctorates](https://ncses.nsf.gov/surveys/earned-doctorates) provide aggregate statistics, but lack information on individual programs.
+Some grant-funded initiatives like the [Council of Graduate Schools' PhD Completion Project](https://cgsnet.org/data-insights/diversity-equity-inclusiveness/degree-completion/ph-d-completion-project) aim to improve data collection and reporting, but challenges remain.
 Such initiatives are labor-intensive and require manual updating. 
-They may not capture the full range of programs and outcomes and often lack recent updates.
-Furthermore, accessing this data can be challenging due to legacy systems, privacy concerns, and inconsistent reporting practices.
+They may not capture the full range of programs and outcomes and often not up-to-date.
+Furthermore, accessing this data directly from the educational institutions can be challenging due to legacy systems, privacy concerns, and inconsistent reporting practices.
 
 ### Archive of Enrollment Data
 
