@@ -1,4 +1,4 @@
-import { extractDateFromUrl } from './helpers';
+import {extractDateFromUrl} from './helpers';
 
 const initialize_programs = (data) => {
     const programs = {};
@@ -89,7 +89,7 @@ export const updateTimeToDegree = (data, programs) => {
         program.yearsCount = 0;
     });
 
-    const { totalYears, yearsCount } = calculateAverageYearsToDegree(data);
+    // const { totalYears, yearsCount } = calculateAverageYearsToDegree(data);
 
     data.forEach(entry => {
         const program = programs[entry.University];
@@ -127,8 +127,7 @@ const calculateAverageYearsToDegree = (data) => {
         }
     });
 
-    const averageDuration = yearsCount > 0 ? (totalYears / yearsCount).toFixed(2) : 'N/A';
-    return { totalYears, yearsCount, averageDuration };
+    return yearsCount > 0 ? (totalYears / yearsCount).toFixed(2) : 'N/A';
 };
 
 export const computeProgramIndex = (data) => {
@@ -184,7 +183,7 @@ export const computeProgramSummary = (data) => {
         }
     });
 
-    const { totalYears, yearsCount, averageDuration } = calculateAverageYearsToDegree(data);
+    const averageDuration = calculateAverageYearsToDegree(data);
 
     const percentageOfPlacements = totalEntries > 0 ? ((placedStudents / totalEntries) * 100).toFixed(2) : '0.00';
 
