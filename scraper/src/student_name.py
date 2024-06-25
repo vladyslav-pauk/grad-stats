@@ -29,11 +29,10 @@ from typing import List
 
 from nltk import word_tokenize, pos_tag, ne_chunk
 
-from .utils import load_nltk, load_logging, load_sys_path
+from .utils import load_nltk, load_sys_path
 from .exceptions import ValidationError
 
 load_nltk()
-load_logging()
 load_sys_path()
 
 
@@ -69,8 +68,8 @@ def validate_names(source: str, name_list: List[str]) -> bool:
         # if not _is_in_source(name, source):
         #     raise ValidationError.name_not_in_source(name)
 
-        if not _is_student_name(name):
-            raise ValidationError.invalid_student_name(name)
+        # if not _is_student_name(name):
+        #     raise ValidationError.invalid_student_name(name)
 
     return True
 
@@ -136,16 +135,17 @@ def _is_student_name(name: str) -> bool:
     pos_tags = pos_tag(tokens)
 
     pos_tag_counts = {
-        'JJR': 0, 'NNP': 0, 'NNS': 0, 'JJ': 0, 'NN': 0, 'RB': 0, 'VB': 0, 'S': 0, 'JJS': 0, 'VBG': 0, 'VBD': 0, 'GPE': 0
+        'JJR': 0, 'NNP': 0, 'NNS': 0, 'JJ': 0, 'NN': 0, 'RB': 0, 'VB': 0, 'S': 0, 'JJS': 0, 'VBG': 0, 'VBD': 0, 'MD': 0, 'GPE': 0
     }
     for _, tag in pos_tags:
         if tag not in pos_tag_counts:
             pos_tag_counts[tag] = 0
         pos_tag_counts[tag] += 1
 
-    print("Named entities: ", ne_chunk(pos_tags, binary=False))
+    # print("Named entities: ", ne_chunk(pos_tags, binary=False))
     if (
             (pos_tag_counts['JJR'] >= 1 and pos_tag_counts['NN'] >= 1)
+            or (pos_tag_counts['MD'] >= 1 and pos_tag_counts['VB'] >= 1)
             or ((pos_tag_counts['VBG'] >= 1 or pos_tag_counts['VBD'] >= 1) and pos_tag_counts['NN'] >= 1)
             or pos_tag_counts['NNP'] >= 2
             or (pos_tag_counts['NNP'] >= 1 and (

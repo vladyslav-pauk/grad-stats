@@ -2,7 +2,7 @@ import argparse
 
 import pandas as pd
 
-from .src.program_page import get_page, get_pagination, scrape_data_from_pages
+from .src.program_page import get_pagination, scrape_data_from_pages
 from .src.placement_page import update_placement
 from .src.database import update_dataset
 from .src.utils import read_programs, load_logging
@@ -27,8 +27,6 @@ def main(filename: str) -> pd.DataFrame:
         update_dataset(data)
 
     return data
-    # url_pairs = [('http://philosophy.princeton.edu:80/people/graduate-students',
-    # 'https://philosophy.princeton.edu/graduate/placement-record')]
 
 
 if __name__ == '__main__':
@@ -52,32 +50,23 @@ if __name__ == '__main__':
     else:
         new_data = main(args.file)
 
-
-# todo: fix sorting
-# todo: invalid dates
-
-# todo: README
 # todo: report
 
 # viewer
-# todo: more statistics in program summary, also some metadata
 
 # fixme: nav tabs, border-bottom
 # fixme: tooltip transparency
-# fixme: align tooltip window to the left
-# fixme: fix sorting indicator initialization and memory
 
 # scraper
-# todo: calculate start date and end date in the middle between two snapshots
-#  keep start_date and end_date as it is but use ranges for calculating average
-#  end_date should be the last snapshot before disappeared. if it's active no end-date.
-# todo: pass error e to chat, but log only error info.
-# todo: validation feedback
-# todo: if function confirmed by user create pull request, if not iterate
-# todo: function to delete entries from database
 
-# fixme: context length error
-# fixme: log every page, log at the end of url search
-# fixme: handle empty name list, possible for pagination
-# fixme: update function before first page, don't update further
-# fixme: fix placement (wrong student, o'hagan)
+# fixme: fix placement
+
+# todo: delete a program command
+
+# todo: pass error e to chat, but log only error info
+# todo: prompt only if name list changed
+# todo: update only placement
+# todo: add graduate page to the program tuple
+# todo: log every page, log at the end of url search
+# todo: handle empty name list, possible for pagination
+# todo: fix placement (wrong student, o'hagan)

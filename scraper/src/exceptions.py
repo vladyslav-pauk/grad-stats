@@ -20,13 +20,14 @@ Functions:
     handle_exception(exc_type, exc_value, exc_traceback):
         Logs unhandled exceptions, except for keyboard interrupts.
 """
+import logging
+import sys
+import time
+from typing import Type, Optional
+from types import TracebackType
 
 from requests.exceptions import ConnectionError, HTTPError, Timeout
 from urllib3.exceptions import NewConnectionError
-from typing import Type, Optional
-from types import TracebackType
-import logging
-import sys
 
 
 def handle_exception(exc_type: Type[BaseException], exc_value: BaseException, exc_traceback: Optional[TracebackType]) -> None:
@@ -45,6 +46,15 @@ def handle_exception(exc_type: Type[BaseException], exc_value: BaseException, ex
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
         return
     logging.error("Unhandled exception", exc_info=(exc_type, exc_value, exc_traceback))
+
+
+def handle_retry_exception(exc: Exception, attempts: int, retry_delay: int) -> tuple[int, int]:
+    logging.error(f"Retrying in {retry_delay}s - Wayback Machine connection failed")
+    # logging.error(f"Retrying in {retry_delay}s - {exc}")
+    time.sleep(retry_delay)
+    retry_delay *= 2
+    attempts += 1
+    return retry_delay, attempts
 
 
 class ValidationError(Exception):

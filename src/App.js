@@ -10,6 +10,7 @@ import StudentData from './components/StudentData';
 import ProgramSummary from './components/ProgramSummary';
 import SnapshotLinks from './components/SnapshotLinks';
 import ProgramIndex from './components/ProgramIndex';
+import StatisticsTab from './components/StatisticsTab'; // Import the new StatisticsTab component
 import { fetchVersions, fetchStudentData } from './utils/dataFetch';
 import { computeProgramSummary, computeProgramIndex } from './utils/dataProcess';
 import { formatValue } from './utils/helpers';
@@ -32,18 +33,6 @@ const App = () => {
     const dropdownRef = useRef(null);
     const searchInputRef = useRef(null);
 
-    const formatDatesInData = (data) => {
-        return data.map(item => {
-            const formattedItem = { ...item };
-            Object.keys(formattedItem).forEach(key => {
-                if (key.toLowerCase().includes('date') || key.toLowerCase().includes('time')) {
-                    formattedItem[key] = new Date(formattedItem[key]).toLocaleDateString();
-                }
-            });
-            return formattedItem;
-        });
-    };
-
     useEffect(() => {
         fetchVersions()
             .then(fetchStudentData)
@@ -65,12 +54,11 @@ const App = () => {
         }
     }, []);
 
-    const debouncedFetchData = useCallback(debounce((q) => fetchData(q), 300), [fetchData]);
-
     useEffect(() => {
+        const debouncedFetchData = debounce((q) => fetchData(q), 300);
         debouncedFetchData(query);
         return () => debouncedFetchData.cancel();
-    }, [query, debouncedFetchData]);
+    }, [query, fetchData]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -128,7 +116,7 @@ const App = () => {
         setStats(filteredMatches);
         setProgramStatistics(computeProgramIndex(window.studentData));
         setStatistics(computeProgramSummary(filteredMatches));
-        setCurrentProgram(university ? university : 'Program Index');
+        setCurrentProgram(university ? university : 'Overview');
         setActiveTab(university ? 'statistics' : 'programStatistics');
         setUniversities([]);
         setQuery('');
@@ -178,7 +166,7 @@ const App = () => {
             aValue = a[sortConfig.key];
             bValue = b[sortConfig.key];
 
-            if ((sortConfig.key === 'enrollmentDate')) {
+            if ((sortConfig.key === 'enrollmentDate') || (sortConfig.key === 'completionDate')) {
                 aValue = new Date(aValue.replace('< ', '').replace('> ', '')).getTime();
                 bValue = new Date(bValue.replace('< ', '').replace('> ', '')).getTime();
             }
@@ -201,17 +189,17 @@ const App = () => {
 
     const renderTabs = () => (
         <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} id="uncontrolled-tab-example" className="mt-3">
-            {currentProgram !== 'Program Index' && (
+            {currentProgram !== 'Overview' && (
                 <Tab eventKey="statistics" title="Summary">
                     <ProgramSummary statistics={statistics} />
                 </Tab>
             )}
-            {currentProgram === 'Program Index' && (
-                <Tab eventKey="programStatistics" title="Graduate Programs">
+            {currentProgram === 'Overview' && (
+                <Tab eventKey="programStatistics" title="Programs">
                     <ProgramIndex programs={programStatistics} onSelectProgram={handleStatistics} />
                 </Tab>
             )}
-            <Tab eventKey="data" title="Student Data">
+            <Tab eventKey="data" title="Students">
                 <StudentData
                     stats={sortedStats()}
                     sortConfig={sortConfig}
@@ -222,7 +210,12 @@ const App = () => {
                     currentProgram={currentProgram}
                 />
             </Tab>
-            {currentProgram !== 'Program Index' && (
+            {currentProgram === 'Overview' && (
+                <Tab eventKey="statisticsTab" title="Statistics">
+                    <StatisticsTab programStatistics={programStatistics} />
+                </Tab>
+            )}
+            {currentProgram !== 'Overview' && (
                 <Tab eventKey="snapshots" title="Snapshots">
                     <SnapshotLinks stats={stats} />
                 </Tab>
@@ -261,7 +254,7 @@ const App = () => {
                     </div>
                 )}
                 <footer className="app-footer">
-                    <p className="app-footer-text">&copy; 2024 PhD Stats. All rights reserved.</p>
+                    <p className="app-footer-text">&copy; 2024 Grad Stats. All rights reserved.</p>
                 </footer>
             </div>
         </div>

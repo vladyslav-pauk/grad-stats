@@ -35,12 +35,12 @@ def update_placement(database_df: pd.DataFrame, placement_page: str, log: bool =
     try:
         response = requests.get(placement_page)
         response.raise_for_status()
-    except requests.RequestException as e:
-        logging.error(f"Error fetching URL {placement_page}: {e}")
-        return database_df
-
-    soup_object = BeautifulSoup(response.content, 'html.parser')
-    html_content = soup_object.get_text()
+        response_content = response.content
+        soup_object = BeautifulSoup(response_content, 'html.parser')
+        html_content = soup_object.get_text()
+    except requests.RequestException:
+        logging.error(f"Error fetching placement page {placement_page}")
+        html_content = ''
 
     webpage_names = set(re.findall(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b', html_content))
 

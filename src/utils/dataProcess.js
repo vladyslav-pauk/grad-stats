@@ -97,10 +97,9 @@ export const updateTimeToDegree = (data, programs) => {
         const endDate = new Date(entry.completionDate.replace('> ', ''));
         const durationInYears = (endDate - startDate) / (1000 * 60 * 60 * 24 * 365.25);
 
-        program.totalYears += durationInYears;
-        program.yearsCount += 1;
-
         if (!entry.enrollmentDate.includes('<') && !entry.completionDate.includes('>')) {
+            program.totalYears += durationInYears;
+            program.yearsCount += 1;
             entry.timeToDegree = durationInYears.toFixed(2);
         } else {
             entry.timeToDegree = `> ${durationInYears.toFixed(2)}`;
@@ -119,10 +118,9 @@ const calculateAverageYearsToDegree = (data) => {
         const endDate = new Date(entry.completionDate.replace('> ', ''));
         const durationInYears = (endDate - startDate) / (1000 * 60 * 60 * 24 * 365.25);
 
-        totalYears += durationInYears;
-        yearsCount += 1;
-
         if (!entry.enrollmentDate.includes('<') && !entry.completionDate.includes('>')) {
+            totalYears += durationInYears;
+            yearsCount += 1;
             entry.timeToDegree = durationInYears.toFixed(2);
         } else {
             entry.timeToDegree = `> ${durationInYears.toFixed(2)}`;
@@ -181,7 +179,7 @@ export const computeProgramSummary = (data) => {
         if (entry.Snapshots && entry.Snapshots.length > 0) {
             entry.Snapshots.forEach(snapshot => {
                 const { date } = extractDateFromUrl(snapshot);
-                uniqueSnapshotDates.add(date.toDateString()); // Add unique date strings
+                uniqueSnapshotDates.add(date.toLocaleDateString()); // Add unique date strings
             });
         }
     });

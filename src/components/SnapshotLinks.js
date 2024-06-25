@@ -43,7 +43,7 @@ function SnapshotLinks({ stats }) {
     const tooltipTexts = {
         date: 'Date when the snapshot was taken',
         count: 'Number of students listed in the snapshot',
-        link: 'Snapshot URL'
+        // link: 'Snapshot URL'
     };
 
     return (
@@ -72,13 +72,14 @@ function SnapshotLinks({ stats }) {
                             Students
                         </th>
                     </OverlayTrigger>
-                    <OverlayTrigger
-                        key="link"
-                        placement="top"
-                        overlay={<Tooltip id="tooltip-link">{tooltipTexts.link}</Tooltip>}
-                    >
-                        <th>Link</th>
-                    </OverlayTrigger>
+                    <th>Link</th>
+                    {/*<OverlayTrigger*/}
+                    {/*    key="link"*/}
+                    {/*    placement="top"*/}
+                    {/*    overlay={<Tooltip id="tooltip-link">{tooltipTexts.link}</Tooltip>}*/}
+                    {/*>*/}
+                    {/*    <th>Link</th>*/}
+                    {/*</OverlayTrigger>*/}
                 </tr>
                 </thead>
                 <tbody>

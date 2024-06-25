@@ -18,18 +18,18 @@ function StudentData({ stats, sortConfig, handleSort, tableHoverIndex, setTableH
 
     const columns = columnOrder
     .filter(column => Object.keys(stats[0]).includes(column))
-    .filter(column => currentProgram === 'Program Index' || (column !== 'University'))
-    // .filter(column => currentProgram !== 'Program Index' || (column !== 'Start_Date' && column !== 'End_Date'))
+    .filter(column => currentProgram === 'Overview' || (column !== 'University'))
+    .filter(column => currentProgram !== 'Overview' || (column !== 'enrollmentDate' && column !== 'completionDate'))
     ;
 
     const tooltipTexts = {
-        University: 'The institution offering the program',
+        University: 'The institution offering the graduate program',
         Name: 'First and last name of the student',
         Active: 'Current enrollment status according to the latest snapshot',
         Placement: 'Job placement status according to the placement page',
-        timeToDegree: 'Estimated time-to-degree in years',
-        enrollmentDate: 'Estimated enrollment date',
-        completionDate: 'Estimated completion date',
+        timeToDegree: 'Time spent in graduate program based on estimated enrollment and completion dates (years)',
+        enrollmentDate: 'Estimated enrollment date. Estimated as the average of two adjacent snapshots where the status changes. If unknown, the earliest snapshot date is used.',
+        completionDate: 'Estimated completion date. Estimated as the average of two adjacent snapshots where the status changes. If currently active, the current snapshot date is used.',
     };
 
     return (

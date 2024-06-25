@@ -27,16 +27,15 @@ from typing import Tuple, List
 
 import requests
 import pandas as pd
-import time
 import datetime
 from bs4 import BeautifulSoup
-from requests.exceptions import ConnectionError, HTTPError, Timeout
+from requests.exceptions import HTTPError, ConnectionError
 
 from ..src.search_module import search_names
 from ..src.snapshot_url import get_snapshot_urls
 from ..src.module_manager import generate_search_module, validate_search_module
 from ..src.database import process_data
-from ..src.exceptions import ValidationError, ModuleError
+from ..src.exceptions import ValidationError, ModuleError, WaybackMachineError, handle_retry_exception
 
 
 def scrape_data_from_pages(
@@ -78,6 +77,7 @@ def load_search_module(validation_url):
     Returns:
         None
     """
+    logging.info(f'Validating snapshot: {validation_url}')
     validation_html = get_page(validation_url)
     try:
         validate_search_module(validation_html, validation_url)
@@ -115,6 +115,7 @@ def get_pagination(url_tuple: tuple) -> list:
     i = 2
     while i < 1000:
         url_page = url + f'?pg={i}'
+
         response = get_page(url_page)
 
         soup = BeautifulSoup(response, 'html.parser')
@@ -124,7 +125,9 @@ def get_pagination(url_tuple: tuple) -> list:
         except:
             empty_h1_tags = None
 
-        if empty_h1_tags or abs(len(response) - len(previous_response)) <= 50:
+        if (empty_h1_tags
+                or abs(len(response) - len(previous_response) <= 100)
+                or response == ''):
             logging.info(f"Found {i - 1} page{'s' if len(url_pages) > 1 else ''} for {url_tuple[2]}")
             break
 
@@ -152,24 +155,33 @@ def get_page(url: str, max_retries: int = 10, initial_retry_delay: int = 16) -> 
     attempts = 0
     retry_delay = initial_retry_delay
 
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'DNT': '1',
+        'Upgrade-Insecure-Requests': '1',
+        'Referer': 'https://www.google.com/',
+        'TE': 'Trailers'
+    }
+
     while attempts < max_retries:
         try:
-            response = requests.get(url)
-            response.raise_for_status()
+            response = requests.get(url, headers=headers)
+
+            if response.status_code == 406:
+                logging.error(f"Snapshot not available: {url}")
+                return ''
+            if response.status_code == 403:
+                return ''
             return response.text
 
-        except (HTTPError, ConnectionError, Timeout):
-            logging.error(f"Retrying in {retry_delay}s - Wayback Machine connection failed")
-            time.sleep(retry_delay)
-            retry_delay *= 2
-            attempts += 1
+        except (WaybackMachineError, ConnectionError) as e:
+            retry_delay, attempts = handle_retry_exception(e, attempts, retry_delay)
 
     logging.error(f"Failed to fetch content after {max_retries} attempts.")
     return ""
-    # page_content = BeautifulSoup(response.text, 'html.parser')
-    # [s.extract() for s in page_content(['script', 'style'])]
-    # return page_content
-    # return BeautifulSoup("", 'html.parser')
 
 
 def _track_presence_in_page(page_tuple: Tuple[str, str, str], log_snapshot_search: bool) -> pd.DataFrame:
@@ -189,6 +201,8 @@ def _track_presence_in_page(page_tuple: Tuple[str, str, str], log_snapshot_searc
 
     for url in snapshot_urls:
         page_source = get_page(url)
+        if not page_source:
+            continue
         load_search_module(validation_url=url)
         snapshot_data = _extract_timestamps_from_snapshot(page_source, url, university=page_tuple[2])
         list_data = pd.concat([list_data, snapshot_data], ignore_index=True)
@@ -230,12 +244,7 @@ def _extract_timestamps_from_snapshot(page_source: str, url: str, university: st
     except Exception as e:
         logging.error(e)
         names = []
-        # logging.fatal(
-        #     "An unexpected error occurred during the name search process. "
-        #     "Please check the log for more details and try running the program again.",
-        #     exc_info=True
-        # )
-    print("Extracted names: ", names)
+
     date, status = _parse_date(url)
 
     for name in names:
@@ -248,9 +257,6 @@ def _extract_timestamps_from_snapshot(page_source: str, url: str, university: st
         })
 
     return pd.DataFrame(data, columns=columns)
-    # save page source to html in scraper/tests/validation_number.html where number is next available index
-    # with open(f'scraper/tests/validation_{date}.html', 'w') as file:
-    #     file.write(page_source)
 
 
 def _parse_date(url: str) -> Tuple[str, bool]:

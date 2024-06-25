@@ -40,11 +40,11 @@ function ProgramIndex({ programs, onSelectProgram }) {
 
     const tooltipTexts = {
         program: 'The institution offering the program',
-        currentlyActive: 'Number of students currently enrolled',
-        totalEntries: 'Total number of enrolled students since the earliest record of the program',
+        currentlyActive: 'Number of students currently enrolled in the graduate program, according to the latest snapshot',
+        totalEntries: 'Total number of students enrolled in the graduate program since the earliest record',
         percentageOfPlacements: 'Percentage of students placed in jobs according to the placement page',
-        averageDuration: 'Average duration of enrollment, based on data from former students',
-        earliestSnapshot: 'Earliest record of the program in the web archive',
+        averageDuration: 'Estimated mean time-to-degree, based on data from former students with known enrollment date',
+        earliestSnapshot: 'Earliest record of the graduate program in the web archive',
     };
 
     return (

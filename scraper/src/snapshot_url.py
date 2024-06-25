@@ -11,10 +11,11 @@ Functions:
 
 import requests
 import logging
-import time
 from typing import Tuple, List
 
 from requests.exceptions import ConnectionError, HTTPError, Timeout
+
+from .exceptions import handle_retry_exception
 
 
 def get_snapshot_urls(
@@ -52,11 +53,8 @@ def get_snapshot_urls(
                     f"Found {len(snapshot_urls)} archive snapshot{'s' if len(snapshot_urls) > 1 else ''}")
             return snapshot_urls
 
-        except (HTTPError, ConnectionError, Timeout):
-            logging.error(f"Retrying in {retry_delay}s - Wayback Machine Connection failed")
-            time.sleep(retry_delay)
-            retry_delay *= 2
-            attempts += 1
+        except (HTTPError, ConnectionError, Timeout) as e:
+            retry_delay, attempts = handle_retry_exception(e, attempts, retry_delay)
 
     else:
         logging.error(f"Failed to fetch snapshots after {max_retries} attempts")

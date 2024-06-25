@@ -110,6 +110,7 @@ def _extract_names(module: types.ModuleType, soup: BeautifulSoup) -> List[str]:
         ModuleError: If there is an issue during the execution of the module.
     """
     try:
-        return module.extract_phd_student_names(soup)
+        names = module.extract_phd_student_names(soup)
+        return [name.replace('\n', '').replace(r'\s+', ' ') for name in names if name]
     except Exception:
         raise ModuleError.execution_error()

@@ -18,6 +18,9 @@
     "recharts": "^2.12.7",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.0-"
+  },
   "scripts": {
     "start": "node_modules/.bin/react-scripts start",
     "build": "node_modules/.bin/react-scripts build",

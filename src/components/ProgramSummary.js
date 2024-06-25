@@ -1,4 +1,5 @@
 import React from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import '../App.css';
 import { formatValue } from '../utils/helpers';
 
@@ -21,23 +22,33 @@ function ProgramSummary({ statistics }) {
     const placementPage = <a href={placementLink} target="_blank" rel="noopener noreferrer">{placementLink}</a>
 
     const rows = [
-        {label: 'Currently Enrolled', value: currentlyActive},
-        {label: 'Total Students Recorded', value: totalEntries},
-        {label: 'Placement Rate', value: placementRate},
-        {label: 'Average Time-to-Degree', value: averageDuration},
-        {label: 'Number of Snapshots', value: numberOfSnapshots},
-        {label: 'Earliest Record', value: earliestSnapshot},
-        {label: 'Program Page', value: programPage},
-        {label: 'Placement Page', value: placementPage}
-        // ...Object.keys(otherStats).map(key => ({
-        //     label: formatColumnName(key),
-        //     value: otherStats[key].toFixed ? otherStats[key].toFixed(1) : otherStats[key]
-        // })),
+        { label: 'Currently Enrolled', value: currentlyActive, tooltip: 'Number of students currently enrolled in the graduate program, according to the latest snapshot' },
+        { label: 'Total Students Recorded', value: totalEntries, tooltip: 'Total number of students enrolled in the graduate program since the earliest record' },
+        { label: 'Placement Rate', value: placementRate, tooltip: 'Percentage of students placed in jobs according to the placement page' },
+        { label: 'Average Time-to-Degree', value: averageDuration, tooltip: 'Estimated mean time-to-degree, based on data from former students with known enrollment date' },
+        { label: 'Number of Snapshots', value: numberOfSnapshots, tooltip: 'Total number of snapshots recorded for this program' },
+        { label: 'Earliest Record', value: earliestSnapshot, tooltip: 'Earliest record of the graduate program in the web archive' },
+        { label: 'Program Page', value: programPage, tooltip: 'Link to the program page' },
+        { label: 'Placement Page', value: placementPage, tooltip: 'Link to the placement page' }
     ];
 
     return (
         <div className="mt-3">
             <table className="table table-striped table-transparent">
+                {/*<tbody>*/}
+                {/*    {rows.map((row, index) => (*/}
+                {/*        <OverlayTrigger*/}
+                {/*            key={index}*/}
+                {/*            placement="top"*/}
+                {/*            overlay={<Tooltip id={`tooltip-${index}`}>{row.tooltip}</Tooltip>}*/}
+                {/*        >*/}
+                {/*            <tr key={index}>*/}
+                {/*                <th>{row.label}</th>*/}
+                {/*                <td>{formatValue(row.value, row, 'value')}</td>*/}
+                {/*            </tr>*/}
+                {/*        </OverlayTrigger>*/}
+                {/*    ))}*/}
+                {/*</tbody>*/}
                 <tbody>
                 {rows.map((row, index) => (
                     <tr key={index}>

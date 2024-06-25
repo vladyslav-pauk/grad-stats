@@ -4,7 +4,7 @@ function Header() {
     return (
         <>
             <div style={{ height: '10px' }}></div>
-            <h1 className="text-center">PhD Stats</h1>
+            <h1 className="text-center">Grad Stats</h1>
             <div style={{ height: '10px' }}></div>
         </>
     );

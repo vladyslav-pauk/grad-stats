@@ -12,20 +12,20 @@ Functions:
 
 import os
 from dotenv import load_dotenv
+import logging
 import yaml
 
 import openai
 from openai import OpenAI
 
 from .exceptions import OpenAIError
-from .utils import load_config, load_logging
+from .utils import load_config, _chunk_html
 
 
-MODEL, _, MAX_HISTORY_LEN, _ = load_config()
-load_logging()
+MODEL, _, MAX_HISTORY_LEN, SOURCE_CHUNK_LEN = load_config()
 
 
-def get_gpt_response(gpt_chat: tuple, prompt: str) -> str:
+def get_gpt_response(gpt_chat: tuple, prompt: str, source: str) -> tuple:
     """
     Fetches the response from the GPT API for the given prompt.
 
@@ -33,6 +33,7 @@ def get_gpt_response(gpt_chat: tuple, prompt: str) -> str:
     to include previous exchanges and ensures that the history does not exceed the maximum allowed length.
 
     Args:
+        source: html source
         gpt_chat (tuple): Initialized GPT chat object containing the client, prompts, and chat history.
         prompt (str): The prompt to send to the GPT API.
 
@@ -42,14 +43,25 @@ def get_gpt_response(gpt_chat: tuple, prompt: str) -> str:
     Raises:
         OpenAIError: If there is an error with the GPT API call, such as API errors, connection errors, or rate limits.
     """
-    client, _, history = gpt_chat
+    client, prompts, history = gpt_chat
+    history.append({"role": "user", "content": prompt})
 
-    if len(history) > MAX_HISTORY_LEN:
-        history = history[-0.5 * MAX_HISTORY_LEN:]
+    if len("".join(item['content'] for item in history)) > MAX_HISTORY_LEN:
+        history = resample_source(prompts, source)
+        # logging.info('Resampling source example')
+        # source_sample = "\n".join(_chunk_html(source, SOURCE_CHUNK_LEN))
+        # history = [
+        #     {
+        #         "role": "user",
+        #         "content": prompts["setup_prompt"]
+        #     },
+        #     {
+        #         "role": "user",
+        #         "content": prompts['generate_function_prompt'].format(html_chunks=source_sample)
+        #     }
+        # ]
 
     try:
-        history.append({"role": "user", "content": prompt})
-
         response = client.chat.completions.create(
             model=MODEL,
             messages=history
@@ -58,7 +70,7 @@ def get_gpt_response(gpt_chat: tuple, prompt: str) -> str:
 
         history.append({"role": "assistant", "content": response_content})
 
-        return response_content
+        return client, prompts, history
     except (openai.APIError, openai.APIConnectionError, openai.RateLimitError) as e:
         status_code = getattr(e, 'code', None)
         raise OpenAIError(status_code)
@@ -88,3 +100,19 @@ def init_gpt_chat() -> tuple:
         prompts = yaml.safe_load(file)
     chat_history = [{"role": "user", "content": prompts["setup_prompt"]}]
     return client, prompts, chat_history
+
+
+def resample_source(prompts: tuple, source: str) -> list:
+    logging.info('Resampling source example')
+    source_sample = "\n".join(_chunk_html(source, SOURCE_CHUNK_LEN))
+    history = [
+        {
+            "role": "user",
+            "content": prompts["setup_prompt"]
+        },
+        {
+            "role": "user",
+            "content": prompts['generate_function_prompt'].format(html_chunks=source_sample)
+        }
+    ]
+    return history

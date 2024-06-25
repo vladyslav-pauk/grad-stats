@@ -1,0 +1,79 @@
+.chart-container {
+    height: 450px;
+    margin: 10% 20% 0 -5%;
+    padding: 0;
+}
+
+.stat-summary {
+    padding: 0 15px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.stat-summary div {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    min-width: 150px;
+    text-align: left;
+    display: inline-block;
+}
+
+.stat-value {
+    text-align: right;
+    display: inline-block;
+}
+
+.row.noGutters {
+    margin-left: 0;
+    margin-right: 0;
+    height: 100%;
+}
+
+.row.noGutters > [class*='col-'] {
+    padding-left: 0;
+    padding-right: 0;
+    height: 100%;
+}
+
+/* Customize dropdown button */
+.custom-dropdown .dropdown-toggle {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.custom-dropdown .dropdown-toggle:hover,
+.custom-dropdown .dropdown-toggle:focus,
+.custom-dropdown .dropdown-toggle:active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Customize dropdown menu items */
+.custom-dropdown .dropdown-menu {
+    background-color: #ffffff;
+}
+
+.custom-dropdown .dropdown-item:hover,
+.custom-dropdown .dropdown-item:focus,
+.custom-dropdown .dropdown-item:active {
+    background-color: var(--primary-color);
+    color: white;
+}

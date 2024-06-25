@@ -1,6 +1,6 @@
-# Scraping Web for Academic Progress (SWAPP)
+# Scraping Web for Academic Progress
 
-The Academic Programs Web Scraping Package (SWAPP) provides a comprehensive and efficient solution for extracting and performing chronological analysis of PhD student information from graduate program webpages.
+The graduate programs web scraping package provides a comprehensive and efficient solution for extracting and performing chronological analysis of PhD student information from graduate program webpages.
 It leverages Wayback Machine web archive data and automatic pattern matching generation using OpenAI's GPT API to automate the data collection process.
 
 [//]: # (The PhD program scraping module addresses this challenge by automating the extraction of PhD student names from university web pages.)

@@ -1,6 +1,7 @@
 @import 'css/_tables.css';
 @import 'css/_nav.css';
 @import 'css/_search.css';
+@import 'css/_stats.css';
 
 :root {
     --primary-color: rgba(103, 131, 223, 1);

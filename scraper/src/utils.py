@@ -26,12 +26,13 @@ Functions:
         Cleans an archived URL to its original form.
 """
 
-import logging
 import os
 import csv
 import re
 import json
 import sys
+import random
+import logging
 
 from .exceptions import handle_exception
 
@@ -63,15 +64,18 @@ def load_sys_path() -> None:
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 
-def load_logging() -> None:
+def load_logging(level='INFO') -> None:
     """
     Sets up logging configuration for the application.
 
     This function configures the logging settings, including the log format and log levels for different libraries.
     It also sets a custom exception handler for unhandled exceptions.
     """
+    with open('scraper/src/config.json', 'r') as file:
+        config = json.load(file)
+    level = config['LOG_LEVEL']
     sys.excepthook = handle_exception
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(level=logging.getLevelName(level), format='%(asctime)s - %(levelname)s - %(message)s')
     logging.getLogger("openai").setLevel(logging.ERROR)
     logging.getLogger('nltk').setLevel(logging.ERROR)
 
@@ -148,3 +152,21 @@ def parent_url(url: str) -> str:
     if url_match.endswith('/'):
         url_match = url_match[:-1]
     return url_match
+
+
+def _chunk_html(html: str, block_size: int) -> list:
+    """
+    Chunks the HTML content into smaller blocks for processing.
+
+    Args:
+        html (str): The raw HTML content to chunk.
+        block_size (int): The size of each chunk.
+
+    Returns:
+        list: A list of HTML chunks.
+    """
+    chunks = []
+    for i in range(0, len(html), block_size):
+        chunks.append(html[i:i + block_size])
+    chunk_sample = random.sample(chunks, min(10, len(chunks)))
+    return chunk_sample

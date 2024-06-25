@@ -86,3 +86,8 @@
 .tooltip-arrow {
     display: none !important;
 }
+
+.chart-container {
+    margin-bottom: 300px;
+    position: relative;
+}

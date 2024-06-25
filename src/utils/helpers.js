@@ -32,14 +32,14 @@ export const formatValue = (value, row, column) => {
 };
 
 export const formatColumnName = (column) => {
-    if (column === 'timeToDegree') return 'Time-to-Degree';
-    if (column === 'enrollmentDate') return 'Enrollment Date';
-    if (column === 'completionDate') return 'Completion Date';
+    if (column === 'timeToDegree') return 'Duration';
+    if (column === 'enrollmentDate') return 'Start';
+    if (column === 'completionDate') return 'Completion';
     if (column === 'Active') return 'Enrolled';
-    if (column === 'University') return 'Host Institution';
-    if (column === 'program') return 'Host Institution';
-    if (column === 'totalEntries') return 'Total Students';
-    if (column === 'currentlyActive') return 'Currently Enrolled';
+    if (column === 'University') return 'Institution';
+    if (column === 'program') return 'Institution';
+    if (column === 'totalEntries') return 'Total';
+    if (column === 'currentlyActive') return 'Current';
     if (column === 'percentageOfPlacements') return 'Placement Rate';
     if (column === 'averageDuration') return 'Time-to-Degree';
     if (column === 'earliestSnapshot') return 'Earliest Record';

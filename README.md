@@ -1,8 +1,8 @@
-# PhD Stats
+# Grad Stats
 
 ## Overview
 
-The PhD Stats is a React application designed to provide an interactive interface for exploring and analyzing data related to PhD programs. It allows users to search for universities, view detailed statistics on student data, and gain insights into various programs.
+The Grad Stats is a React application designed to provide an interactive interface for exploring and analyzing data related to PhD programs. It allows users to search for universities, view detailed statistics on student data, and gain insights into various programs.
 
 ## Features
 

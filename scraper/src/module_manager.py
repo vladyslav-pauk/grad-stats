@@ -33,8 +33,8 @@ import random
 
 from .student_name import validate_names
 from .search_module import search_names
-from .gpt_api import get_gpt_response, init_gpt_chat
-from .utils import parse_module_name, load_config, load_sys_path
+from .gpt_api import get_gpt_response, init_gpt_chat, resample_source
+from .utils import parse_module_name, load_config, load_sys_path, _chunk_html
 from .exceptions import ValidationError, OpenAIError, ModuleError
 
 load_sys_path()
@@ -51,8 +51,7 @@ def generate_search_module(html_source: str, url: str) -> None:
         """
     gpt_chat = init_gpt_chat()
 
-    html_chunks = _chunk_html(html_source, SOURCE_CHUNK_LEN)
-    generated_code = _generate_code(html_chunks, gpt_chat)
+    generated_code, gpt_chat = _generate_code(html_source, gpt_chat)
     _save_module(generated_code, url)
     logging.info(f"Generated name search module")
 
@@ -71,7 +70,8 @@ def generate_search_module(html_source: str, url: str) -> None:
                     names = search_names(html_source, url)
                 except ModuleError:
                     names = []
-                updated_code = _update_code(
+
+                updated_code, gpt_chat = _update_code(
                     generated_code,
                     error_message,
                     html_chunks[iteration] if iteration < len(html_chunks) else "",
@@ -84,8 +84,10 @@ def generate_search_module(html_source: str, url: str) -> None:
                 continue
 
             logging.info(f"Updated search module")
+            if iteration == round(NUM_ITERATIONS / 10):
+                gpt_chat = resample_source(gpt_chat[1], html_source)
     else:
-        logging.info(f"Failed to generate module after {NUM_ITERATIONS} attempts")
+        logging.error(f"Failed to generate module after {NUM_ITERATIONS} updates. Proceeding to the next snapshot")
 
 
 def validate_search_module(html_source: str, url: str) -> bool:
@@ -104,7 +106,16 @@ def validate_search_module(html_source: str, url: str) -> bool:
     if os.path.exists(filepath):
         try:
             names = search_names(html_source, url)
-            return validate_names(html_source, names)
+            if names:
+                print("Extracted names: ", names)
+            if validate_names(html_source, names):
+                os.system('printf "\\a"')
+                user_prompt = input(
+                    "Press enter to continue or provide error description: ")
+                if user_prompt:
+                    raise ValidationError.invalid_student_name(user_prompt)
+                else:
+                    return True
 
         except (ValidationError, ModuleError) as e:
             logging.error(e)
@@ -113,47 +124,51 @@ def validate_search_module(html_source: str, url: str) -> bool:
         raise ModuleError.file_not_found(filepath)
 
 
-def _generate_code(source_chunks: list, gpt_chat: tuple) -> str:
+def _generate_code(source: str, gpt_chat: tuple) -> tuple:
     """
     Generates code for the search module based on the HTML chunks.
 
     Args:
-        source_chunks (list): List of HTML chunks to generate the code from.
+        source (str): Page source code.
         gpt_chat (tuple): Initialized GPT chat object.
 
     Returns:
         str: The generated code as a string.
     """
-    combined_html_chunks = "\n".join(source_chunks)
-    prompt = gpt_chat[1]['generate_function_prompt'].format(
-        html_chunks=combined_html_chunks
-    )
 
+    source_sample = "\n".join(_chunk_html(source, SOURCE_CHUNK_LEN))
+    prompt = gpt_chat[1]['generate_function_prompt'].format(
+        html_chunks=source_sample
+    )
     try:
-        response_content = get_gpt_response(gpt_chat, prompt)
-        return _crop_code(response_content)
-    except (OpenAIError.insufficient_balance()) as e:
-        logging.error(e)
-        sys.exit(1)
+        gpt_chat = get_gpt_response(gpt_chat, prompt, source)
+        return _crop_code(gpt_chat[2][-1]['content']), gpt_chat
+    except OpenAIError as e:
+        if 'insufficient' in str(e).lower():
+            logging.error("Insufficient balance. Please check your OpenAI balance.")
+            sys.exit(1)
+        else:
+            logging.error(e)
+            return "", ()
     except (ValidationError, ModuleError, OpenAIError) as e:
         logging.error(e)
-        return ""
+        return "", ()
 
 
 def _update_code(
     original_code: str,
     error_message: str,
-    html_chunk: str,
+    source: str,
     names: list,
     gpt_chat: tuple
-) -> str:
+) -> tuple:
     """
     Updates the search module code based on error messages and additional HTML chunks.
 
     Args:
         original_code (str): The original generated code.
         error_message (str): The error message from the previous validation attempt.
-        html_chunk (str): Additional HTML chunk to use for the update.
+        source (str): Additional HTML chunk to use for the update.
         names (list): List of names found in the HTML.
         gpt_chat (tuple): Initialized GPT chat object.
 
@@ -165,14 +180,14 @@ def _update_code(
         function_code=original_code,
         error_message=error_message,
         names=names,
-        html_chunk=html_chunk
+        html_chunk=''
     )
     try:
-        updated_code = get_gpt_response(gpt_chat, prompt)
-        return _crop_code(updated_code)
+        gpt_chat = get_gpt_response(gpt_chat, prompt, source)
+        return _crop_code(gpt_chat[2][-1]['content']), gpt_chat
     except (ValidationError, ModuleError, OpenAIError) as e:
         logging.error(e)
-        return ""
+        return (), []
 
 
 def _save_module(code: str, url: str) -> None:
@@ -202,21 +217,3 @@ def _crop_code(code: str) -> str:
     end_idx = code.find('\n', code.find("return", start_idx)) + 1
     function_code = code[start_idx:end_idx]
     return function_code
-
-
-def _chunk_html(html: str, block_size: int) -> list:
-    """
-    Chunks the HTML content into smaller blocks for processing.
-
-    Args:
-        html (str): The raw HTML content to chunk.
-        block_size (int): The size of each chunk.
-
-    Returns:
-        list: A list of HTML chunks.
-    """
-    chunks = []
-    for i in range(0, len(html), block_size):
-        chunks.append(html[i:i + block_size])
-    chunk_sample = random.sample(chunks, min(10, len(chunks)))
-    return chunk_sample
